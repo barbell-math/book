@@ -1,0 +1,15 @@
+*.vim
+*.exe
+*.o
+*.db
+*.aux
+*.log
+*.blg
+*.bbl
+*.bcf
+*.out
+*.gz
+*.bib
+*.pdf
+*.xml
+*.toc
