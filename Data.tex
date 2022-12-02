@@ -48,44 +48,9 @@ Before starting, it is worth mentioning how elements in the data set were measur
 
 Weight, and hence intensity, are obvious. Recording the weight lifted and the fraction that weight is of the lifters 1RM is all that's required. This defines weight as $w> 0$ and intensity as $I>0$. Weight is not allowed to equal $0$ because that would imply there is no resistance and hence no training stimulus, making the exercise useless. \footnote{Sometimes people classify body weight exercises as having $0$ weight, despite still having to lift some fraction of there own body weight. This is mainly done because it can be difficult to measure the exact proportion of there body weight they are actually lifting.} Intensity is not capped at $1$ because lifting a weight greater than the lifters previous 1RM is the ultimate goal of a powerlifting program.
 
-Reps are just positive integer values greater than or equal to $1$, or $r\in \{ \mathbb{R}\ge 1 \}$. As mentioned in section \ref{sec:CommonTermsSection}, effort will follow the RPE scale, defining effort as $E\in \{0,0.5,1,...,10\}$.
+Reps are just positive integer values greater than or equal to $1$, or $r\in \{ \mathbb{R}\ge 1 \}$. 
+As discussed in section \ref{sec:FractionalSets}, sets are in the domain of positive numbers greater than or equal to $1$, or $s\ge 1$. Effort will follow the RPE scale, discussed in \ref{sec:CommonTermsSection}, defining it as $E\in \{0,0.5,1,...,10\}$.
 
-Time will be recorded as a date, which means it will have units of days. Dates by themselves cannot be mathematically used. To work around this, the past will be positive values representing the number of days since the exercise was performed. This will make $0$ represent the current day. Given this, time will be in the domain of positive integer values, or $t\in \{ \mathbb{R}\ge 0 \}$.
+Time will be recorded as a date, which means it will have units of days. Dates by themselves cannot be mathematically used. To work around this, the past will be negative values representing the number of days since the exercise was performed, making $0$ represent the current day. Future dates can (and will) be considered, which will be represented as positive values. Given this, time will be in the domain of integer values, or $t\in \{ \mathbb{R} \}$.
 
 Following the traditional definition, frequency will be calculated across days, meaning separate sets of the same exercise on the same day will not count toward an increased frequency. Separate sets of the same exercise on different days will increase the frequency of the exercise. Naturally, frequency is limited to positive integer values, or $f\in \{ \mathbb{R}\ge 0 \}$.
-
-Sets appear to be in the same domain as reps, but a specific case leads to a different representation. Lets say a lifter is prescribed to squat for $5$ sets of $3$ with the same weight across all $5$ sets. The exact weight is not relevant to the example. Then lets say the lifter completed all $3$ reps on the first $4$ sets, but only managed to complete $2$ reps on the last set. One way to record this is shown in table \ref{tab:FailedSetExampleIncorrectData}.
-
-\begin{table}[h]
-    \centering
-    \begin{tabular}{c|c|c|c}
-        Exercise & Sets & Reps & \dots \\
-        \hline
-        Squat & $4$ & $3$ & \dots \\
-        Squat & $1$ & $2$ & \dots \\ 
-    \end{tabular}
-    \caption{A table illustrating the incorrect way to record failed reps across sets.}
-    \label{tab:FailedSetExampleIncorrectData}
-\end{table}
-
-Recording the missed rep this way will lead to problems later when attempting to fit a surface to the data, as a single data point will have turned into two correlated data points. \footnote{Linear regression assumes that the data points are independent from each other.} Put another way, the same exercise now has two data points. To remedy this, fractional sets will be used, making sets in the domain of positive numbers greater than or equal to $1$, or $s\ge 1$. The reason sets cannot be less than $1$ is because any fractional sets less than one can simply be represented as a single set of less reps. Table \ref{tab:FailedSetExampleCorrectData} shows the adjusted way to record failed reps.
-
-\begin{table}[h]
-    \centering
-    \begin{tabular}{c|c|c|c}
-        Exercise & Sets & Reps & \dots \\
-        \hline
-        Squat & $4\frac{2}{3}$ & 3 & \dots \\
-    \end{tabular}
-    \caption{A table illustrating the correct way to record failed reps across sets.}
-    \label{tab:FailedSetExampleCorrectData}
-\end{table}
-
-Note that volume, as shown below, is not changed by making sets fractional. Intensity is not changed in virtue of the weight not changing and frequency is also not changed due to the sets all being performed on the same day.
-
-\begin{equation*}
-    \begin{split}
-        v_1=&v(4,3,w)+v(1,2,w)=14w \\
-        v_2=&v\left(4\frac{2}{3},3,w\right)=14w \\
-    \end{split}
-\end{equation*}
