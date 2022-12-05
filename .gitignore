@@ -9,7 +9,6 @@
 *.bcf
 *.out
 *.gz
-*.bib
 *.pdf
 *.xml
 *.toc
