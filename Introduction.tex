@@ -65,9 +65,9 @@ Effort will be measured on a scale known as \textit{rate of perceived exertion},
         $7$ & Could do three more reps. \\
         $5-6$ & Could do 4-6 more reps. \\
         $3-4$ & Light effort. \\
-        $1-2$ & Little effort.
+        $1-2$ & Little to no effort.
     \end{tabular}
-    \caption{A table explaining the relationship between an RPE rating and what the lifter was capable of doing.}
+    \caption{A table explaining the relationship between an RPE rating and what the lifter is capable of doing.}
     \label{tab:RPETable}
 \end{table}
 
@@ -98,89 +98,4 @@ The third value is \textit{frequency}. Frequency is simply how often a lift is p
 
 Another important concept is \textit{fatigue}. As a lifter progresses through a workout program there fatigue will increase. Fatigue is unavoidable, and it must be properly managed. Continually training in a fatigued state will result in far greater chances of sustaining an injury and lackluster progress. \cite{FATIGUE} Fatigue can be managed in many ways such as decreasing intensity, frequency, volume, or taking extra unplanned time off from the gym.
 
-The last concept considered here is the difference between \textit{strength training} and \textit{hypertrophy}. Generally, strength training seeks to maximize a particular set of exercises 1RM's where as hypertrophy seeks to maximize muscle growth. To a certain extent, they go hand in hand, but one can be emphasized over the other. For hypertrophy there are generally fewer sets with more reps and lighter weight. For strength training there are generally more sets with fewer reps and heavier weight. This paper is concerned with powerlifting, which is a strength sport, but hypertrophy can be used as a tool to gain strength so it is important to understand it.
-
-\section{Small Differences: What's Different From the 'Standard'}
-\label{sec:SmallDifferencesSection}
-
-The vast majority of concepts surrounding lifting that are used in this book will not differ from there standard definitions. However, due to the nuanced detail that modeling requires, some small tweaks will be made. Each of these small differences will be discussed along with why changes were made.
-
-\subsection{Set Wise RPE Grouping}
-\label{sec:SetWiseRPEGrouping}
-
-One small change will be made to the 'standard' RPE system. Typically, RPE is measured for each set a lifter completes, regardless of any other parameters that dictate what is done for an exercise. In the context of this book, RPE will be recorded only once for each unique combination of sets, reps, and weight performed during an exercise. The recorded RPE will match the highest RPE required to perform all of the sets. Typically this will just be the RPE of the last set, but is not guaranteed to be the last set. An example may help demonstrate. The first part of a hypothetical deadlift workout with the 'standard' RPE scale is shown in table \ref{tab:StandardRPEExample}.
-
-\begin{table}[h]
-	\centering
-	\begin{tabular}{c|c|c|c|c|c}
-		Date & Exercise & Sets & Reps & Weight & Effort \\
-        \hline
-        Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $1$ & $455$ lbs & $8.5$ \\
-        Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $4$ & $405$ lbs & $6$ \\
-        Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $4$ & $405$ lbs & $6$ \\
-        Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $4$ & $405$ lbs & $6.5$ \\
-        Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $4$ & $405$ lbs & $7.5$ \\
-        Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $4$ & $405$ lbs & $8.5$ \\
-        Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $10$ & $315$ lbs & $7$ \\
-	\end{tabular}
-	\caption{A table demonstrating the 'standard' way RPE is measured, on a per-set level. Note how the RPE varies across sets with the same set, rep, and weight values, likely because the lifter got tired as the workout continued.}
-	\label{tab:StandardRPEExample}
-\end{table}
-
-Now, table \ref{tab:NonStandardRPEExample} demonstrates the adjusted RPE system that this book uses.
-
-\begin{table}[h]
-	\centering
-	\begin{tabular}{c|c|c|c|c|c}
-		Date & Exercise & Sets & Reps & Weight & Effort \\
-        \hline
-        Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $1$ & $455$ lbs & $8.5$ \\
-        Mon, July 4\textsuperscript{th} & Deadlifts & $5$ & $4$ & $405$ lbs & $8.5$ \\
-        Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $10$ & $315$ lbs & $7$ \\
-	\end{tabular}
-	\caption{A table demonstrating the way RPE is measured for this book. Note how only the highest RPE value is recorded for distinct set, rep, and weight combinations.}
-	\label{tab:NonStandardRPEExample}
-\end{table}
-
-This may seem like an odd choice but there are several reasons for doing this. The most obvious, and least important reason, is it matches what the lifter would see in there training program. A lifter is typically told to do something like '$5$ sets of $4$ at $85$\%'. Given this terminology, it would make more sense to the lifter to only record one RPE value and not $5$. More importantly however, is grouping common sets, reps, and weights gives the model a more accurate view to learn from. Given the 'standard' way of recording RPE, there is no need to record sets at all, as there will only ever be one set, each one with a varying RPE value. Without getting too deep into the math, this will also create problems later when attempting to learn from the data, as the same rep and weight values will have different RPE values, removing correlations in the data and rendering predictions useless. By only recording the highest RPE and allowing the number of sets to increase past $1$, the model gets a far clearer representation of what the lifter is actually doing.
-
-It is worth mentioning why the max RPE of a particular set, rep, and weight combination is chosen. Other measures such as the average RPE could also be used. The simple answer is that it does not make sense to average effort. Averaging effort could lead to scenarios where the max RPE is $10$ but the average is less than $10$, leading the model to assume that more volume could be done despite some sets already requiring maximum effort. RPE $10$ cannot be surpassed but it would be required to be passed if more volume were prescribed. Selecting the max RPE instead of the average avoids this problem.
-
-\subsection{Fractional Sets}
-\label{sec:FractionalSets}
-
-Sets appear to only require integer values, but a specific case leads to a different representation. Lets say a lifter is prescribed to squat for $5$ sets of $3$ with the same weight across all $5$ sets. The exact weight is not relevant to the example. Then lets say the lifter completed all $3$ reps on the first $4$ sets, but only managed to complete $2$ reps on the last set. One way to record this is shown in table \ref{tab:FailedSetExampleIncorrectData}.
-
-\begin{table}[h]
-    \centering
-    \begin{tabular}{c|c|c|c}
-        Exercise & Sets & Reps & \dots \\
-        \hline
-        Squat & $4$ & $3$ & \dots \\
-        Squat & $1$ & $2$ & \dots \\ 
-    \end{tabular}
-    \caption{A table illustrating the incorrect way to record failed reps across sets.}
-    \label{tab:FailedSetExampleIncorrectData}
-\end{table}
-
-Recording the missed rep this way will lead to problems later when attempting to fit a surface to the data, as a single data point will have turned into two correlated data points. \footnote{Linear regression assumes that the data points are independent from each other.} Put another way, the same exercise now has two data points. To remedy this, fractional sets will be used, making sets in the domain of positive numbers greater than or equal to $1$, or $s\ge 1$. The reason sets cannot be less than $1$ is because any fractional sets less than one can simply be represented as a single set of less reps. Table \ref{tab:FailedSetExampleCorrectData} shows the adjusted way to record failed reps.
-
-\begin{table}[h]
-    \centering
-    \begin{tabular}{c|c|c|c}
-        Exercise & Sets & Reps & \dots \\
-        \hline
-        Squat & $4\frac{2}{3}$ & 3 & \dots \\
-    \end{tabular}
-    \caption{A table illustrating the correct way to record failed reps across sets.}
-    \label{tab:FailedSetExampleCorrectData}
-\end{table}
-
-Note that volume, as shown below, is not changed by making sets fractional. Intensity is not changed in virtue of the weight not changing and frequency is also not changed due to the sets all being performed on the same day.
-
-\begin{equation*}
-    \begin{split}
-        v_1=&v(4,3,w)+v(1,2,w)=14w \\
-        v_2=&v\left(4\frac{2}{3},3,w\right)=14w \\
-    \end{split}
-\end{equation*}
+The last concept considered here is the difference between \textit{strength training} and \textit{hypertrophy}. Generally, strength training seeks to maximize a particular set of exercises 1RM's where as hypertrophy seeks to maximize muscle growth. To a certain extent, they go hand in hand, but one can be emphasized over the other. For hypertrophy there are generally fewer sets with more reps and lighter weight. For strength training there are generally more sets with fewer reps and heavier weight. This book is concerned with powerlifting, which is a strength sport, but hypertrophy can be used as a tool to gain strength so it is important to understand it.
