@@ -236,7 +236,9 @@ By now this equation should be looking familiar. With a little rearranging, equa
 \subsection{Linear Regression}
 \label{sec:PotentialSurfaceLinearRegression}
 
-Equation \ref{eq:PotentialSurfaceEquation} is the final equation that fully realises all of the intuitive relationships discussed in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables}. This claim will be validated in sections \ref{sec:PotentialSurfaceVolumePeak}-\ref{sec:PotentialSurfaceUnboundedVolume}. Constraints have also been added to the constants in equation \ref{eq:PotentialSurfaceEquation} to limit the behavior of the model to what is sensible for the problem at hand. Keeping in mind the limitations discussed in section \ref{sec:PotentialSurfaceLinearRegressionAndTimeSeriesProblems}, linear regression can now be used to fit the surface to a lifters data, fully defining what that lifter is capable of doing. The error equation for linear regression is shown below.
+Equation \ref{eq:PotentialSurfaceEquation} is the final equation that fully realises all of the intuitive relationships discussed in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables}. This claim will be validated in sections \ref{sec:PotentialSurfaceVolumePeak}-\ref{sec:PotentialSurfaceUnboundedVolume}. Constraints have also been added to the constants in equation \ref{eq:PotentialSurfaceEquation} to limit the behavior of the model to what is sensible for the problem at hand. Keeping in mind the limitations discussed in section \ref{sec:PotentialSurfaceLinearRegressionAndTimeSeriesProblems}, linear regression can now be used to fit the surface to a lifters data, fully defining what that lifter is capable of doing. 
+
+Before performing linear regression, the lack of data for latent fatigue necessitates removing it's corresponding term from the potential surface equation. \footnote{Reasoning for not having data for latent fatigue is discussed in section \ref{sec:AugmentedDataSet}.} With that one small change, the error equation for linear regression is shown below.
 
 \begin{equation*}
     E_{rr}=\sum_{
@@ -245,7 +247,7 @@ Equation \ref{eq:PotentialSurfaceEquation} is the final equation that fully real
         I_i
         -\epsilon
         +\epsilon_1 E_i
-        +\epsilon_2 F_{l,i}
+        %+\epsilon_2 F_{l,i}
         +\epsilon_3 F_{w,i}
         +\epsilon_4 F_{e,i}
         +\epsilon_5 (s_i-1)^2(r_i-1)^2
@@ -265,9 +267,9 @@ To minimize the error, the partial derivatives of each unknown constant is found
             I_i
             -\epsilon
             +\epsilon_1 E_i
-            +\epsilon_2 F_{l,i}
+            %+\epsilon_2 F_{l,i}
+            +\epsilon_3 F_{w,i}
             +\dots
-            %+\epsilon_3 F_{w,i}
             %+\epsilon_4 F_{e,i}
             %+\epsilon_5 (s_i-1)^2(r_i-1)^2
             +\epsilon_6 (s_i-1)^2
@@ -279,9 +281,9 @@ To minimize the error, the partial derivatives of each unknown constant is found
             I_i
             -\epsilon
             +\epsilon_1 E_i
-            +\epsilon_2 F_{l,i}
+            %+\epsilon_2 F_{l,i}
+            +\epsilon_3 F_{w,i}
             +\dots
-            %+\epsilon_3 F_{w,i}
             %+\epsilon_4 F_{e,i}
             %+\epsilon_5(s_i-1)^2(r_i-1)^2
             +\epsilon_6(s_i-1)^2
@@ -289,9 +291,9 @@ To minimize the error, the partial derivatives of each unknown constant is found
         \right)&=0\\
         \epsilon \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n 1 
         -\epsilon_1 \sum_{\substack{i=0\\ t_i\in \{ T \}}} E_i
-        -\epsilon_2 \sum_{\substack{i=0\\ t_i\in \{ T \}}} F_{l,i}
+        %-\epsilon_2 \sum_{\substack{i=0\\ t_i\in \{ T \}}} F_{l,i}
+        -\epsilon_3 \sum_{\substack{i=0\\ t_i\in \{ T \}}} F_{w,i}
         -\dots
-        %-\epsilon_3 \sum_{\substack{i=0\\ t_i\in \{ T \}}} F_{w,i}
         %-\epsilon_4 \sum_{\substack{i=0\\ t_i\in \{ T \}}} F_{e,i}
         %-\epsilon_5 \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n (s_i-1)^2(r_i-1)^2
         -\epsilon_6 \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n (s_i-1)^2
@@ -332,7 +334,7 @@ After a similar process is carried out for each unknown constant, equation \ref{
 \begin{equation*}
     \mathbf{x}=\left[
     \begin{matrix}
-        \epsilon \\ \epsilon_1 \\ \vdots \\ \epsilon_7
+        \epsilon \\ \epsilon_5 \\ \vdots \\ \epsilon_1
     \end{matrix}
     \right]
 \end{equation*}
