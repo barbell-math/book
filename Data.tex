@@ -41,101 +41,124 @@ During the time period the lifter was recording data, there were several notable
     \item On 10/5/2022 the lifter tore his hamstring squatting. The diagnosis was a grade 1-2 muscle belly tear, and the lifter went to three physical therapy (PT) sessions before feeling comfortable to adjust training on his own.
 \end{enumerate}
 
-\section{Units of Measurement}
+These events will be used later in the book to verify and analyze how the model responds to certain circumstances.
+
+
+\section{Augmenting The Data: Improvising for What Can't Be Measured}
+\label{sec:AugmentedDataSet}
+
+Up to this point, fatigue has not been considered. This is a direct result of fatigue not being able to be measured in a timely manner that is also unobtrusive to training. Many of the tests used to measure fatigue require tools or extensive time that is simply not conducive to a training environment, especially when it comes to short term fatigue measurements such as inter-set fatigue. However, fatigue is a large factor that determines what a lifter can do. While fatigue cannot be directly represented due to it not being part of the data, it effects are still visible. Things like sets that took more effort than they should have or sets that were not completed could all be attributed to fatigue. Any modeling done will need a way to determine what affects fatigue had. To help accomplish this, the data set will be augmented with \textit{indexes} that provide measurements similar to how fatigue would be present if it were measured directly. This may seem strange, so hopefully the first example will help clear things up.
+
+Consider inter-workout fatigue. Every rep of every exercise a lifter does will increase the lifters inter-workout fatigue. To represent this, an inter-workout fatigue index will be added to the data set. To calculate the inter-workout fatigue index, the total number of reps completed across all exercises before the current exercise will be summed together. The arithmetic sequence shown in equation \ref{eq:InterWorkoutFatigueEquation} demonstrates this, and can be used when adding an exercise to a workout. \footnote{Equation \ref{eq:InterWorkoutFatigueEquation} is only valid within the context of a single workout. Once a new workout begins the $i$ counter variable resets to $0$.} Note how the first inter-workout fatigue index is $0$. This reflects the lifter not having generated any inter-workout fatigue when first starting a workout. Every value after that then reflects the inter-workout fatigue that was present \textit{before} each exercise was done. Only measuring the fatigue that was present before the exercise was performed is important because it represents the fatigue the exercise was performed with, ignoring the fatigue that will be generated while doing the exercise. This is consistent with how any real measurements of fatigue would be recorded.
+
+\begin{equation}
+	\label{eq:InterWorkoutFatigueEquation}
+	\begin{split}
+		F_{w,i} & = s_{i}r_{i}+F_{w,i-1} \\
+		F_{w,0} & = 0
+	\end{split}
+\end{equation}
+
+%This index will simply count the total number of sets performed across all exercises, incrementing one for each set performed following the order they were performed. 
+%Make s,r values squared
+
+By defining the inter-workout fatigue index this way, it will increase when a direct measurement of inter-workout fatigue would. Having the index value increase as fatigue increases and decrease as fatigue decreases is the key to making this strategy work, as any modeling later will be able to scale the results as needed through constants. \footnote{This method does assume fatigue increases with reps linearly. An argument could be made for exponential increases in fatigue with reps, but for simplicities sake it will be assumed to increase linearly. Note that if further research proves a non-linear relationship the index values could easily be adjusted to follow the correct non-linear pattern.} Table \ref{tab:IndexesExample} shows an example of the inter-workout fatigue index along with how it's values were calculated above it. \footnote{Note how the last value is not shown in data set because it is past the end of the workout.}
+
+\begin{equation*}
+	\begin{aligned}
+		F_{w,0} & =0 \\
+		F_{w,1} & =1(1)+0=1 \\
+		F_{w,2} & =5(4)+1=21 \\
+		F_{w,3} & =1(10)+21=31 \\
+		F_{w,4} & =5(5)+31=56 \\
+		F_{w,5} & =3(12)+56=92  \\
+	\end{aligned}
+\end{equation*}
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{c|c|c|c|c|c|c|c}
+		Date & Exercise & Sets & Reps & Weight & Effort & $F_w$ Index & $F_e$ Index \\
+        \hline
+        Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $1$ & $455$ lbs & $8.5$ & $0$ & $0$ \\
+        Mon, July 4\textsuperscript{th} & Deadlifts & $5$ & $4$ & $405$ lbs & $8.5$ & $1$ & $1$ \\
+        Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $10$ & $315$ lbs & $7$ & $21$ & $21$ \\
+        Mon, July 4\textsuperscript{th} & Barbell Rows & $5$ & $5$ & $225$ lbs & $6.5$ & $31$ & $0$ \\
+        Mon, July 4\textsuperscript{th} & Hyperextensions & $3$ & $12$ & $45$ lbs & $6$ & $56$ & $0$ \\
+        Tue, July 5\textsuperscript{th} & SSB Squats & $5$ & $8$ & $255$ lbs & $6$ & $0$ & $0$ \\
+        \dots & \dots & \dots & \dots & \dots & \dots & \dots & \dots  \\
+	\end{tabular}
+	\caption{A table demonstrating the way various fatigue index values are calculated. Note how $F_w$ increases with the total number of reps. $F_e$ increases with the number times a lift was performed, also in accordance to the total number of reps. $F_w$ resets to $0$ on the new workout and $F_e$ resets to $0$ on each different exercise.}
+	\label{tab:IndexesExample}
+\end{table}
+
+Inter-exercise fatigue can have the same index scheme but instead of incrementing over the entire workout, it only increments according to sets of the same exercise, resetting each time a new exercise is started. Equation \ref{eq:InterExerciseFatigueEquation} can be used to calculate the inter-exercise fatigue index. Note that this equation is only valid within the context of a single exercuse. Table \ref{tab:IndexesExample} also shows an example of inter-exercise fatigue.
+
+\begin{equation}
+	\label{eq:InterExerciseFatigueEquation}
+	\begin{split}
+		F_{e,i} & = s_{i}r_{i}+F_{e,i-1} \\
+		F_{e,0} & = 0
+	\end{split}
+\end{equation}
+
+The last two categories of fatigue are inter-set fatigue and latent fatigue. It is tempting to add an index for inter-set fatigue, but the sets and reps values already serve this purpose. Latent fatigue is a different beast altogether though. Its behavior is not so cut and dry as the other types of fatigue. It can fluctuate based on many factors, many of which are entirely independent from the gym. This makes it impossible to make an index value for latent fatigue as the key to making any index work is to make it increase and decrease as the original measurement would. If those increases and decreases cannot be accurately predicted and represented then an index cannot be used reliably.
+
+\section{Domains and Units of Measurement}
 \label{sec:UnitsOfMeasurement}
 
 Before starting, it is worth mentioning how elements in the data set were measured as it will set the stage for future discussion.
 
-Weight, and hence intensity, are obvious. Recording the weight lifted and the fraction that weight is of the lifters 1RM is all that's required. This defines weight as $w> 0$ and intensity as $I>0$. Weight is not allowed to equal $0$ because that would imply there is no resistance and hence no training stimulus, making the exercise useless. \footnote{Sometimes people classify body weight exercises as having $0$ weight, despite still having to lift some fraction of there own body weight. This is mainly done because it can be difficult to measure the exact proportion of there body weight they are actually lifting.} Intensity is not capped at $1$ because lifting a weight greater than the lifters previous 1RM is the ultimate goal of a powerlifting program.
+\begin{itemize}
+	\item Weight: Weight is obvious. Recording the weight lifted is all that's required, which defines weight as $w>0$. Weight is not allowed to equal $0$ because that would imply there is no resistance and hence no training stimulus, making the exercise useless. \footnote{Sometimes people classify body weight exercises as having $0$ weight, despite still having to lift some fraction of there own body weight. This is mainly done because it can be difficult to measure the exact proportion of there body weight they are actually lifting.} For the data set used in this book, weight is measured in pounds.
+	
+	\item Intensity: Intensity follows the definition of weight. Recording the weight lifted as a proportion of the lifters 1RM is all that's required. This defines intensity as $I>0$. Again, intensity is not allowed to equal $0$ because that would imply there is no training stimulus. Intensity is not capped at $1$ because lifting a weight greater than the lifters previous 1RM is the ultimate goal of a powerlifting program. By definition, intensity is recorded as a percentage.
+	
+	\item Reps: Reps are just positive integer values greater than or equal to $1$, or $r\in \{ \mathbb{Z} \ge 1 \}$. Reps are a base unit, and as such just have the unit of 'reps'. However, for the vast majority of the discussions in this book, reps will be presumed to be \textit{unit-less}.
+	
+	\item Sets: As discussed in section \ref{sec:FractionalSets}, sets are in the domain of positive numbers greater than or equal to $1$, or $s\ge 1$. Just like reps, sets are a base unit, and will have the unit of 'sets'. However, just like reps, sets will be presumed to be \textit{unit-less}.
+	
+	\item Effort: Effort will follow the RPE scale, discussed in section \ref{sec:CommonTermsSection}, defining it as $E\in \{0,0.5,1,...,10\}$. Effort has units of RPE.
+	
+	\item Time: Time will be recorded as a date. However, dates by themselves cannot be mathematically used. To work around this, the past will be negative values representing the number of days since the exercise was performed, making $0$ represent the current day. Future dates can (and will) be considered, and will be represented as positive values. Given this, time will be in the domain of integer values, or $t\in \{ \mathbb{Z} \}$, and it will have units of days.
+	
+	\item Frequency: Following the traditional definition, frequency will be calculated across days, meaning separate sets of the same exercise on the same day will not count toward an increased frequency. Separate sets of the same exercise on different days will increase the frequency of the exercise. Naturally, frequency is limited to positive integer values, or $f\in \{ \mathbb{Z}\ge 0 \}$. Frequency is also a base unit, which technically gives it units of 'frequency', but just like sets and reps, will mostly be considered to be unit-less.
+	
+	\item Inter-workout fatigue index: Given how the indexes were created in section \ref{sec:AugmentedDataSet} they will be in the domain of integer values greater than or equal to $1$, or $F_w\in \{ \mathbb{Z} \ge 1 \}$. The inter-workout fatigue index is a base unit, and as such will have units of 'fatigue' or be considered unit-less.
+	
+	\item Inter-exercise fatigue index: Similar to inter-workout fatigue, inter-exercise fatigue will be in the domain of integer values greater than or equal to $1$, or $F_e\in \{ \mathbb{Z} \ge 1 \}$. The inter-exercise fatigue index is a base unit, and as such will have units of 'fatigue' or be considered unit-less.
+\end{itemize}
 
-Reps are just positive integer values greater than or equal to $1$, or $r\in \{ \mathbb{R}\ge 1 \}$. 
-As discussed in section \ref{sec:FractionalSets}, sets are in the domain of positive numbers greater than or equal to $1$, or $s\ge 1$. Effort will follow the RPE scale, discussed in \ref{sec:CommonTermsSection}, defining it as $E\in \{0,0.5,1,...,10\}$.
+%Weight, and hence intensity, are obvious. Recording the weight lifted and the weights proportion of the lifters 1RM is all that's required. This defines weight as $w>0$ and intensity as $I>0$. Weight is not allowed to equal $0$ because that would imply there is no resistance and hence no training stimulus, making the exercise useless. \footnote{Sometimes people classify body weight exercises as having $0$ weight, despite still having to lift some fraction of there own body weight. This is mainly done because it can be difficult to measure the exact proportion of there body weight they are actually lifting.} Intensity is not capped at $1$ because lifting a weight greater than the lifters previous 1RM is the ultimate goal of a powerlifting program. For the data set, weight is measured in pounds and intensity is, by definition, measured as a percentage.
 
-Time will be recorded as a date, which means it will have units of days. Dates by themselves cannot be mathematically used. To work around this, the past will be negative values representing the number of days since the exercise was performed, making $0$ represent the current day. Future dates can (and will) be considered, and will be represented as positive values. Given this, time will be in the domain of integer values, or $t\in \{ \mathbb{R} \}$.
+%Reps are just positive integer values greater than or equal to $1$, or $r\in \{ \mathbb{Z} \ge 1 \}$. 
+%As discussed in section \ref{sec:FractionalSets}, sets are in the domain of positive numbers greater than or equal to $1$, or $s\ge 1$. Effort will follow the RPE scale, discussed in \ref{sec:CommonTermsSection}, defining it as $E\in \{0,0.5,1,...,10\}$. Reps and sets have units that reflect there names, however, for the vast majority of the discussions in this book they will be presumed to be \textit{unit-less}.
 
-Following the traditional definition, frequency will be calculated across days, meaning separate sets of the same exercise on the same day will not count toward an increased frequency. Separate sets of the same exercise on different days will increase the frequency of the exercise. Naturally, frequency is limited to positive integer values, or $f\in \{ \mathbb{R}\ge 0 \}$.
+%Time will be recorded as a date, which means it will have units of days. Dates by themselves cannot be mathematically used. To work around this, the past will be negative values representing the number of days since the exercise was performed, making $0$ represent the current day. Future dates can (and will) be considered, and will be represented as positive values. Given this, time will be in the domain of integer values, or $t\in \{ \mathbb{Z} \}$.
 
-\section{Small Differences: What's Different From 'Standard'}
-\label{sec:SmallDifferencesSection}
+%Following the traditional definition, frequency will be calculated across days, meaning separate sets of the same exercise on the same day will not count toward an increased frequency. Separate sets of the same exercise on different days will increase the frequency of the exercise. Naturally, frequency is limited to positive integer values, or $f\in \{ \mathbb{Z}\ge 0 \}$.
 
-The vast majority of concepts surrounding lifting that are used in this book will not differ from there standard definitions introduced in section \ref{sec:CommonTermsSection}. However, due to the nuanced detail that modeling requires, some small tweaks were made when recording data. Each of these small differences will be discussed along with why changes were made.
-
-\subsection{Set Wise RPE Grouping}
-\label{sec:SetWiseRPEGrouping}
-
-One small change will be made to the 'standard' RPE system. Typically, RPE is measured for each set a lifter completes, regardless of any other parameters that dictate what is done for an exercise. In the context of this book, RPE will be recorded only once for each unique combination of sets, reps, and weight performed during an exercise. The recorded RPE will match the highest RPE required to perform all of the sets. Typically this will just be the RPE of the last set, but is not guaranteed to be the last set. An example may help demonstrate. The first part of a hypothetical deadlift workout with the 'standard' RPE scale is shown in table \ref{tab:StandardRPEExample}.
-
-\begin{table}[h]
-	\centering
-	\begin{tabular}{c|c|c|c|c|c}
-		Date & Exercise & Sets & Reps & Weight & Effort \\
-        \hline
-        Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $1$ & $455$ lbs & $8.5$ \\
-        Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $4$ & $405$ lbs & $6$ \\
-        Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $4$ & $405$ lbs & $6$ \\
-        Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $4$ & $405$ lbs & $6.5$ \\
-        Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $4$ & $405$ lbs & $7.5$ \\
-        Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $4$ & $405$ lbs & $8.5$ \\
-        Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $10$ & $315$ lbs & $7$ \\
-	\end{tabular}
-	\caption{A table demonstrating the 'standard' way RPE is measured, on a per-set level. Note how the RPE varies across sets with the same set, rep, and weight values, likely because the lifter got tired as the workout continued.}
-	\label{tab:StandardRPEExample}
-\end{table}
-
-Now, table \ref{tab:NonStandardRPEExample} demonstrates the adjusted RPE system that this book uses.
+Table \ref{tab:DomainUnitTable} summarizes the domains the data set element exist over as well as there units.
 
 \begin{table}[h]
 	\centering
-	\begin{tabular}{c|c|c|c|c|c}
-		Date & Exercise & Sets & Reps & Weight & Effort \\
+    \begin{tabular}{|c|l|l|}
+	    \hline
+	    \multicolumn{3}{|c|}{Data Element Unit and Domain List} \\
+	    \hline
+        Measurement & Domain & Unit \\
         \hline
-        Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $1$ & $455$ lbs & $8.5$ \\
-        Mon, July 4\textsuperscript{th} & Deadlifts & $5$ & $4$ & $405$ lbs & $8.5$ \\
-        Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $10$ & $315$ lbs & $7$ \\
-	\end{tabular}
-	\caption{A table demonstrating the way RPE is measured for this book. Note how only the highest RPE value is recorded for distinct set, rep, and weight combinations.}
-	\label{tab:NonStandardRPEExample}
-\end{table}
-
-This may seem like an odd choice but there are several reasons for doing this. The most obvious, and least important reason, is it matches what the lifter would see in there training program. A lifter is typically told to do something like '$5$ sets of $4$ at $85$\%'. Given this terminology, it would make more sense to the lifter to only record one RPE value and not $5$. More importantly however, is grouping common sets, reps, and weights gives the model a more accurate view to learn from. Given the 'standard' way of recording RPE, there is no need to record sets at all, as there will only ever be one set, each one with a varying RPE value. Without getting too deep into the math, this will also create problems later when attempting to learn from the data, as the same rep and weight values will have different RPE values, removing correlations in the data and rendering predictions useless. By only recording the highest RPE and allowing the number of sets to increase past $1$, the model gets a far clearer representation of what the lifter is actually doing.
-
-It is worth mentioning why the max RPE of a particular set, rep, and weight combination is chosen. Other measures such as the average RPE could also be used. The simple answer is that it does not make sense to average effort. Averaging effort could lead to scenarios where the max RPE is $10$ but the average is less than $10$, leading the model to assume that more volume could be done despite some sets already requiring maximum effort. RPE $10$ cannot be surpassed but it would be required to be passed if more volume were prescribed. Selecting the max RPE instead of the average avoids this problem.
-
-\subsection{Fractional Sets}
-\label{sec:FractionalSets}
-
-Sets appear to only require integer values, but a specific case leads to a different representation. Lets say a lifter is prescribed to squat for $5$ sets of $3$ with the same weight across all $5$ sets. The exact weight is not relevant to the example. Then lets say the lifter completed all $3$ reps on the first $4$ sets, but only managed to complete $2$ reps on the last set. One way to record this is shown in table \ref{tab:FailedSetExampleIncorrectData}.
-
-\begin{table}[h]
-    \centering
-    \begin{tabular}{c|c|c|c}
-        Exercise & Sets & Reps & \dots \\
+        Sets & $s\ge 1$ & 'sets' or unit-less\\
+        Reps & $r\in \{ \mathbb{Z} \ge 1 \}$ & 'reps' or unit-less \\
+        Effort & $E\in \{0,0.5,1,...,10\}$ & RPE \\
+        Intensity & $I>0$ & Percentage ($\%$) \\
+        Weight & $w>0$ & lbs. \\
+        Frequency & $f\in \{ \mathbb{Z}\ge 0 \}$ & 'frequency' or unit-less \\
+        Time & $t\in \{ \mathbb{Z} \}$ & Days \\
+        Inter-workout fatigue index & $F_w\in \{ \mathbb{Z} \ge 1 \}$ & 'fatigue' or unit-less \\
+        Inter-exercise fatigue index & $F_e\in \{ \mathbb{Z} \ge 1 \}$ & 'fatigue' or unit-less \\
         \hline
-        Squat & $4$ & $3$ & \dots \\
-        Squat & $1$ & $2$ & \dots \\ 
     \end{tabular}
-    \caption{A table illustrating the incorrect way to record failed reps across sets.}
-    \label{tab:FailedSetExampleIncorrectData}
+    \caption{A table showing each measurement and it's associated domain.}
+    \label{tab:DomainUnitTable}
 \end{table}
-
-Recording the missed rep this way will lead to problems later when attempting to fit a surface to the data, as a single data point will have turned into two correlated data points. \footnote{Linear regression assumes that the data points are independent from each other.} Put another way, the same exercise now has two data points. To remedy this, fractional sets will be used, making sets in the domain of positive numbers greater than or equal to $1$, or $s\ge 1$. The reason sets cannot be less than $1$ is because any fractional sets less than one can simply be represented as a single set of less reps. Table \ref{tab:FailedSetExampleCorrectData} shows the adjusted way to record failed reps.
-
-\begin{table}[h]
-    \centering
-    \begin{tabular}{c|c|c|c}
-        Exercise & Sets & Reps & \dots \\
-        \hline
-        Squat & $4\frac{2}{3}$ & 3 & \dots \\
-    \end{tabular}
-    \caption{A table illustrating the correct way to record failed reps across sets.}
-    \label{tab:FailedSetExampleCorrectData}
-\end{table}
-
-Note that volume, as shown below, is not changed by making sets fractional. Intensity is not changed in virtue of the weight not changing and frequency is also not changed due to the sets all being performed on the same day.
-
-\begin{equation*}
-    \begin{split}
-        v_1=&v(4,3,w)+v(1,2,w)=14w \\
-        v_2=&v\left(4\frac{2}{3},3,w\right)=14w \\
-    \end{split}
-\end{equation*}

@@ -24,7 +24,7 @@ The exercise being performed is largely dependent on what goals the lifter is pu
 \section{Intuitive Relationships Between Variables}
 \label{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables}
 
-A lifter has a \textit{volume tolerance}, which represents a lifters work capacity. Given a certain volume tolerance, the only five variables that can change are weight, intensity, effort, sets, and reps. This is obvious from equations \ref{eq:BaseVolumeEquation} and \ref{eq:IntensityBasedVolumeEquation}.
+A lifter has a \textit{volume tolerance}, which represents there work capacity. Given a certain volume tolerance, the only five variables that can change are weight, intensity, effort, sets, and reps. This is obvious from equations \ref{eq:BaseVolumeEquation} and \ref{eq:IntensityBasedVolumeEquation}.
 
 Weight and intensity are synonymous through the lens of volume, as the total amount of weight lifted is calculated regardless of the differing parameters. It should be clear from equations \ref{eq:BaseVolumeEquation} and \ref{eq:IntensityBasedVolumeEquation} that volume will increase with increased weight and intensity. Mathematically, this makes sense, but the limits of the human body need to be considered. As intensity approaches $100\%$ more effort is required to maintain the same amount of volume. Because effort is limited, volume will necessarily decrease at higher weights, to a point where it reverses the increase in volume from the increase in weight. An example may make this clearer. At $100\%$ intensity a lifter can realistically expect to obtain a volume equal to there 1RM, shown in equation \ref{eq:VolumeWithDiffereingIntensities1}. At $50\%$ intensity, all it takes is two reps to match the volume performed at $100\%$ intensity, which is shown in equation \ref{eq:VolumeWithDiffereingIntensities2}. At $50\%$ intensity, far more than one set of two reps can be performed, making it easy to surpass the volume done at $100\%$ intensity. The data discussed in chapter \ref{sec:DataSection} has many examples of this.
 
@@ -37,7 +37,7 @@ Weight and intensity are synonymous through the lens of volume, as the total amo
     \end{align}
 \end{subequations}
 
-It should be clear that volume will increase with weight until a peak is reached and from there will start to decrease due to limited effort at higher intensities. Where volume peaks exactly will need to be found from the data. Figure \ref{fig:IntensityVsVolumeGraph} is a graph comparing intensity and volume that clearly displays the intuitive behaviors just discussed.
+It should be clear that volume will increase with weight until a peak is reached and from there will start to decrease due to limited effort at higher intensities. Where volume peaks exactly will need to be found from the data. Figure \ref{fig:IntensityVsVolumeGraph} is a graph comparing intensity and volume that clearly displays the peak in volume that was just discussed.
 
 \begin{figure}
     \centering
@@ -46,7 +46,14 @@ It should be clear that volume will increase with weight until a peak is reached
     \label{fig:IntensityVsVolumeGraph}
 \end{figure}
 
-With volume diminishing at higher intensities due to limited effort, the next question is what happens when effort increases or decreases across all intensities. As effort increases, more sets will be able to be completed, more reps will be able to be completed in each set, or more weight will be able to be lifted. If the increase in effort is large enough, some combination of sets, reps, and weight could all increase. The opposite is true if effort decreases. Again, from equations \ref{eq:BaseVolumeEquation} and \ref{eq:IntensityBasedVolumeEquation} it should be clear that sets and reps are directly proportional to volume, implying an increase in either one will increase volume. Putting all of this together, as effort increases volume will increase and as effort decreases volume will decrease.
+The fact that volume diminishes at higher intensities cannot be stressed enough, as it breaks any intuition gathered from equations \ref{eq:BaseVolumeEquation} and \ref{eq:IntensityBasedVolumeEquation}. These equations, serve as a way to \textit{measure} volume, not as a proxy to determine what is possible. These equations have no regard to the limitations of the human body. It is common knowledge among strength coaches that if you want to increase volume sets and reps need to be increased, not weight. To summarize, the following intuitions can be stated:
+
+\begin{enumerate}
+	\item Volume increases linearly with sets and reps.
+	\item Volume increases with diminishing returns to weight, to a point, at which it starts to decrease with increasing returns to weight.
+\end{enumerate}
+
+With volume diminishing at higher intensities due to limited effort, the next question is what happens when effort increases or decreases across all intensities. As effort increases, more sets will be able to be completed, more reps will be able to be completed in each set, or more weight will be able to be lifted. If the increase in effort is large enough, some combination of sets, reps, and weight could all increase. The opposite is true if effort decreases. Again, it should be clear that sets and reps are directly proportional to volume, implying an increase in either one will increase volume. If weight is below the point where it starts to limit volume, an increase in weight could also potentially increase volume. Putting all of this together, as effort increases volume will increase and as effort decreases volume will decrease.
 
 \begin{figure}
     \centering
@@ -57,37 +64,39 @@ With volume diminishing at higher intensities due to limited effort, the next qu
 \begin{figure}
     \centering
     \includegraphics[scale=0.55]{images/ch3/IntensityVsEffort.png}
-    \caption{A graph comparing effort and intensity. Note how the intensity tends to increase with higher effort values. This is the result of a powerlifters goal being to maximize a 1RM.}
+    \caption{A graph comparing effort and intensity. Note how the intensity tends to increase with higher effort values. This is the result of a powerlifters goal to increase a 1RM.}
     \label{fig:EffortVsIntensity}
 \end{figure}
 
-However, in figure \ref{fig:EffortVsVolumeGraph} volume does not seem to correlate with effort as previously mentioned. This is the result of effort and intensity being correlated, which is shown in figure \ref{fig:EffortVsIntensity}. Effort and intensity being correlated is an artifact of the data being collected by a powerlifter, where the lifters goal is to increase the 1RM for a particular lift. \footnote{Put another way, as effort increases, a powerlifter will seek to maximize weight over volume.} The lack of correlation in figure \ref{fig:EffortVsVolumeGraph} is fully explained by combining the previously established fact that volume at higher intensities is necessarily limited by effort with the goal of a powerlifter to maximize weight. Given a sport that is more concerned with rep maxes, such as crossfit, the effort vs intensity graph would level out because lower intensities would be pushed for as many reps as possible, creating maximal effort sets with lower intensities.\footnote{This is a perfect example to demonstrate how effort and intensity are two different concepts.} In order to have maximal effort sets with lower intensities either sets and/or reps will need to increase, thereby forcing volume to increase considerably and restoring the correlation between effort and volume discussed previously.
+However, in figure \ref{fig:EffortVsVolumeGraph}, which compares volume and effort, volume does not seem to correlate with effort as previously mentioned. Rather than volume increasing with effort it seemingly remains constant. Either the logic in the previous paragraph is flawed or further analysis is needed. With the logic from the previous paragraph maintaining it's stance, further investigation is required. As with any investigation, the data is the starting point. In this case the source of the data needs to be considered. A powerlifter collected the data and the goal of a powerlifter is to maximize weight above all, including volume. This goal can be seen in figure \ref{fig:EffortVsIntensity}, where intensity positively correlates with effort. What figure \ref{fig:EffortVsIntensity} is saying is that as effort increased the lifter choose to increase weight over sets and reps. Increasing weight, or intensity, will not increase volume as much as if sets and reps were increased due to the previously established fact that volume at higher intensities is necessarily limited by effort. This is a clear bias in the data set, and explains why volume is seemingly constant in figure \ref{fig:EffortVsVolumeGraph}. Given a sport that is more concerned with rep maxes, such as Crossfit, the effort vs intensity graph would level out because lower intensities would be pushed for as many reps as possible, creating maximal effort sets with lower intensities. \footnote{This is a perfect example to demonstrate how effort and intensity are two different concepts.} In order to have maximal effort sets with lower intensities either sets, reps, or both sets and reps will need to increase, thereby forcing volume to increase considerably and restoring the correlation between effort and volume previously discussed.
 
-With intensity and efforts relation to volume being explored, sets and reps are all thats left. It may be tempting to conclude that volume should be constant given a particular weight and effort. This conclusion can be reached by looking at equations \ref{eq:BaseVolumeEquation} and \ref{eq:IntensityBasedVolumeEquation}, where once the weight and effort are known sets and reps would just vary inversely to ensure volume remains constant. Again, while mathematically true, the limits of the human body need to be considered. Evidence that the relationship between sets and reps is not inverse is shown in figure \ref{fig:SetsVsReps}, where a drop in reps from the expected inverse pattern is seen for $s<3$. This can be attributed to a lack of \textit{endurance}, where sets with a greater number of reps  require more endurance than sets with less reps. Powerlifters are eternally known for having no endurance, so it should come as no surprise that they will favor more sets over reps. This favoritism between sets and reps will of course mean volume is no longer constant given a particular weight and effort, and as such will be known as the \textit{volume skew}.
+
+%This is the result of effort and intensity being correlated, which is shown in figure \ref{fig:EffortVsIntensity}. Effort and intensity being correlated is an artifact of the data being collected by a powerlifter, where the lifters goal is to increase the 1RM for a particular lift. \footnote{Put another way, as effort increases, a powerlifter will seek to maximize weight over volume.} The lack of correlation in figure \ref{fig:EffortVsVolumeGraph} is fully explained by combining the previously established fact that volume at higher intensities is necessarily limited by effort with the goal of a powerlifter to maximize weight. Given a sport that is more concerned with rep maxes, such as crossfit, the effort vs intensity graph would level out because lower intensities would be pushed for as many reps as possible, creating maximal effort sets with lower intensities.\footnote{This is a perfect example to demonstrate how effort and intensity are two different concepts.} In order to have maximal effort sets with lower intensities either sets, reps, or both sets and reps will need to increase, thereby forcing volume to increase considerably and restoring the correlation between effort and volume discussed previously.
+
+With effort and intensity's relation to volume being explored, sets and reps are all that's left. It may be tempting to conclude that volume should be constant given a particular weight and effort. This conclusion can be reached by looking at equations \ref{eq:BaseVolumeEquation} and \ref{eq:IntensityBasedVolumeEquation}, where once the weight and effort are known sets and reps would just vary inversely to ensure volume remains constant. Again, while mathematically true, the limits of the human body need to be considered. Evidence that the relationship between sets and reps is not perfectly inverse is shown in figure \ref{fig:SetsVsReps}, where a drop in sets from the expected inverse pattern is seen. This favoritism between sets and reps will of course mean volume is no longer constant given a particular intensity and effort, and as such will be known as the \textit{volume skew}.
+%This can be attributed to a lack of \textit{endurance}, where sets with a greater number of reps  require more endurance than sets with less reps. Powerlifters are eternally known for having no endurance, so it should come as no surprise that they will favor more sets over reps.
 
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.55]{images/ch3/SetsVsReps.png}
-    \caption{A graph comparing average reps and sets. Note how the relationship is not perfectly inverse. In this case, the lifter has a volume skew towards sets, where more sets are favored (the long tail to the right), over reps (which would require a shorter tail and greater peak).}
+    \caption{A graph comparing average reps and sets for main compound and main compound accessory lifts. Note how the relationship is not perfectly inverse. In this case, the lifter has a volume skew towards reps, where more reps are favored over more sets.}
     \label{fig:SetsVsReps}
 \end{figure}
 
-By this point it should be obvious the crux of the problem in question will require finding a lifters volume tolerance across weight and effort, as well as the lifters volume skew between sets and reps. In order to solve this problem, a surface will need to be found that exhibits the appropriate behaviors and then that surface will need to be fitted to the data using linear regression.
+By this point it should be obvious the crux of the problem in question will require finding a lifters volume tolerance across intensity and effort, as well as the lifters volume skew between sets and reps. In order to solve this problem, a surface will need to be found that exhibits the appropriate behaviors and then that surface will need to be fitted to the data using linear regression.
 
 \section{Linear Regression and Time Series Problems}
 \label{sec:PotentialSurfaceLinearRegressionAndTimeSeriesProblems}
 
-Before moving forward with the goal of finding a surface of best fit using the data set and linear regression, the limits of linear regression need to be considered. Looking at the data set, it should be clear that it is a time series: the data points are collected over time, and data points nearer in time have greater importance than data points farther away in time. Linear regression assumes that all the data points are uncorrelated, which was just proven to not be true. To reconcile the differences between working with linear regression and a time series data set, two things can be done.
+Before moving forward with the goal of finding a surface of best fit using the data set and linear regression, the limits of linear regression need to be considered. Looking at the data set, it should be clear that it is a time series: the data points are collected over time, and data points nearer in time have greater importance than data points farther away in time. Linear regression assumes that all the data points are uncorrelated, which is clearly untrue with time series data. To reconcile the differences between working with linear regression and a time series data set, two things can be done.
 
-The first step that can be taken is to limit the time frame that linear regression is run over. Sets, reps, volume, and the volume skew can all vary through time, but not necessarily in direct linear relation to time. As an example of this, consider seasonal training, which some powerlifters choose to employ. In the off season intensities will drop, volume will increase, and the emphasis on training may shift to hypertrophy over strength. In the on season intensities will increase, volume will necessarily decrease, and the emphasis on training will shift to strength over hypertrophy. This will result in shifts in the number of sets and reps being done over time. To capture these changes over time, the data points used will be limited to a specific time frame, creating a form of a moving average as a lifter continues to train. The exact equation that determines what data points are included and to what extent they are considered will be discussed more in chapter \ref{sec:TimeFrame}. That being said, the general notation for the set of data points used when performing linear regression is shown in equation \ref{eq:TimeFrame}. The exact length of the time frame, $t_f$, along with any other specifics, will be discussed in chapter \ref{sec:TimeFrame}. Throughout the rest of this book, equation \ref{eq:TimeFrame} will be written short hand as $t_i\in \{ T \}$.
+The first step that can be taken is to limit the time frame that linear regression is run over. Sets, reps, volume, and the volume skew can all vary through time, but not necessarily in direct linear relation to time. As an example of this, consider seasonal training, which some powerlifters choose to employ. In the off season intensities will drop, volume will increase, and the emphasis on training may shift to hypertrophy over strength. In the on season intensities will increase, volume will necessarily decrease, and the emphasis on training will shift to strength over hypertrophy. This will result in shifts in the number of sets and reps being done over time. To capture these changes over time, the data points used can be limited to a specific time frame, creating a form of moving average as a lifter continues to train. The exact equation that determines what data points are included and to what extent they are considered will be discussed more in chapter \ref{sec:TimeFrame}. That being said, some notation is required to continue, and the general notation used to show which data points will be used when performing linear regression is shown in equation \ref{eq:TimeFrame}. The exact length of the time frame, $t_f$, along with any other specifics, will be discussed in chapter \ref{sec:TimeFrame}. Throughout the rest of this book equation \ref{eq:TimeFrame} will be written short hand as $t_i\in \{ T \}$ In an effort to save space.
 
 \begin{equation}
     \label{eq:TimeFrame}
-    \begin{split}
-        %t_t\le t_i\le t_t+t_f
-        t_i & \in\{ t_t, t_t+1,\dots,t_t+t_f \} \\
-        \equiv t_i & \in \{ T \}
-    \end{split}
+    %t_t\le t_i\le t_t+t_f
+    t_i \in\{ t_t, t_t+1,\dots,t_t+t_f \}
+    \equiv t_i \in \{ T \}
 \end{equation}
 \centerline{where}
 \begin{equation*}
@@ -99,99 +108,194 @@ The first step that can be taken is to limit the time frame that linear regressi
     \end{split}
 \end{equation*}
 
-The second step that can be taken is to remove weights correlation with time. Weight correlating with time makes intuitive sense, as the goal of a powerlifter is to continually increase weight over time. As an example, say a lifter starts out with a 1RM of $300$ lbs on squat, but through training is able to increase that weight over time to $800$ lbs. It should be obvious from the example that weight has a positive correlation with time. To fix this, weight will be replaced by intensity. This will remove the correlation with time because intensity is calculated using an exercises 1RM, which itself changes with time, canceling out any effects from an increase in weight as time increases. Going back to the previous example, despite weight increasing over time, intensity would generally be limited to the range $0\le I\le 1$, because the lifter would set new 1RM's over time thereby forcing the intensities to be generally less than $1$.
+The second step that can be taken is to remove weights correlation with time. Weight correlating with time makes intuitive sense, as the goal of a powerlifter is to continually increase weight over time. As an example, say a lifter starts out with a 1RM of $300$ lbs on squat, but through training is able to increase that weight over time to $800$ lbs. It should be obvious from the example that weight has a positive correlation with time. To fix this, weight will be replaced by intensity. This will remove the correlation with time because intensity is calculated using an exercises 1RM, which itself changes with time, canceling out any effects from an increase in weight through time. To show this the previous example will be used again. Despite weight increasing over time, intensity would generally be limited to the range $0\le I\le 1$ because the lifter would set new 1RM's over time, thereby forcing the intensities to be generally less than $1$.
 
-By replacing weight with intensity, having an accurate tracking of a lifters 1RM over time becomes an important dependence for the model. For a powerlifter, this is generally not a problem as a lifts 1RM is usually tested once a mesocycle. Problems arise however when things like injuries, or other unplanned problems occur. During these situations a lifters 1RM is not known and can change rapidly or extremely slowly over time. A solution to problems like this will be explored in sections \ref{sec:TimeFrameDynamicTimeFrameAnalysis} and \ref{sec:TimeFrameInjuriesAndChanges}.
+Having an accurate tracking of a lifters 1RM over time becomes an important dependence for the model now that weight is replaced by intensity. For a powerlifter, this is generally not a problem as a lifts 1RM is usually tested once a macrocycle. Problems arise however when things like injuries, or other unplanned problems occur. During these situations a lifters 1RM is not known and can change rapidly or extremely slowly over time. A solution to problems like this will be explored in sections \ref{sec:TimeFrameDynamicTimeFrameAnalysis} and \ref{sec:TimeFrameInjuriesAndChanges}.
 
 \section{Defining the Relationships}
 \label{sec:PotentialSurfaceDefiningTheRelationships}
 
-To find a surface and run linear regression, the following subset of the data set is need.
+There are two ways to approach the problem of defining a surface that represents what is possible for a lifter. The first looks at the problem through a lens of performance and the second looks at the problem through the lens of volume. Both approaches will be discussed here.
+
+\subsection{The Lens of Performance}
+\label{sec:PotentialSurfaceLensOfPerformance}
+
+The starting point of the surface is amusingly simple, and can be summed up in the following phrase: Performance is effort minus fatigue. To be more specific, performance is equal to total effort minis total fatigue, as shown in equation \ref{eq:PerformanceEquation}. For a powerlifter, performance is simply the weight that is lifted, making $P=w$.
 
 \begin{equation}
-    \label{eq:UserDataSet}
-    \begin{split}
-        \{(s,r,I,E)_i\}_{i=0}^n & \text{  where}\\
-        \begin{split}
-            s&\equiv \text{Sets} \\
-            r&\equiv \text{Reps} \\
-            I&\equiv \text{Intensity} \\
-            E&\equiv \text{Effort} \\
-        \end{split}
-    \end{split}
+	\label{eq:PerformanceEquation}
+	\begin{split}
+			P &= E_{tot}-F_{tot} \\
+			w &= E_{tot}-F_{tot}
+	\end{split}
 \end{equation}
 
-The inverse relationship between sets and reps mentioned in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} leads to an initial representation of $sr=I$. This cannot be used however because of the asymptotic behavior of the equation at $x=0$ and $y=0$. It is not physically possible for a lifter to continually do infinitely more reps with infinitely less sets, or visa versa. This equation is also to rigid to account for any volume skew. The equation $s^2+r^2=I$ avoids asymptotic behavior and also allows for volume to be skewed, but can lead to a large peak in volume that cannot be controlled without reducing volume across the board. \footnote{This is the classical optimization problem presented in algebra classes, where the optimization equation is a parabola. In this case, the parabolic nature of the optimization equation, which represents some quasi-measure of volume, has to much 'volume' as the peak of the parabola is approached. A more level 'volume' equation is desired.} To avoid both problems, a combination of the equations will be used, which is shown below.
-
-%The inverse relationship between sets and reps is mostly preserved, but the asymptotic behavior is also avoided.\footnote{The terms of the inverse relationship are both squared to make solving for $s$ and $r$ easier, which is something that will need to be done later.}
-
-\begin{equation*}
-    a(s-1)^2(r-1)^2+b(s-1)^2+c(r-1)^2=1-I
-\end{equation*}
-
-The above equation is negated so volume increases as intensity decreases and centered at $(s=1,r=1,I=1)$ to represent the users current 1RM. The constants $a$, $b$, and $c$ are left to be found by fitting the surface to the lifters data.
-
-Effort also needs to be considered. The above equation could just be limited to fit a certain effort, or range of efforts, generating a set of equations, one for each effort or effort range. This sounds good initially, but the sparseness of the data set makes this approach prone to error. A given exercise may only be performed once per week, which gives very little data to work with in a four dimensional problem. Assuming perfect consistency, only 52 data points would be generated over a year. It is clear that every data point needs to be used if possible. Instead of only fitting the surface to data points that have a certain effort, the surface will be fit to all data points with an error proportional to the effort. Another constant, $d$, will be added so that the surface peaks at a weight that is appropriate for the target effort.
+After performance, total effort is the next easiest term to understand as it directly correlates to how effort was discussed in section \ref{sec:CommonTermsSection}. The only effort that can be applied is by the lifter themselves, no other external factor can 'add effort' to a lifters workout. \footnote{An argument could be made for pre-workout, sugar rushes, or adrenaline dumps 'adding effort', but these are only tools for a lifter to exert more effort, not tools to generate more effort in and of themselves. Even with these tools, at the end of the day, the effort still has to come from the lifter themselves.} Given this, $E_{tot}$ can be nicely summed up in equation \ref{eq:TotalEffort}.
 
 \begin{equation}
-    \label{eq:PotentialSurfaceEquation}
-    a(s-1)^2(r-1)^2+b(s-1)^2+c(r-1)^2+\epsilon E=d-I
+	\label{eq:TotalEffort}
+	E_{tot}=\epsilon_1 E
+\end{equation}
+
+%Total sets done
+Total fatigue is more complicated, as there are several different types of fatigue that contribute to it's total. Given the four different types of fatigue listed in section \ref{sec:ModifiedFatigueCategories}, total fatigue can be represented as follows.
+
+\begin{equation*}
+	F_{tot}=\epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+\epsilon_5 F_s
+\end{equation*}
+
+Section \ref{sec:AugmentedDataSet} introduced indexes to represent inter-workout and inter-exercise fatigue. These data points can be directly used in the above equation, however as discussed in section \ref{sec:AugmentedDataSet} the index values only represent the fatigue present before the exercise is performed. The fatigue generated from the current exercise needs to be considered to avoid scenarios where the lifter fails a lift due to being too fatigued to make it through the entire exercise. This is where inter-set fatigue matters. Inter-set fatigue will increase in proportion to to total number of reps done. Two additional terms can be added to measure the fatigue generated from sets and reps individually.
+
+\begin{equation*}
+	F_{tot}=\epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+\epsilon_5 sr+\epsilon_6 s+\epsilon_7 r
+\end{equation*}
+
+The discussion in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} needs to be considered however. One of the main takeaways from that section is that volume is limited by effort at high percentages. As it stands in the current fatigue equation, there will be no peak in volume because all the relationships with sets and reps are either linear or a linear combination of both of them. To correct for this, the terms containing sets and reps will be squared, allowing for a peak in volume that can be adjusted through the constant in front of each term. \footnote{Yes, there are more flexible ways to create a peak, but using those ways would make it so linear regression could not be performed due to the multiplicative combinations of constants.} With these changes, the total fatigue equation is shown below.
+
+\begin{equation}
+	\label{eq:TotalFatigue}
+	F_{tot}=\epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+\epsilon_5 (s)^2(r)^2+\epsilon_6 (s)^2+\epsilon_7 (r)^2
+\end{equation}
+
+Finally, returning to the context of the performance equation, it will be centered at $(s=1,r=1,w=\epsilon)$ allowing the surface to represent the lifters 1RM. This may seem finished, but section \ref{sec:PotentialSurfaceLinearRegressionAndTimeSeriesProblems} necessitates the use of intensity instead of weight. Luckily, using equation \ref{eq:BaseIntensityEquation} solving for $I$ is not difficult. 
+
+\begin{equation*}
+	I=\frac{1}{l_{1RM}}\left( 
+		\epsilon-\epsilon_1 E-\left( 
+			\epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+\epsilon_5 (s-1)^2(r-1)^2+\epsilon_6 (s-1)^2+\epsilon_7 (r-1)^2
+		\right)
+	\right)
+\end{equation*}
+
+Given that the constants will be found through linear regression, dividing each one by $l_{1RM}$, another constant, is not necessary. Removing $l_{1RM}$ simplifies the equation. By doing removing $l_{1RM}$ it's value is encoded into the constants, which is an idea that will be returned to later. Equation \ref{eq:PotentialSurfaceEquation} is the final representation of the surface.
+
+\begin{equation}
+	\label{eq:PotentialSurfaceEquation}
+	\begin{split}
+		w & =\epsilon-\epsilon_1 E-\left( 
+			\epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+\epsilon_5 (s-1)^2(r-1)^2+\epsilon_6 (s-1)^2+\epsilon_7 (r-1)^2
+		\right) \\
+		I & =\epsilon-\epsilon_1 E-\left( 
+			\epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+\epsilon_5 (s-1)^2(r-1)^2+\epsilon_6 (s-1)^2+\epsilon_7 (r-1)^2
+		\right)
+	\end{split}
 \end{equation}
 \centerline{where}
 \begin{equation*}
     \begin{split}
         E & \in \{ 0,0.5,1,1.5,...,10 \} \\
-        a,b,c,d & \ge 0 \\
+        \epsilon_5,\epsilon_6,\epsilon_7,\epsilon & \ge 0 \\
     \end{split}
 \end{equation*}
 
-Equation \ref{eq:PotentialSurfaceEquation} is the final equation that fully realises all of the intuitive relationships discussed in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables}. This claim will be validated in sections \ref{sec:PotentialSurfaceVolumePeak} and \ref{sec:PotentialSurfaceVolumeIncreasesWithEffort}. Constraints have also been added to the constants in equation \ref{eq:PotentialSurfaceEquation} to limit the behavior of the model to what is sensible for the problem at hand. Keeping in mind the limitations discussed in section \ref{sec:PotentialSurfaceLinearRegressionAndTimeSeriesProblems}, linear regression can now be used to fit the surface to a lifters data, fully defining what that lifter is capable of doing.
 
-The error equation is shown below.
+
+
+%To find a surface and run linear regression, the following subset of the data set is need.
+
+%\begin{equation}
+%    \label{eq:UserDataSet}
+%    \begin{split}
+%        \{(s,r,I,E)_i\}_{i=0}^n & \text{  where}\\
+%        \begin{split}
+%            s&\equiv \text{Sets} \\
+%            r&\equiv \text{Reps} \\
+%            I&\equiv \text{Intensity} \\
+%            E&\equiv \text{Effort} \\
+%        \end{split}
+%    \end{split}
+%\end{equation}
+
+\subsection{The Lens of Volume}
+\label{sec:PotentialSurfaceLensOfVolume}
+
+The inverse relationship between sets and reps mentioned in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} leads to an initial representation of $sr=I$. This cannot be used however because of the asymptotic behavior of the equation at $s=0$ and $r=0$. It is not physically possible for a lifter to continually do infinitely more reps with infinitely less sets, or visa versa. Also, this equation is also to rigid to account for any volume skew. The equation $s^2+r^2=I$ avoids asymptotic behavior and also allows for volume to be skewed, but can lead to a large peak in volume that cannot be controlled without reducing volume across the board. \footnote{This is the classical optimization problem presented in algebra classes, where the optimization equation is a parabola. In this case, the parabolic nature of the optimization equation, which represents some quasi-measure of volume, has to much 'volume' as the peak of the parabola is approached. A more level 'volume' equation is desired.} To avoid both problems, a combination of the equations will be used, which is shown below.
+
+%The inverse relationship between sets and reps is mostly preserved, but the asymptotic behavior is also avoided.\footnote{The terms of the inverse relationship are both squared to make solving for $s$ and $r$ easier, which is something that will need to be done later.}
+
+\begin{equation*}
+    \epsilon_5 (s-1)^2(r-1)^2+\epsilon_6 (s-1)^2+\epsilon_7 (r-1)^2=1-I
+\end{equation*}
+
+The above equation is negated so volume increases as intensity decreases and centered at $(s=1,r=1,I=1)$ to represent the users current 1RM. The constants $\epsilon_5$, $\epsilon_5$, and $\epsilon_5$ are left to be found by fitting the surface to the lifters data.
+
+Effort also needs to be considered. As per section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} volume increases with effort. To reflect this another term will be added that allows volume to increase with increased effort levels. Another constant, $\epsilon$, will be added so that the surface peaks at a weight that is appropriate for the target effort.
+
+\begin{equation*}
+    \epsilon_5(s-1)^2(r-1)^2+\epsilon_6(s-1)^2+\epsilon_7(r-1)^2+\epsilon_1 E=\epsilon-I
+\end{equation*}
+
+After effort all that is left to consider is fatigue. Volume is limited by fatigue, necessitating another group of constants that correspond to fatigue.
+
+\begin{equation*}
+    \epsilon_5(s-1)^2(r-1)^2+\epsilon_6(s-1)^2+\epsilon_7(r-1)^2+\epsilon_1 E+\epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+=\epsilon-I
+\end{equation*}
+
+By now this equation should be looking familiar. With a little rearranging, equation \ref{eq:PotentialSurfaceEquation} is reached. It is important to note that looking at the problem from two different perspectives resulted in the same outcome. With any modeling problem, consistency between perspectives is important, usually implying some form of correctness. \footnote{If there is such a thing as a 'correct' answer when modeling.}
+
+\subsection{Linear Regression}
+\label{sec:PotentialSurfaceLinearRegression}
+
+Equation \ref{eq:PotentialSurfaceEquation} is the final equation that fully realises all of the intuitive relationships discussed in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables}. This claim will be validated in sections \ref{sec:PotentialSurfaceVolumePeak}-\ref{sec:PotentialSurfaceUnboundedVolume}. Constraints have also been added to the constants in equation \ref{eq:PotentialSurfaceEquation} to limit the behavior of the model to what is sensible for the problem at hand. Keeping in mind the limitations discussed in section \ref{sec:PotentialSurfaceLinearRegressionAndTimeSeriesProblems}, linear regression can now be used to fit the surface to a lifters data, fully defining what that lifter is capable of doing. The error equation for linear regression is shown below.
 
 \begin{equation*}
     E_{rr}=\sum_{
             \substack{i=0\\ t_i\in \{ T \}}
         }^n \left(
         I_i
-        -d
-        +a(s_i-1)^2(r_i-1)^2
-        +b(s_i-1)^2
-        +c(r_i-1)^2
-        +\epsilon E
+        -\epsilon
+        +\epsilon_1 E_i
+        +\epsilon_2 F_{l,i}
+        +\epsilon_3 F_{w,i}
+        +\epsilon_4 F_{e,i}
+        +\epsilon_5 (s_i-1)^2(r_i-1)^2
+        +\epsilon_6 (s_i-1)^2
+        +\epsilon_7 (r_i-1)^2
     \right)^2
 \end{equation*}
 
-The partial derivatives of each unknown constant are found, setting each equal to zero to minimize the error.
+To minimize the error, the partial derivatives of each unknown constant is found and each one is set equal to zero. An example with $\epsilon$ is shown below.
 
 \begin{equation*}
     \begin{split}
-        \frac{\partial E_{rr}}{\partial d}=
-        \frac{\partial}{\partial d}\sum_{
+        \frac{\partial E_{rr}}{\partial \epsilon}=
+        \frac{\partial}{\partial \epsilon}\sum_{
                 \substack{i=0\\ t_i\in \{ T \}}
             }^n \left(
             I_i
-            -d
-            +a(s_i-1)^2(r_i-1)^2
-            +b(s_i-1)^2
-            +c(r_i-1)^2
-            +\epsilon E_i
+            -\epsilon
+            +\epsilon_1 E_i
+            +\epsilon_2 F_{l,i}
+            +\dots
+            %+\epsilon_3 F_{w,i}
+            %+\epsilon_4 F_{e,i}
+            %+\epsilon_5 (s_i-1)^2(r_i-1)^2
+            +\epsilon_6 (s_i-1)^2
+            +\epsilon_7 (r_i-1)^2
         \right)^2&=0\\
         -2\sum_{
                 \substack{i=0\\ t_i\in \{ T \}}
             }^n \left(
             I_i
-            -d
-            +a(s_i-1)^2(r_i-1)^2
-            +b(s_i-1)^2
-            +c(r_i-1)^2
-            +\epsilon E_i
+            -\epsilon
+            +\epsilon_1 E_i
+            +\epsilon_2 F_{l,i}
+            +\dots
+            %+\epsilon_3 F_{w,i}
+            %+\epsilon_4 F_{e,i}
+            %+\epsilon_5(s_i-1)^2(r_i-1)^2
+            +\epsilon_6(s_i-1)^2
+            +\epsilon_7(r_i-1)^2
         \right)&=0\\
-        d \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n 1 
-        -a \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n (s_i-1)^2(r_i-1)^2
-        -b \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n (s_i-1)^2
-        -c \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n (r_i-1)^2
-        -\epsilon \sum_{\substack{i=0\\ t_i\in \{ T \}}} E_i
+        \epsilon \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n 1 
+        -\epsilon_1 \sum_{\substack{i=0\\ t_i\in \{ T \}}} E_i
+        -\epsilon_2 \sum_{\substack{i=0\\ t_i\in \{ T \}}} F_{l,i}
+        -\dots
+        %-\epsilon_3 \sum_{\substack{i=0\\ t_i\in \{ T \}}} F_{w,i}
+        %-\epsilon_4 \sum_{\substack{i=0\\ t_i\in \{ T \}}} F_{e,i}
+        %-\epsilon_5 \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n (s_i-1)^2(r_i-1)^2
+        -\epsilon_6 \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n (s_i-1)^2
+        -\epsilon_7 \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n (r_i-1)^2
         &=
         \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n I_i\\
     \end{split}
@@ -199,9 +303,13 @@ The partial derivatives of each unknown constant are found, setting each equal t
 
 After a similar process is carried out for each unknown constant, equation \ref{eq:LinearRegMatrixEquation} can be used, and the unknown constants can be solved for.
 
-\begin{equation}
+\begin{equation*}
     \label{eq:LinearRegMatrixEquation}
-    \left[
+	\mathbf{mx=b}
+\end{equation*}
+\centerline{where}
+\begin{equation*}
+    \mathbf{m}=\left[
     \begin{matrix}
         \sum_{i=0}^n 1 &
         \dots &
@@ -220,11 +328,16 @@ After a similar process is carried out for each unknown constant, equation \ref{
         -\sum_{\substack{i=0\\ t_i\in \{ T \}}}^n E_i^2
     \end{matrix}
     \right]
-    \left[
+\end{equation*}
+\begin{equation*}
+    \mathbf{x}=\left[
     \begin{matrix}
-        d \\ a \\ \vdots \\ \epsilon
+        \epsilon \\ \epsilon_1 \\ \vdots \\ \epsilon_7
     \end{matrix}
-    \right]=\left[
+    \right]
+\end{equation*}
+\begin{equation*}
+    \mathbf{b}=\left[
     \begin{matrix}
         \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n I_i \\
         \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n I_i(s_i-1)^2(r_i-1)^2 \\
@@ -232,11 +345,11 @@ After a similar process is carried out for each unknown constant, equation \ref{
         \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n I_i E_i
     \end{matrix}
     \right]
-\end{equation}
+\end{equation*}
 
-With equations \ref{eq:PotentialSurfaceEquation} and \ref{eq:LinearRegMatrixEquation} as well as the data set defined in equation \ref{eq:UserDataSet}, the surface that establishes what is possible for a lifter is fully defined. This surface will be called the \textit{potential surface}, and it is important to conceptualize that every combination of sets, reps, weight, and effort defined by this surface is theoretically possible for a lifter to complete. This is the base future sections of this paper will build off of.
+With equations \ref{eq:PotentialSurfaceEquation} and \ref{eq:LinearRegMatrixEquation}, the surface that establishes what is possible for a lifter is fully defined. This surface will be called the \textit{potential surface}, and it is important to conceptualize that every combination of sets, reps, weight, and effort defined by this surface is theoretically possible for a lifter to complete. This is the base future chapters of this book will build off of.
 
-After fitting the surface to the data shown in appendix \ref{sec:AppendixA} and discussed in section \ref{sec:DataSection}, graphs similar to the ones shown in table \ref{tab:DeadliftPotentialSurfaceAcrossEffort} were created. A full set of potential surface graphs for squat, bench, and deadlift across effort levels $5-10$ are available in appendix \ref{sec:AppendixB}. It is important the relationships discussed in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} are present in these graphs, which will be the topic for sections \ref{sec:PotentialSurfaceVolumePeak}-\ref{sec:PotentialSurfaceUnboundedVolume}.
+After fitting the surface to the data discussed in chapter \ref{sec:DataSection}, graphs similar to the ones shown in table \ref{tab:DeadliftPotentialSurfaceAcrossEffort} can be created. A full set of potential surface graphs for squat, bench, and deadlift across effort levels $5-10$ are available in appendix \ref{sec:AppendixA}. It is important the relationships discussed in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} are present in these graphs, which will be the topic for sections \ref{sec:PotentialSurfaceVolumePeak}-\ref{sec:PotentialSurfaceUnboundedVolume}. Many of the relationships discussed in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} are concerned with volume. To give some intuition for volume before moving on, the graphs shown in table \ref{tab:DeadliftVolumeAcrossEffort} are the result of solving the potential surface for $I$ and substituting it in equation \ref{eq:IntensityBasedVolumeEquation}.
 
 \begin{table}[]
     \centering
@@ -252,8 +365,6 @@ After fitting the surface to the data shown in appendix \ref{sec:AppendixA} and 
     \caption{The potential surface fitted to deadlift data at various effort levels.}
     \label{tab:DeadliftPotentialSurfaceAcrossEffort}
 \end{table}
-
-Many of the relationships discussed in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} are concerned with volume. To give some intuition for volume, the graphs shown in table \ref{tab:DeadliftVolumeAcrossEffort} are the result of solving the potential surface for $I$ and substituting it in equation \ref{eq:IntensityBasedVolumeEquation}.
 
 \begin{table}[]
     \centering

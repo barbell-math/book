@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from typing import List
 from typing import Optional
 
 MAIN_FILE_LOC="images"
@@ -13,6 +14,14 @@ units={
     "Effort": "RPE",
     "Intensity": "% of 1RM",
 }
+
+def listToFilter(_in: List[str]) -> str:
+    rv=""
+    for i,item in enumerate(_in):
+        rv+=("'{0}'".format(item))
+        if i+1<len(_in):
+            rv+=","
+    return rv
 
 def getUnit(_in: str) -> str:
     return "({0})".format(units[_in]) if _in in units else ""
@@ -31,9 +40,13 @@ class Ch3(object):
         return Ch3.__mergedDf
 
     @staticmethod
-    def oneVTwo(one: str, two: str, trendline: Optional[bool]=True) -> None:
+    def oneVTwo(one: str,
+            two: str,
+            trendline: Optional[bool]=True,
+            types: Optional[List[str]]=["Main Compound","Main Compound Accessory"]
+        ) -> None:
         tmp=Ch3().mergedDf.query(
-            "Intensity<=1.2 and (T in ('Main Compound','Main Compound Accessory'))"
+            "Intensity<=1.2 and (T in ({0}))".format(listToFilter(types)),
         )[[one,two]].dropna()
 
         if trendline:
@@ -47,11 +60,11 @@ class Ch3(object):
 
         plt.ylim(0,max(tmp[two]))
         plt.title(
-            "{0} vs {1} For Main Compound and Main Compound Accessories".format(
+            "{0} vs {1} for Main Compound and Main Compound Accessories".format(
                 one,two),
         fontsize=TITLE_FONT_SIZE)
         plt.xlabel("{0} {1}".format(one,getUnit(one)))
-        plt.ylabel("{0} {1}".format(two,getUnit(one)))
+        plt.ylabel("{0} {1}".format(two,getUnit(two)))
         plt.grid()
         plt.savefig("{0}/{1}Vs{2}.png".format(Ch3.fileLoc,one,two),
             bbox_inches="tight"
