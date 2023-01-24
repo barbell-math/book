@@ -1,0 +1,39 @@
+\chapter{
+	The System and It's Linkages
+    \\
+    \large{Understanding What Was Previously Done}
+}
+\label{sec:AugmentedDataLatentFatigue}
+
+
+% - Fried CNS - track high effort sets - max or average? - bi weekly, if not more - increasing trend across macrocycle
+% - Fatigue from similar exercises - similarity index - recovery rates? - WEEKLY - match microcycle
+% - Fatigue from last weeks exercise
+% - FATIGUE THROUGH TIME IN GENERAL
+
+Latent fatigue is the persistent fatigue that remains between workouts. Of all the data points shown so far, it is the only one that reaches between workouts, making it of crucial importance to fully understand. It also happens to be the most complex to understand. It is worth mentioning what is needed. Just like inter-workout and inter-exercise fatigue an index value is needed to represent latent fatigue that is present \textit{before} a workout. Doing this will require looking at previous workouts, creating a crucial link through time.
+
+Going back to section \ref{sec:CommonTermsSection} two general types of fatigue were introduced: central and peripheral. Both of these types of fatigue exist between workouts. Central fatigue generally occurs on high intensity sets. It may make sense to say "central fatigue occurs on high \textit{effort} sets", but this is not true. Sets with low intensity, high volume, and high effort will not induce large amounts of central fatigue. As an example of this look at bodybuilding. Bodybuilding is a sport where effort is almost always high (due to lifters taking sets to failure) and intensity is low to allow for increased volume. Bodybuilders would not be able to continually train day after day with high amounts of central fatigue, indicating that high amounts of effort do not correlate to central fatigue. However, going back to the example with bodybuilders, high volume will induce large amounts of peripheral fatigue. Notice how there is a 'tug of war' between intensity and volume. This same tug of war was explained in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables}. Section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} was only concerned with a single exercise, but this section is concerned with the broader effects of many exercises through time.
+
+\begin{table}[h]
+	\centering
+    \begin{tabular}{|c|c|c|}
+	    \hline
+	    \multicolumn{3}{|c|}{Intensity-Volume Regions} \\
+	    \hline
+         & Low Volume & High Volume \\
+        \hline
+        Sets & $s\ge 1$ & 'sets' or unit-less\\
+        Reps & $r\in \{ \mathbb{Z} \ge 1 \}$ & 'reps' or unit-less \\
+        Effort & $E\in \{0,0.5,1,...,10\}$ & RPE \\
+        Intensity & $I>0$ & Percentage ($\%$) \\
+        Weight & $w>0$ & lbs. \\
+        Frequency & $f\in \{ \mathbb{Z}\ge 0 \}$ & 'frequency' or unit-less \\
+        Time & $t\in \{ \mathbb{Z} \}$ & Days \\
+        Inter-workout fatigue index & $F_w\in \{ \mathbb{Z} \ge 1 \}$ & 'fatigue' or unit-less \\
+        Inter-exercise fatigue index & $F_e\in \{ \mathbb{Z} \ge 1 \}$ & 'fatigue' or unit-less \\
+        \hline
+    \end{tabular}
+    \caption{A table showing each measurement and it's associated domain.}
+    \label{tab:DomainUnitTable}
+\end{table}

@@ -115,11 +115,6 @@ Having an accurate tracking of a lifters 1RM over time becomes an important depe
 \section{Defining the Relationships}
 \label{sec:PotentialSurfaceDefiningTheRelationships}
 
-There are two ways to approach the problem of defining a surface that represents what is possible for a lifter. The first looks at the problem through a lens of performance and the second looks at the problem through the lens of volume. Both approaches will be discussed here.
-
-\subsection{The Lens of Performance}
-\label{sec:PotentialSurfaceLensOfPerformance}
-
 The starting point of the surface is amusingly simple, and can be summed up in the following phrase: Performance is effort minus fatigue. To be more specific, performance is equal to total effort minis total fatigue, as shown in equation \ref{eq:PerformanceEquation}. For a powerlifter, performance is simply the weight that is lifted, making $P=w$.
 
 \begin{equation}
@@ -150,7 +145,7 @@ Section \ref{sec:AugmentedDataSet} introduced indexes to represent inter-workout
 	F_{tot}=\epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+\epsilon_5 sr+\epsilon_6 s+\epsilon_7 r
 \end{equation*}
 
-The discussion in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} needs to be considered however. One of the main takeaways from that section is that volume is limited by effort at high percentages. As it stands in the current fatigue equation, there will be no peak in volume because all the relationships with sets and reps are either linear or a linear combination of both of them. To correct for this, the terms containing sets and reps will be squared, allowing for a peak in volume that can be adjusted through the constant in front of each term. \footnote{Yes, there are more flexible ways to create a peak, but using those ways would make it so linear regression could not be performed due to the multiplicative combinations of constants.} With these changes, the total fatigue equation is shown below.
+The discussion in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} needs to be considered however. One of the main takeaways from that section is that volume is limited by effort at high intensities. As it stands in the current fatigue equation, there will be no peak in volume because all the relationships with sets and reps are either linear or a linear combination of both of them. To correct for this, the terms containing sets and reps will be squared, allowing for a peak in volume that can be adjusted through the constant in front of each term. \footnote{Yes, there are more flexible ways to create a peak, but using those ways would make it so linear regression could not be performed due to the multiplicative combinations of constants.} With these changes, the total fatigue equation is shown below.
 
 \begin{equation}
 	\label{eq:TotalFatigue}
@@ -161,7 +156,7 @@ Finally, returning to the context of the performance equation, it will be center
 
 \begin{equation*}
 	I=\frac{1}{l_{1RM}}\left( 
-		\epsilon-\epsilon_1 E-\left( 
+		\epsilon+\epsilon_1 E-\left( 
 			\epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+\epsilon_5 (s-1)^2(r-1)^2+\epsilon_6 (s-1)^2+\epsilon_7 (r-1)^2
 		\right)
 	\right)
@@ -172,10 +167,10 @@ Given that the constants will be found through linear regression, dividing each 
 \begin{equation}
 	\label{eq:PotentialSurfaceEquation}
 	\begin{split}
-		w & =\epsilon-\epsilon_1 E-\left( 
+		w & =\epsilon+\epsilon_1 E-\left( 
 			\epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+\epsilon_5 (s-1)^2(r-1)^2+\epsilon_6 (s-1)^2+\epsilon_7 (r-1)^2
 		\right) \\
-		I & =\epsilon-\epsilon_1 E-\left( 
+		I & =\epsilon+\epsilon_1 E-\left( 
 			\epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+\epsilon_5 (s-1)^2(r-1)^2+\epsilon_6 (s-1)^2+\epsilon_7 (r-1)^2
 		\right)
 	\end{split}
@@ -187,8 +182,6 @@ Given that the constants will be found through linear regression, dividing each 
         \epsilon_5,\epsilon_6,\epsilon_7,\epsilon & \ge 0 \\
     \end{split}
 \end{equation*}
-
-
 
 
 %To find a surface and run linear regression, the following subset of the data set is need.
@@ -206,39 +199,39 @@ Given that the constants will be found through linear regression, dividing each 
 %    \end{split}
 %\end{equation}
 
-\subsection{The Lens of Volume}
-\label{sec:PotentialSurfaceLensOfVolume}
-
-The inverse relationship between sets and reps mentioned in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} leads to an initial representation of $sr=I$. This cannot be used however because of the asymptotic behavior of the equation at $s=0$ and $r=0$. It is not physically possible for a lifter to continually do infinitely more reps with infinitely less sets, or visa versa. Also, this equation is also to rigid to account for any volume skew. The equation $s^2+r^2=I$ avoids asymptotic behavior and also allows for volume to be skewed, but can lead to a large peak in volume that cannot be controlled without reducing volume across the board. \footnote{This is the classical optimization problem presented in algebra classes, where the optimization equation is a parabola. In this case, the parabolic nature of the optimization equation, which represents some quasi-measure of volume, has to much 'volume' as the peak of the parabola is approached. A more level 'volume' equation is desired.} To avoid both problems, a combination of the equations will be used, which is shown below.
-
-%The inverse relationship between sets and reps is mostly preserved, but the asymptotic behavior is also avoided.\footnote{The terms of the inverse relationship are both squared to make solving for $s$ and $r$ easier, which is something that will need to be done later.}
-
-\begin{equation*}
-    \epsilon_5 (s-1)^2(r-1)^2+\epsilon_6 (s-1)^2+\epsilon_7 (r-1)^2=1-I
-\end{equation*}
-
-The above equation is negated so volume increases as intensity decreases and centered at $(s=1,r=1,I=1)$ to represent the users current 1RM. The constants $\epsilon_5$, $\epsilon_5$, and $\epsilon_5$ are left to be found by fitting the surface to the lifters data.
-
-Effort also needs to be considered. As per section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} volume increases with effort. To reflect this another term will be added that allows volume to increase with increased effort levels. Another constant, $\epsilon$, will be added so that the surface peaks at a weight that is appropriate for the target effort.
-
-\begin{equation*}
-    \epsilon_5(s-1)^2(r-1)^2+\epsilon_6(s-1)^2+\epsilon_7(r-1)^2+\epsilon_1 E=\epsilon-I
-\end{equation*}
-
-After effort all that is left to consider is fatigue. Volume is limited by fatigue, necessitating another group of constants that correspond to fatigue.
-
-\begin{equation*}
-    \epsilon_5(s-1)^2(r-1)^2+\epsilon_6(s-1)^2+\epsilon_7(r-1)^2+\epsilon_1 E+\epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+=\epsilon-I
-\end{equation*}
-
-By now this equation should be looking familiar. With a little rearranging, equation \ref{eq:PotentialSurfaceEquation} is reached. It is important to note that looking at the problem from two different perspectives resulted in the same outcome. With any modeling problem, consistency between perspectives is important, usually implying some form of correctness. \footnote{If there is such a thing as a 'correct' answer when modeling.}
-
-\subsection{Linear Regression}
-\label{sec:PotentialSurfaceLinearRegression}
+%\subsection{The Lens of Volume}
+%\label{sec:PotentialSurfaceLensOfVolume}
+%
+%The inverse relationship between sets and reps mentioned in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} leads to an initial representation of $sr=I$. This cannot be used however because of the asymptotic behavior of the equation at $s=0$ and $r=0$. It is not physically possible for a lifter to continually do infinitely more reps with infinitely less sets, or visa versa. Also, this equation is also to rigid to account for any volume skew. The equation $s^2+r^2=I$ avoids asymptotic behavior and also allows for volume to be skewed, but can lead to a large peak in volume that cannot be controlled without reducing volume across the board. \footnote{This is the classical optimization problem presented in algebra classes, where the optimization equation is a parabola. In this case, the parabolic nature of the optimization equation, which represents some quasi-measure of volume, has to much 'volume' as the peak of the parabola is approached. A more level 'volume' equation is desired.} To avoid both problems, a combination of the equations will be used, which is shown below.
+%
+%%The inverse relationship between sets and reps is mostly preserved, but the asymptotic behavior is also avoided.\footnote{The terms of the inverse relationship are both squared to make solving for $s$ and $r$ easier, which is something that will need to be done later.}
+%
+%\begin{equation*}
+%    \epsilon_5 (s-1)^2(r-1)^2+\epsilon_6 (s-1)^2+\epsilon_7 (r-1)^2=1-I
+%\end{equation*}
+%
+%The above equation is negated so volume increases as intensity decreases and centered at $(s=1,r=1,I=1)$ to represent the users current 1RM. The constants $\epsilon_5$, $\epsilon_5$, and $\epsilon_5$ are left to be found by fitting the surface to the lifters data.
+%
+%Effort also needs to be considered. As per section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} volume increases with effort. To reflect this another term will be added that allows volume to increase with increased effort levels. Another constant, $\epsilon$, will be added so that the surface peaks at a weight that is appropriate for the target effort.
+%
+%\begin{equation*}
+%    \epsilon_5(s-1)^2(r-1)^2+\epsilon_6(s-1)^2+\epsilon_7(r-1)^2-\epsilon_1 E=\epsilon-I
+%\end{equation*}
+%
+%After effort all that is left to consider is fatigue. Volume is limited by fatigue, necessitating another group of constants that correspond to fatigue.
+%
+%\begin{equation*}
+%    \epsilon_5(s-1)^2(r-1)^2+\epsilon_6(s-1)^2+\epsilon_7(r-1)^2-\epsilon_1 E+\epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e=\epsilon-I
+%\end{equation*}
+%
+%By now this equation should be looking familiar. With a little rearranging, equation \ref{eq:PotentialSurfaceEquation} is reached. It is important to note that looking at the problem from two different perspectives resulted in the same outcome. With any modeling problem, consistency between perspectives is important, usually implying some form of correctness. \footnote{If there is such a thing as a 'correct' answer when modeling.}
+%
+%\subsection{Linear Regression}
+%\label{sec:PotentialSurfaceLinearRegression}
 
 Equation \ref{eq:PotentialSurfaceEquation} is the final equation that fully realises all of the intuitive relationships discussed in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables}. This claim will be validated in sections \ref{sec:PotentialSurfaceVolumePeak}-\ref{sec:PotentialSurfaceUnboundedVolume}. Constraints have also been added to the constants in equation \ref{eq:PotentialSurfaceEquation} to limit the behavior of the model to what is sensible for the problem at hand. Keeping in mind the limitations discussed in section \ref{sec:PotentialSurfaceLinearRegressionAndTimeSeriesProblems}, linear regression can now be used to fit the surface to a lifters data, fully defining what that lifter is capable of doing. 
 
-Before performing linear regression, the lack of data for latent fatigue necessitates removing it's corresponding term from the potential surface equation. \footnote{Reasoning for not having data for latent fatigue is discussed in section \ref{sec:AugmentedDataSet}.} With that one small change, the error equation for linear regression is shown below.
+Before performing linear regression, it is worth mentioning that latent fatigue has mostly been ignored. It has it's rightful place in the potential surface, but it's implications are so broad that they need a chapter of there own. For this chapter the effects from latent fatigue will not be considered. For now, think of it as though $\epsilon_2$ were set to $0$.  With that one small note, the error equation for linear regression is shown below.
 
 \begin{equation*}
     E_{rr}=\sum_{
@@ -246,8 +239,8 @@ Before performing linear regression, the lack of data for latent fatigue necessi
         }^n \left(
         I_i
         -\epsilon
-        +\epsilon_1 E_i
-        %+\epsilon_2 F_{l,i}
+        -\epsilon_1 E_i
+        +\epsilon_2 F_{l,i}
         +\epsilon_3 F_{w,i}
         +\epsilon_4 F_{e,i}
         +\epsilon_5 (s_i-1)^2(r_i-1)^2
@@ -266,10 +259,10 @@ To minimize the error, the partial derivatives of each unknown constant is found
             }^n \left(
             I_i
             -\epsilon
-            +\epsilon_1 E_i
-            %+\epsilon_2 F_{l,i}
-            +\epsilon_3 F_{w,i}
+            -\epsilon_1 E_i
+            +\epsilon_2 F_{l,i}
             +\dots
+            %+\epsilon_3 F_{w,i}
             %+\epsilon_4 F_{e,i}
             %+\epsilon_5 (s_i-1)^2(r_i-1)^2
             +\epsilon_6 (s_i-1)^2
@@ -280,20 +273,20 @@ To minimize the error, the partial derivatives of each unknown constant is found
             }^n \left(
             I_i
             -\epsilon
-            +\epsilon_1 E_i
-            %+\epsilon_2 F_{l,i}
-            +\epsilon_3 F_{w,i}
+            -\epsilon_1 E_i
+            +\epsilon_2 F_{l,i}
             +\dots
+            %+\epsilon_3 F_{w,i}
             %+\epsilon_4 F_{e,i}
             %+\epsilon_5(s_i-1)^2(r_i-1)^2
             +\epsilon_6(s_i-1)^2
             +\epsilon_7(r_i-1)^2
         \right)&=0\\
         \epsilon \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n 1 
-        -\epsilon_1 \sum_{\substack{i=0\\ t_i\in \{ T \}}} E_i
-        %-\epsilon_2 \sum_{\substack{i=0\\ t_i\in \{ T \}}} F_{l,i}
-        -\epsilon_3 \sum_{\substack{i=0\\ t_i\in \{ T \}}} F_{w,i}
+        +\epsilon_1 \sum_{\substack{i=0\\ t_i\in \{ T \}}} E_i
+        -\epsilon_2 \sum_{\substack{i=0\\ t_i\in \{ T \}}} F_{l,i}
         -\dots
+        %-\epsilon_3 \sum_{\substack{i=0\\ t_i\in \{ T \}}} F_{w,i}
         %-\epsilon_4 \sum_{\substack{i=0\\ t_i\in \{ T \}}} F_{e,i}
         %-\epsilon_5 \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n (s_i-1)^2(r_i-1)^2
         -\epsilon_6 \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n (s_i-1)^2
@@ -305,10 +298,10 @@ To minimize the error, the partial derivatives of each unknown constant is found
 
 After a similar process is carried out for each unknown constant, equation \ref{eq:LinearRegMatrixEquation} can be used, and the unknown constants can be solved for.
 
-\begin{equation*}
+\begin{equation}
     \label{eq:LinearRegMatrixEquation}
 	\mathbf{mx=b}
-\end{equation*}
+\end{equation}
 \centerline{where}
 \begin{equation*}
     \mathbf{m}=\left[

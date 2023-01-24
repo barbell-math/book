@@ -84,9 +84,9 @@ By defining the inter-workout fatigue index this way, it will increase when a di
         Mon, July 4\textsuperscript{th} & Deadlifts & $5$ & $4$ & $405$ lbs & $8.5$ & $1$ & $1$ \\
         Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $10$ & $315$ lbs & $7$ & $21$ & $21$ \\
         Mon, July 4\textsuperscript{th} & Barbell Rows & $5$ & $5$ & $225$ lbs & $6.5$ & $31$ & $0$ \\
-        Mon, July 4\textsuperscript{th} & Hyperextensions & $3$ & $12$ & $45$ lbs & $6$ & $56$ & $0$ \\
+        Mon, July 4\textsuperscript{th} & Hyperextensions & $3$ & $12$ & $45$ lbs & $-$ & $56$ & $0$ \\
         Tue, July 5\textsuperscript{th} & SSB Squats & $5$ & $8$ & $255$ lbs & $6$ & $0$ & $0$ \\
-        \dots & \dots & \dots & \dots & \dots & \dots & \dots & \dots  \\
+        \dots & \dots & \dots & \dots & \dots & \dots & \dots & \dots \\
 	\end{tabular}
 	\caption{A table demonstrating the way various fatigue index values are calculated. Note how $F_w$ increases with the total number of reps. $F_e$ increases with the number times a lift was performed, also in accordance to the total number of reps. $F_w$ resets to $0$ on the new workout and $F_e$ resets to $0$ on each different exercise.}
 	\label{tab:IndexesExample}
@@ -102,7 +102,8 @@ Inter-exercise fatigue can have the same index scheme but instead of incrementin
 	\end{split}
 \end{equation}
 
-The last two categories of fatigue are inter-set fatigue and latent fatigue. It is tempting to add an index for inter-set fatigue, but the sets and reps values already serve this purpose. Latent fatigue is a different beast altogether though. Its behavior is not so cut and dry as the other types of fatigue. It can fluctuate based on many factors, many of which are entirely independent from the gym. This makes it impossible to make an index value for latent fatigue as the key to making any index work is to make it increase and decrease as the original measurement would. If those increases and decreases cannot be accurately predicted and represented then an index cannot be used reliably.
+The last two categories of fatigue are inter-set fatigue and latent fatigue. It is tempting to add an index for inter-set fatigue, but the set and reps values already serve this purpose. Latent fatigue's behavior is not so cut and dry as the other types of fatigue. It can fluctuate based on many factors, many of which are entirely independent from the gym. This makes it difficult to make an index value for latent fatigue as the key to making any index work is to make it increase and decrease as the original measurement would. If those increases and decreases cannot be accurately predicted and represented then an index cannot be used reliably. While the factors outside the gym cannot be controlled for, the factors that are present from the gym can, and should, be considered. Doing this however will requite it's own chapter, chapter \ref{sec:}.
+
 
 \section{Domains and Units of Measurement}
 \label{sec:UnitsOfMeasurement}
