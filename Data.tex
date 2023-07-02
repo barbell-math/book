@@ -36,9 +36,13 @@ During the time period the lifter was recording data, there were several notable
     
     \item On 7/24/2022 the lifter participated in a full meet. The prep leading up to that competition was very consistent, and resulted in the lifters best performance on the platform to date.
     
-   	\item On 9/10/2022 the lifter participated in a full meet. The lifter set 3/5 Colorado state records in his weight and age class, and matched the other two.
+   	\item On 9/10/2022 the lifter participated in a full meet. The lifter set 3/5 Colorado state records in his weight and age class, and matched the other two. The lifter matched his previous performance.
     
     \item On 10/5/2022 the lifter tore his hamstring squatting. The diagnosis was a grade 1-2 muscle belly tear, and the lifter went to three physical therapy (PT) sessions before feeling comfortable to adjust training on his own.
+    
+    \item On 2/16/2023 the liter matched his squat PR, representing full physical recovery from the hamstring tear on 10/5/2022.
+    
+    \item On 5/6/2023 the lifter participated in a full meet. The lifter claimed all 5 Colorado state records despite missing his last bench and deadlift. The lifter bested his previous performance by $15$ lbs.
 \end{enumerate}
 
 These events will be used later in the book to verify and analyze how the model responds to certain circumstances.
@@ -47,14 +51,19 @@ These events will be used later in the book to verify and analyze how the model 
 \section{Augmenting The Data: Improvising for What Can't Be Measured}
 \label{sec:AugmentedDataSet}
 
-Up to this point, fatigue has not been considered. This is a direct result of fatigue not being able to be measured in a timely manner that is also unobtrusive to training. Many of the tests used to measure fatigue require tools or extensive time that is simply not conducive to a training environment, especially when it comes to short term fatigue measurements such as inter-set fatigue. However, fatigue is a large factor that determines what a lifter can do. While fatigue cannot be directly represented due to it not being part of the data, it effects are still visible. Things like sets that took more effort than they should have or sets that were not completed could all be attributed to fatigue. Any modeling done will need a way to determine what affects fatigue had. To help accomplish this, the data set will be augmented with \textit{indexes} that provide measurements similar to how fatigue would be present if it were measured directly. This may seem strange, so hopefully the first example will help clear things up.
+Some readers may have noticed the lack of data that records fatigue. This is a direct result of not being able to measure fatigue in a timely manner that is also unobtrusive to training. Many of the tests used to measure fatigue require tools or extensive time that is simply not conducive to a training environment, especially when it comes to short term fatigue measurements such as inter-set fatigue. However, fatigue is a large factor that determines what a lifter can do. While fatigue cannot be directly represented due to it not being part of the data, it effects are still visible. Things like sets that took more effort than they should have can be attributed to fatigue. Any modeling done will need a way to determine what affects fatigue had. To help accomplish this, the data set will be augmented with \textit{indexes} that provide measurements similar to how fatigue would be present if it were measured directly. This may seem strange, so hopefully the first example will help clear things up.
 
 Consider inter-workout fatigue. Every rep of every exercise a lifter does will increase the lifters inter-workout fatigue. To represent this, an inter-workout fatigue index will be added to the data set. To calculate the inter-workout fatigue index, the total number of reps completed across all exercises before the current exercise will be summed together. The arithmetic sequence shown in equation \ref{eq:InterWorkoutFatigueEquation} demonstrates this, and can be used when adding an exercise to a workout. \footnote{Equation \ref{eq:InterWorkoutFatigueEquation} is only valid within the context of a single workout. Once a new workout begins the $i$ counter variable resets to $0$.} Note how the first inter-workout fatigue index is $0$. This reflects the lifter not having generated any inter-workout fatigue when first starting a workout. Every value after that then reflects the inter-workout fatigue that was present \textit{before} each exercise was done. Only measuring the fatigue that was present before the exercise was performed is important because it represents the fatigue the exercise was performed with, ignoring the fatigue that will be generated while doing the exercise. This is consistent with how any real measurements of fatigue would be recorded.
 
 \begin{equation}
 	\label{eq:InterWorkoutFatigueEquation}
 	\begin{split}
-		F_{w,i} & = s_{i}r_{i}+F_{w,i-1} \\
+		F_{w,i} & = 
+		\begin{cases}
+			s_{i-1}r_{i-1}+F_{w,i-1} \;\; & \text{if }t_i=t_{i-1} \\
+			0 \;\; & \text{otherwise}
+		\end{cases}
+		\\
 		F_{w,0} & = 0
 	\end{split}
 \end{equation}
@@ -62,7 +71,7 @@ Consider inter-workout fatigue. Every rep of every exercise a lifter does will i
 %This index will simply count the total number of sets performed across all exercises, incrementing one for each set performed following the order they were performed. 
 %Make s,r values squared
 
-By defining the inter-workout fatigue index this way, it will increase when a direct measurement of inter-workout fatigue would. Having the index value increase as fatigue increases and decrease as fatigue decreases is the key to making this strategy work, as any modeling later will be able to scale the results as needed through constants. \footnote{This method does assume fatigue increases with reps linearly. An argument could be made for exponential increases in fatigue with reps, but for simplicities sake it will be assumed to increase linearly. Note that if further research proves a non-linear relationship the index values could easily be adjusted to follow the correct non-linear pattern.} Table \ref{tab:IndexesExample} shows an example of the inter-workout fatigue index along with how it's values were calculated above it. \footnote{Note how the last value is not shown in data set because it is past the end of the workout.}
+By defining the inter-workout fatigue index this way, it will increase when a direct measurement of inter-workout fatigue would. Having the index value increase as fatigue increases and decrease as fatigue decreases is the key to making this strategy work, as any modeling later will be able to scale the results as needed through constants. \footnote{This method does assume fatigue increases with reps linearly. An argument could be made for greater than linear increases in fatigue, but for simplicities sake it will be assumed to increase linearly. Note that if further research proves a non-linear relationship the index values could easily be adjusted to follow the correct non-linear pattern.} Table \ref{tab:IndexesExample} shows an example of the inter-workout fatigue index along with how it's values were calculated above it. \footnote{Note how the last value is not shown in data set because it is past the end of the workout.}
 
 \begin{equation*}
 	\begin{aligned}
@@ -94,10 +103,16 @@ By defining the inter-workout fatigue index this way, it will increase when a di
 
 Inter-exercise fatigue can have the same index scheme but instead of incrementing over the entire workout, it only increments according to sets of the same exercise, resetting each time a new exercise is started. Equation \ref{eq:InterExerciseFatigueEquation} can be used to calculate the inter-exercise fatigue index. Note that this equation is only valid within the context of a single exercuse. Table \ref{tab:IndexesExample} also shows an example of inter-exercise fatigue.
 
+% TODO - change  t_i to exercise_i
 \begin{equation}
 	\label{eq:InterExerciseFatigueEquation}
 	\begin{split}
-		F_{e,i} & = s_{i}r_{i}+F_{e,i-1} \\
+		F_{e,i} & =
+		\begin{cases}
+			s_{i-1}r_{i-1}+F_{e,i-1} \;\; & \text{if }E_{x,i}=E_{x,i-1} \\
+			0 \;\; & \text{otherwise}
+		\end{cases}
+		\\
 		F_{e,0} & = 0
 	\end{split}
 \end{equation}
@@ -115,19 +130,19 @@ Before starting, it is worth mentioning how elements in the data set were measur
 	
 	\item Intensity: Intensity follows the definition of weight. Recording the weight lifted as a proportion of the lifters 1RM is all that's required. This defines intensity as $I>0$. Again, intensity is not allowed to equal $0$ because that would imply there is no training stimulus. Intensity is not capped at $1$ because lifting a weight greater than the lifters previous 1RM is the ultimate goal of a powerlifting program. By definition, intensity is recorded as a percentage.
 	
-	\item Reps: Reps are just positive integer values greater than or equal to $1$, or $r\in \{ \mathbb{Z} \ge 1 \}$. Reps are a base unit, and as such just have the unit of 'reps'. However, for the vast majority of the discussions in this book, reps will be presumed to be \textit{unit-less}.
+	\item Reps: Reps are just positive integer values greater than or equal to $1$, or $r\in \{ \mathbb{N} \ge 1 \}$. Reps are a base unit, and as such just have the unit of 'reps'. However, for the vast majority of the discussions in this book, reps will be presumed to be \textit{unit-less}.
 	
 	\item Sets: As discussed in section \ref{sec:FractionalSets}, sets are in the domain of positive numbers greater than or equal to $1$, or $s\ge 1$. Just like reps, sets are a base unit, and will have the unit of 'sets'. However, just like reps, sets will be presumed to be \textit{unit-less}.
 	
 	\item Effort: Effort will follow the RPE scale, discussed in section \ref{sec:CommonTermsSection}, defining it as $E\in \{0,0.5,1,...,10\}$. Effort has units of RPE.
 	
-	\item Time: Time will be recorded as a date. However, dates by themselves cannot be mathematically used. To work around this, the past will be negative values representing the number of days since the exercise was performed, making $0$ represent the current day. Future dates can (and will) be considered, and will be represented as positive values. Given this, time will be in the domain of integer values, or $t\in \{ \mathbb{Z} \}$, and it will have units of days.
+	\item Time: Time will be recorded as a date. However, dates by themselves cannot be mathematically used. To work around this, the past will be negative values representing the number of days since the exercise was performed, making $0$ represent the current day. Future dates can (and will) be considered, and will be represented as positive values. Given this, time will be in the domain of integer values, or $t\in \{ \mathbb{N} \}$, and it will have units of days.
 	
-	\item Frequency: Following the traditional definition, frequency will be calculated across days, meaning separate sets of the same exercise on the same day will not count toward an increased frequency. Separate sets of the same exercise on different days will increase the frequency of the exercise. Naturally, frequency is limited to positive integer values, or $f\in \{ \mathbb{Z}\ge 0 \}$. Frequency is also a base unit, which technically gives it units of 'frequency', but just like sets and reps, will mostly be considered to be unit-less.
+	\item Frequency: Following the traditional definition, frequency will be calculated across days, meaning separate sets of the same exercise on the same day will not count toward an increased frequency. Separate sets of the same exercise on different days will increase the frequency of the exercise. Naturally, frequency is limited to positive integer values, or $f\in \{ \mathbb{N}\ge 0 \}$. Frequency is also a base unit, which technically gives it units of 'frequency', but just like sets and reps, will mostly be considered to be unit-less.
 	
-	\item Inter-workout fatigue index: Given how the indexes were created in section \ref{sec:AugmentedDataSet} they will be in the domain of integer values greater than or equal to $1$, or $F_w\in \{ \mathbb{Z} \ge 1 \}$. The inter-workout fatigue index is a base unit, and as such will have units of 'fatigue' or be considered unit-less.
+	\item Inter-workout fatigue index: Given how the indexes were created in section \ref{sec:AugmentedDataSet} they will be in the domain of integer values greater than or equal to $1$, or $F_w\in \{ \mathbb{N} \ge 1 \}$. The inter-workout fatigue index is a base unit, and as such will have units of 'fatigue' or be considered unit-less.
 	
-	\item Inter-exercise fatigue index: Similar to inter-workout fatigue, inter-exercise fatigue will be in the domain of integer values greater than or equal to $1$, or $F_e\in \{ \mathbb{Z} \ge 1 \}$. The inter-exercise fatigue index is a base unit, and as such will have units of 'fatigue' or be considered unit-less.
+	\item Inter-exercise fatigue index: Similar to inter-workout fatigue, inter-exercise fatigue will be in the domain of integer values greater than or equal to $1$, or $F_e\in \{ \mathbb{N} \ge 1 \}$. The inter-exercise fatigue index is a base unit, and as such will have units of 'fatigue' or be considered unit-less.
 \end{itemize}
 
 %Weight, and hence intensity, are obvious. Recording the weight lifted and the weights proportion of the lifters 1RM is all that's required. This defines weight as $w>0$ and intensity as $I>0$. Weight is not allowed to equal $0$ because that would imply there is no resistance and hence no training stimulus, making the exercise useless. \footnote{Sometimes people classify body weight exercises as having $0$ weight, despite still having to lift some fraction of there own body weight. This is mainly done because it can be difficult to measure the exact proportion of there body weight they are actually lifting.} Intensity is not capped at $1$ because lifting a weight greater than the lifters previous 1RM is the ultimate goal of a powerlifting program. For the data set, weight is measured in pounds and intensity is, by definition, measured as a percentage.
@@ -139,7 +154,7 @@ Before starting, it is worth mentioning how elements in the data set were measur
 
 %Following the traditional definition, frequency will be calculated across days, meaning separate sets of the same exercise on the same day will not count toward an increased frequency. Separate sets of the same exercise on different days will increase the frequency of the exercise. Naturally, frequency is limited to positive integer values, or $f\in \{ \mathbb{Z}\ge 0 \}$.
 
-Table \ref{tab:DomainUnitTable} summarizes the domains the data set element exist over as well as there units.
+Table \ref{tab:DomainUnitTable} summarizes the domains the data set elements exist over as well as there units.
 
 \begin{table}[h]
 	\centering
@@ -150,14 +165,14 @@ Table \ref{tab:DomainUnitTable} summarizes the domains the data set element exis
         Measurement & Domain & Unit \\
         \hline
         Sets & $s\ge 1$ & 'sets' or unit-less\\
-        Reps & $r\in \{ \mathbb{Z} \ge 1 \}$ & 'reps' or unit-less \\
+        Reps & $r\in \{ \mathbb{N} \ge 1 \}$ & 'reps' or unit-less \\
         Effort & $E\in \{0,0.5,1,...,10\}$ & RPE \\
         Intensity & $I>0$ & Percentage ($\%$) \\
         Weight & $w>0$ & lbs. \\
-        Frequency & $f\in \{ \mathbb{Z}\ge 0 \}$ & 'frequency' or unit-less \\
-        Time & $t\in \{ \mathbb{Z} \}$ & Days \\
-        Inter-workout fatigue index & $F_w\in \{ \mathbb{Z} \ge 1 \}$ & 'fatigue' or unit-less \\
-        Inter-exercise fatigue index & $F_e\in \{ \mathbb{Z} \ge 1 \}$ & 'fatigue' or unit-less \\
+        Frequency & $f\in \{ \mathbb{N}\ge 0 \}$ & 'frequency' or unit-less \\
+        Time & $t\in \{ \mathbb{N} \}$ & Days \\
+        Inter-workout fatigue index & $F_w\in \{ \mathbb{N} \ge 1 \}$ & 'fatigue' or unit-less \\
+        Inter-exercise fatigue index & $F_e\in \{ \mathbb{N} \ge 1 \}$ & 'fatigue' or unit-less \\
         \hline
     \end{tabular}
     \caption{A table showing each measurement and it's associated domain.}
