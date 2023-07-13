@@ -24,7 +24,12 @@ The exercise being performed is largely dependent on what goals the lifter is pu
 \section{Intuitive Relationships Between Variables}
 \label{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables}
 
-A lifter has a \textit{volume tolerance}, which represents there work capacity. Given a certain volume tolerance, the only five variables that can change are weight, intensity, effort, sets, and reps. This is obvious from equations \ref{eq:BaseVolumeEquation} and \ref{eq:IntensityBasedVolumeEquation}.
+The ultimate goal of this chapter is to create a surface that represents what is possible for a lifter to do. To accomplish this, the nature of the surface must first be explored. This can be done by looking at the data as well as applying already established facts about lifting. Briefly, it is worth mentioning why this process is being done manually instead of through other processes common in machine learning. When processes similar to machine learning are conducted the nature of the surface is unknown, which can lead to problems when trying to verify the surface has the desired behavior. Understanding the behavior of the surface is important to be able to constrain it so that it will not instruct a lifter to perform impossible tasks that will likely lead to injury. This is a common issue with machine learning, with it often being compared to a black box. It should be obvious that being able to prove that the surface will not stray into the impossible is very important. With that said, the rest of this section outlines the desired behaviors of the surface.
+
+\subsection{Volume and Intensity}
+\label{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariablesVolumeAndIntensity}
+
+A lifter has a \textit{volume tolerance}, which represents there work capacity. Given a certain volume tolerance, the only five variables that can change are weight, intensity, effort, sets, and reps. This is demonstrated in equations \ref{eq:BaseVolumeEquation} and \ref{eq:IntensityBasedVolumeEquation}.
 
 Weight and intensity are synonymous through the lens of volume, as the total amount of weight lifted is calculated regardless of the differing parameters. It should be clear from equations \ref{eq:BaseVolumeEquation} and \ref{eq:IntensityBasedVolumeEquation} that volume will increase with increased weight and intensity. Mathematically, this makes sense, but the limits of the human body need to be considered. As intensity approaches $100\%$ more effort is required to maintain the same amount of volume. Because effort is limited, volume will necessarily decrease at higher weights, to a point where it reverses the increase in volume from the increase in weight. An example may make this clearer. At $100\%$ intensity a lifter can realistically expect to obtain a volume equal to there 1RM, shown in equation \ref{eq:VolumeWithDiffereingIntensities1}. At $50\%$ intensity, all it takes is two reps to match the volume performed at $100\%$ intensity, which is shown in equation \ref{eq:VolumeWithDiffereingIntensities2}. At $50\%$ intensity, far more than one set of two reps can be performed, making it easy to surpass the volume done at $100\%$ intensity. The data discussed in chapter \ref{sec:DataSection} has many examples of this.
 
@@ -46,12 +51,21 @@ It should be clear that volume will increase with weight until a peak is reached
     \label{fig:IntensityVsVolumeGraph}
 \end{figure}
 
-The fact that volume diminishes at higher intensities cannot be stressed enough, as it breaks any intuition gathered from equations \ref{eq:BaseVolumeEquation} and \ref{eq:IntensityBasedVolumeEquation}. These equations, serve as a way to \textit{measure} volume, not as a proxy to determine what is possible. These equations have no regard to the limitations of the human body. It is common knowledge among strength coaches that if you want to increase volume sets and reps need to be increased, not weight. To summarize, the following intuitions can be stated:
+The fact that volume diminishes at higher intensities cannot be stressed enough, as it breaks any intuition gathered from equations \ref{eq:BaseVolumeEquation} and \ref{eq:IntensityBasedVolumeEquation}. These equations, serve as a way to \textit{measure} volume, not as a proxy to determine what is possible. These equations have no regard to the limitations of the human body. It is common knowledge among strength coaches that if you want to increase volume sets and reps need to be increased, not weight. 
 
-\begin{enumerate}
-	\item Volume increases linearly with sets and reps.
-	\item Volume increases with diminishing returns to weight, to a point, at which it starts to decrease with increasing returns to weight.
-\end{enumerate}
+Given the discussion above, it is tempting to say that as weight approaches $0$ volume will linearly decrease to $0$. Again, while mathematically true, the human body does not follow a linear decrease in volume. When weight diminishes to more and more tolerable loads more and more endurance is required. Generally speaking, the human body is made for endurance. Running for long distances is one of our strengths thanks to evolution. What this means for lifting is that as weight decreases so many more sets and reps can be done that the decrease in volume from the decrease in weight is overcome. There is a limit of course, known as the lifters volume tolerance, so as weight decreases more sets and reps can be done until this limit is reached. The data displayed in figure \ref{fig:IntensityVsVolumeGraph} does not demonstrate this pattern very well, as it appears volume drops of linearly past the peak. This is due to the data being collected by a powerlifter, a sport that does not require much in the way of endurance, and skewing the data as a result. This skewing of the data will come up again in the next section, which is concerned with volume and effort.
+
+%To summarize, the following intuitions can be stated:
+%
+%\begin{enumerate}
+%	\item Volume increases linearly with sets and reps.
+%	\item Volume decreases with weight due.
+%	\item Volume increases with diminishing returns to weight, to a point, at which it starts to decrease with increasing returns to weight.
+%\end{enumerate}
+
+
+\subsection{Volume and Effort}
+\label{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariablesVolumeAndEffort}
 
 With volume diminishing at higher intensities due to limited effort, the next question is what happens when effort increases or decreases across all intensities. As effort increases, more sets will be able to be completed, more reps will be able to be completed in each set, or more weight will be able to be lifted. If the increase in effort is large enough, some combination of sets, reps, and weight could all increase. The opposite is true if effort decreases. Again, it should be clear that sets and reps are directly proportional to volume, implying an increase in either one will increase volume. If weight is below the point where it starts to limit volume, an increase in weight could also potentially increase volume. Putting all of this together, as effort increases volume will increase and as effort decreases volume will decrease.
 
@@ -73,6 +87,9 @@ However, in figure \ref{fig:EffortVsVolumeGraph}, which compares volume and effo
 
 %This is the result of effort and intensity being correlated, which is shown in figure \ref{fig:EffortVsIntensity}. Effort and intensity being correlated is an artifact of the data being collected by a powerlifter, where the lifters goal is to increase the 1RM for a particular lift. \footnote{Put another way, as effort increases, a powerlifter will seek to maximize weight over volume.} The lack of correlation in figure \ref{fig:EffortVsVolumeGraph} is fully explained by combining the previously established fact that volume at higher intensities is necessarily limited by effort with the goal of a powerlifter to maximize weight. Given a sport that is more concerned with rep maxes, such as crossfit, the effort vs intensity graph would level out because lower intensities would be pushed for as many reps as possible, creating maximal effort sets with lower intensities.\footnote{This is a perfect example to demonstrate how effort and intensity are two different concepts.} In order to have maximal effort sets with lower intensities either sets, reps, or both sets and reps will need to increase, thereby forcing volume to increase considerably and restoring the correlation between effort and volume discussed previously.
 
+\subsection{Sets and Reps}
+\label{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariablesSetsAndReps}
+
 With effort and intensity's relation to volume being explored, sets and reps are all that's left. It may be tempting to conclude that volume should be constant given a particular weight and effort. This conclusion can be reached by looking at equations \ref{eq:BaseVolumeEquation} and \ref{eq:IntensityBasedVolumeEquation}, where once the weight and effort are known sets and reps would just vary inversely to ensure volume remains constant. Again, while mathematically true, the limits of the human body need to be considered. Evidence that the relationship between sets and reps is not perfectly inverse is shown in figure \ref{fig:SetsVsReps}, where a drop in sets from the expected inverse pattern is seen. This favoritism between sets and reps will of course mean volume is no longer constant given a particular intensity and effort, and as such will be known as the \textit{volume skew}.
 %This can be attributed to a lack of \textit{endurance}, where sets with a greater number of reps  require more endurance than sets with less reps. Powerlifters are eternally known for having no endurance, so it should come as no surprise that they will favor more sets over reps.
 
@@ -84,6 +101,8 @@ With effort and intensity's relation to volume being explored, sets and reps are
 \end{figure}
 
 By this point it should be obvious the crux of the problem in question will require finding a lifters volume tolerance across intensity and effort, as well as the lifters volume skew between sets and reps. In order to solve this problem, a surface will need to be found that exhibits the appropriate behaviors and then that surface will need to be fitted to the data using linear regression.
+"
+"
 
 \section{Linear Regression and Time Series Problems}
 \label{sec:PotentialSurfaceLinearRegressionAndTimeSeriesProblems}
@@ -346,20 +365,15 @@ With equations \ref{eq:PotentialSurfaceEquation} and \ref{eq:LinearRegMatrixEqua
 
 After fitting the surface to the data discussed in chapter \ref{sec:DataSection}, graphs similar to the ones shown in table \ref{tab:DeadliftPotentialSurfaceAcrossEffort} can be created. A full set of potential surface graphs for squat, bench, and deadlift across effort levels $5-10$ are available in appendix \ref{sec:AppendixA}. It is important the relationships discussed in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} are present in these graphs, which will be the topic for sections \ref{sec:PotentialSurfaceVolumePeak}-\ref{sec:PotentialSurfaceUnboundedVolume}. Many of the relationships discussed in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} are concerned with volume. To give some intuition for volume before moving on, the graphs shown in table \ref{tab:DeadliftVolumeAcrossEffort} are the result of solving the potential surface for $I$ and substituting it in equation \ref{eq:IntensityBasedVolumeEquation}.
 
-\begin{table}[]
-    \centering
-    \begin{tabular}{c|c}
-        RPE & Potential Surface Graph \\
-        \hline \\
-        
-        5 &
-        \includegraphics[width=139mm]{DeadliftSurface/5.png} \\
-        10 &
-        \includegraphics[width=139mm]{DeadliftSurface/10.png} \\
-    \end{tabular}
-    \caption{The potential surface fitted to deadlift data at various effort levels.}
-    \label{tab:DeadliftPotentialSurfaceAcrossEffort}
-\end{table}
+%\begin{table}[]
+%    \centering
+%    \begin{tabular}{c}
+%        \includegraphics[width=125mm]{./images/ch3/PotentialSurface/DeadliftEffort5.png} \\
+%        \includegraphics[width=125mm]{./images/ch3/PotentialSurface/DeadliftEffort10.png} \\
+%    \end{tabular}
+%    \caption{The potential surface fitted to deadlift data at various effort levels.}
+%    \label{tab:DeadliftPotentialSurfaceAcrossEffort}
+%\end{table}
 
 \begin{table}[]
     \centering
