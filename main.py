@@ -8,16 +8,6 @@ from typing import List
 from typing import Optional
 
 
-class Data(object):
-    tl=pd.read_csv("../data/testData/AugmentedTrainingLogTestData.csv")
-    et=pd.read_csv("../data/testData/ExerciseTypeTestData.csv")
-    e=pd.read_csv("../data/testData/ExerciseTestData.csv")
-    ms=pd.read_csv("../data/generatedData/Client1.ms.csv")
-    SquatID=e.query("Name==\"Squat\"")["Id"].iloc[0]
-    BenchID=e.query("Name==\"Bench\"")["Id"].iloc[0]
-    DeadliftID=e.query("Name==\"Deadlift\"")["Id"].iloc[0]
-
-
 IMG_OUT_DIR="images"
 TITLE_FONT_SIZE=12
 SUBTITLE_FONT_SIZE=10
@@ -30,6 +20,16 @@ UNITS={
 }
 
 
+class Data(object):
+    tl=pd.read_csv("../data/testData/AugmentedTrainingLogTestData.csv")
+    et=pd.read_csv("../data/testData/ExerciseTypeTestData.csv")
+    e=pd.read_csv("../data/testData/ExerciseTestData.csv")
+    ms=pd.read_csv("../data/generatedData/Client1.ms.csv")
+    SquatID=e.query("Name==\"Squat\"")["Id"].iloc[0]
+    BenchID=e.query("Name==\"Bench\"")["Id"].iloc[0]
+    DeadliftID=e.query("Name==\"Deadlift\"")["Id"].iloc[0]
+
+
 def listToFilter(_in: List[str]) -> str:
     rv=""
     for i,item in enumerate(_in):
@@ -39,8 +39,12 @@ def listToFilter(_in: List[str]) -> str:
     return rv
 
 
-def getUnit(_in: str) -> str:
-    return "({0})".format(UNITS[_in]) if _in in UNITS else ""
+def formatUnits(_in: List[str]) -> str:
+    rv="("
+    for i,u in enumerate(_in):
+        rv+=("{0}," if i+1<len(_in) else "{0}").format(u)
+    rv+=")"
+    return rv
 
 
 class Ch3(object):
