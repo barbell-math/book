@@ -26,7 +26,9 @@ The exercise being performed is largely dependent on what goals the lifter is pu
 \section{Intuitive Relationships Between Variables}
 \label{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables}
 
-The ultimate goal of this chapter is to create a surface that represents what is possible for a lifter to do. To accomplish this, the nature of the surface must first be explored. This can be done by looking at the data as well as applying already established facts about lifting. Briefly, it is worth mentioning why this process is being done manually instead of through other processes common in machine learning. When processes similar to machine learning are conducted the nature of the surface is unknown, which can lead to problems when trying to verify the surface has the desired behavior. Understanding the behavior of the surface is important to be able to constrain it so that it will not instruct a lifter to perform impossible tasks that will likely lead to injury. This is a common issue with machine learning, with it often being compared to a black box. It should be obvious that being able to prove that the surface will not stray into the impossible is very important. With that said, the rest of this section outlines the desired behaviors of the surface.
+The ultimate goal of this part of this book is to create a surface that represents what is possible for a lifter to do. To accomplish this, the nature of the surface must first be explored. This can be done by looking at the data as well as applying already established facts about lifting. Briefly, it is worth mentioning why this process is being done manually instead of through other processes common in machine learning. When processes similar to machine learning are conducted the nature of the surface is unknown, which can lead to problems when trying to verify the surface has the desired behavior. This is a known issue with machine learning, with it often being compared to a black box. Understanding the behavior of the surface is important to be able to constrain it so that it will not instruct a lifter to perform impossible tasks that will likely lead to injury. Being able to prove that the surface will not stray into the impossible is very important, and will require understanding of all the variables that define its behavior.
+
+Many of the variables that need to be looked at are extremely interdependent on each other. Sets and reps depend on each other, with an increase in one generally requiring a decrease in the other. Intensity depends on sets and reps, with higher intensities requiring possibly less sets and possibly reps. Going back to the relation to sets and reps however, if sets increases and weight decreases then reps could increase, decrease, or remain the same. Effort depends on intensity as well as sets and reps... The point should be clear. Trying to define behaviors based on all of these interdependent variables quickly gets out of hand. Instead of doing this, the behaviors of each variable will be defined in relation to volume where each variable is far more independent. Doing this also allows more abstract properties to be considered, such as volume tolerance. With that said, the rest of this section outlines the desired behaviors of the surface.
 
 \subsection{Property 1: Volume and Intensity}
 \label{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariablesVolumeAndIntensity}
@@ -143,61 +145,62 @@ Having an accurate tracking of a lifters 1RM over time becomes an important depe
 
 While exploring the intuitive relationships between variables a large amount of emphasis was placed on volume, with most variables being discussed in relation to volume. Despite this, this section is more concerned with how the surface is going to be defined, which will not involve directly involve volume. Instead, the general idea of how the surfaces presented in the next couple sections were conceptualized will be discussed. Within each surfaces chapter, there will be a discussion about how the surface abides by the intuitive behaviors, if at all.
 
-With that, the starting point of every surface is amusingly simple, and can be summed up in the following phrase: Performance is effort minus fatigue. To be more specific, performance is equal to total effort minus total fatigue. It is tempting to say that, for a powerlifter, performance is simply the weight that is lifted, making $P=w$. However, remembering that these surfaces will eventually be fitted to the data using linear regression and after the discussion in section \ref{sec:PotentialSurfaceLinearRegressionAndTimeSeriesProblems} it should be clear that intensity should be used in the place of weight to measure performance, making $P=I$. Equation \ref{eq:PerformanceProxy} shows an approximate form for the effort-fatigue model.
+With that, the starting point of every surface is amusingly simple, and can be summed up in the following phrase: Performance is effort without fatigue. To be more specific, performance is equal to total effort without total fatigue. It is tempting to say that, for a powerlifter, performance is simply the weight that is lifted, making $P=w$. However, remembering that these surfaces will eventually be fitted to the data using linear regression and after the discussion in section \ref{sec:PotentialSurfaceLinearRegressionAndTimeSeriesProblems} it should be clear that intensity should be used in the place of weight to measure performance, making $P=I$. Equation \ref{eq:PerformanceProxy} shows an approximate form for the effort-fatigue model.
 
 \begin{equation}
 	\label{eq:PerformanceProxy}
 	\begin{split}
-			P &\approx E_{tot}-F_{tot} \\
-			I &\approx E_{tot}-F_{tot}
+			P &\hat{=} E_{tot}\hat{-}F_{tot} \\
+			I &\hat{=} E_{tot}\hat{-}F_{tot}
 	\end{split}
 \end{equation}
 
-After performance, total effort is the next easiest term to understand as it directly correlates to how effort was discussed in section \ref{sec:CommonTermsSection}. The only effort that can be applied is by the lifter themselves, no other external factor can 'add effort' to a lifters workout. \footnote{An argument could be made for pre-workout, sugar rushes, a lifter 'getting in there head', or adrenaline dumps 'adding effort', but these are only tools to help a lifter to exert more effort, not tools to generate more effort in and of themselves. Even with these tools, at the end of the day, the effort still has to come from the lifter themselves.} Given this, $E_{tot}$ can be nicely summed up in equation \ref{eq:TotalEffort}.
+The $\hat{=}$ symbol in this case means "something like". It is chosen to mean this over something like the $\approx$ symbol because these equations are approximations in the loosest sense. The equations in this section merely form a rough template for later chapters to fully realize. The $\hat{-}$ symbol means "without". The true mathematical interpretation of the $\hat{-}$ symbol is left for future chapters to define.
+
+After performance, total effort is the next easiest term to understand as it directly correlates to how effort was discussed in section \ref{sec:CommonTermsSection}. The only effort that can be applied is by the lifter themselves, no other external factor can 'add effort' to a lifters workout. \footnote{An argument could be made for pre-workout, sugar rushes, a lifter 'getting in there head', or adrenaline dumps 'adding effort', but these are only tools to help a lifter to exert more effort, not tools to generate more effort in and of themselves. Even with these tools, at the end of the day, the effort still has to come from the lifter themselves.} Given this, $E_{tot}$ can be nicely summed up in equation \ref{eq:TotalEffort}. Because there is only one source of effort, a true equality sign can be used. $\epsilon_1$ is a constant that will need to be found after performing linear regression on whatever concrete representation of the surface the next few chapters decide upon.
 
 \begin{equation}
 	\label{eq:TotalEffort}
 	E_{tot}=\epsilon_1 E
 \end{equation}
 
-Total fatigue is more complicated, as there are several different types of fatigue that contribute to it's total. Given the four different types of fatigue listed in section \ref{sec:ModifiedFatigueCategories}, total fatigue can be represented as follows.
+Total fatigue is more complicated, as there are several different types of fatigue that contribute to it's total. Given the four different types of fatigue listed in section \ref{sec:ModifiedFatigueCategories}, total fatigue can be represented as follows. Total fatigue is more open to intrepretation than total effort, hence the $\hat{=}$ symbol.
 
 \begin{equation*}
-	F_{tot} \approx \epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+\epsilon_5 F_s
+	F_{tot} \hat{=} \epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+\epsilon_5 F_s
 \end{equation*}
 
 Section \ref{sec:AugmentedDataSet} introduced indexes to represent inter-workout and inter-exercise fatigue. These data points can be directly used in the above equation, however as discussed in section \ref{sec:AugmentedDataSet} the index values only represent the fatigue present before the exercise is performed. The fatigue generated from the current exercise needs to be considered to avoid scenarios where the lifter fails a lift due to being too fatigued to make it through the entire exercise. This is where inter-set fatigue matters. Inter-set fatigue will increase in proportion to to total number of reps done. Two additional terms can be added to measure the fatigue generated from sets and reps individually.
 
 \begin{equation*}
-	F_{tot} \approx \epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+\epsilon_5 sr+\epsilon_6 s+\epsilon_7 r
+	F_{tot} \hat{=} \epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+\epsilon_5 sr+\epsilon_6 s+\epsilon_7 r
 \end{equation*}
 
-The discussion in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} needs to be considered however. One of the main takeaways from that section is that volume is limited by effort at high intensities. As it stands in the current fatigue equation, there will be no peak in volume because all the relationships with sets and reps are either linear or a linear combination of both of them. To correct for this, the terms containing sets and reps will be squared, allowing for a peak in volume that can be adjusted through the constant in front of each term. \footnote{Yes, there are more flexible ways to create a peak, but using those ways would make it so linear regression could not be performed due to the multiplicative combinations of constants.} With these changes, the total fatigue equation is shown below.
-
-\begin{equation}
-	\label{eq:TotalFatigue}
-	F_{tot} \approx \epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+\epsilon_5 (s)^2(r)^2+\epsilon_6 (s)^2+\epsilon_7 (r)^2
-\end{equation}
-
-Finally, the approximate form of the effort-fatigue model can be defined, and is shown in equation \ref{eq:PotentialSurfaceEquation}. This may seem like a finished equation, but remember this is an approximation. The surfaces in the next several chapters will create final equations to concretely realize the ideas of the effort-fatigue model, apply constraints, and enforce desired behavior. Some of these equations will not even take the same form, but the general idea of the effort-fatigue model still stands behind them.
+Finally, the approximate form of the effort-fatigue model can be defined, and is shown in equation \ref{eq:PotentialSurfaceEquation}. Again, this may seem like a finished equation, but remember this is just a template. The surfaces in the next several chapters will create final equations to concretely realize the ideas of the effort-fatigue model, apply constraints, and enforce desired behavior. These equations may take very different forms, but the general idea of the effort-fatigue model still stands behind them.
 
 \begin{equation}
 	\label{eq:PotentialSurfaceEquation}
 	\begin{split}
-		I & \approx E_{tot}-F_{tot} \\
-		I & \approx \epsilon+\epsilon_1 E-\left( 
-			\epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+\epsilon_5 (s)^2(r)^2+\epsilon_6 (s)^2+\epsilon_7 (r)^2
+		I & \hat{=} E_{tot}\hat{-}F_{tot} \\
+		I & \hat{=} \epsilon_1 E\hat{-}\left( 
+			\epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+\epsilon_5 sr+\epsilon_6 s+\epsilon_7 r
 		\right)
 	\end{split}
 \end{equation}
 
-Before going to the next chapters, it is worth mentioning that latent fatigue will be discussed in chapter \ref{sec:}. It has it's rightful place in the potential surface, but it's implications are so broad that they need a chapter of there own. For this chapter the effects from latent fatigue will not be considered. Until then, think of it as though $\epsilon_2$ were set to $0$. 
+Before going to the next chapters, it is worth mentioning that latent fatigue will be discussed in chapter \ref{sec:}. It has it's rightful place in the potential surface, but it's implications are so broad that they need a chapter of there own. Until chapter \ref{sec:} the effects from latent fatigue will not be considered. For now, think of it as though $\epsilon_2$ were set to $0$. 
 
 
-\chapter{Surface 1: The Translated Basic Surface}
+\chapter{Surface 1: The Basic Surface}
 \label{sec:PotentialSurfaceTheBasicSurface}
 
-The first surface to explore simply takes the effort-fatigue model in it's most literal sense. It takes the approximation and simply treats it as an equality. The only change it makes is to center the surface at $(s=1,r=2,I=1)$ so that the peak in intensity occurs with one set of one rep, matching the lifters 1RM. It also applies several constraints on the constants, the reasoning of which will be discussed later in the chapter, but the general idea behind them is to limit the surface to behavior that makes sense for the problem at hand. This equation attempts to fully realize all of the intuitive relationships discussed in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables}. Which intuitive relationships it fulfills and which it does not will be the topics of sections \ref{sec:PotentialSurfaceVolumePeak}-\ref{sec:PotentialSurfaceUnboundedVolume}.
+The first surface to explore takes the effort-fatigue model in and makes as few changes as possible, treating the $\hat{-}$ symbol to mean literal subtraction. The first change it makes is to center the surface at $(s=1,r=2,I=1)$ so that the peak in intensity occurs with one set of one rep, matching the lifters 1RM. The second change is to add an error term, represented by $\epsilon$. The last, and most substantial change, is to total fatigue. The discussion in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} needs to be considered. One of the main takeaways from that section is that volume is limited by effort at high intensities. If the total fatigue template presented by the effort-fatigue model is taken as a literal equation, volume will not have the correct behavior as intensity approaches $100$\%. Namely, there will not be diminishing returns in volume as intensity increases because all the relationships with sets and reps are either linear or a linear combination of both of them. To correct for this, the terms containing sets and reps will be squared, creating diminishing returns to volume with respect to intensity that can be adjusted through the constant in front of each term. \footnote{Yes, there are more flexible ways to do this, but using those ways would make it so linear regression could not be performed due to the multiplicative combinations of constants.} With these changes, the total fatigue equation for the basic surface is shown below. 
+
+\begin{equation*}
+	F_{tot} = \epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+\epsilon_5 (s-1)^2(r-1)^2+\epsilon_6 (s-1)^2+\epsilon_7 (r-1)^2
+\end{equation*}
+
+The final form of the basic surface is shown in equation \ref{eq:BasicSurfaceEquation}. Several constraints are applied to the constants, the reasoning of which will be discussed later in the chapter, but the general idea behind them is to limit the surface to behavior that makes sense for the problem at hand. This equation attempts to fully realize all of the intuitive relationships discussed in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables}. Which intuitive relationships it fulfills and which it does not will be the topics of sections \ref{sec:PotentialSurfaceVolumePeak}-\ref{sec:PotentialSurfaceUnboundedVolume}.
 
 \begin{equation}
 	\label{eq:BasicSurfaceEquation}
@@ -234,7 +237,7 @@ To run linear regression the error equation is needed, which is shown below.
     \right)^2
 \end{equation*}
 
-To minimize the error, the partial derivatives of each unknown constant is found and each one is set equal to zero. An example with $\epsilon$ is shown below.
+To minimize the error, the partial derivatives of each unknown constant need to be found and each one is set equal to zero. An example with $\epsilon$ is shown below.
 
 \begin{equation*}
     \begin{split}
@@ -327,7 +330,7 @@ After a similar process is carried out for each unknown constant, equation \ref{
     \right]
 \end{equation*}
 
-With equations \ref{eq:PotentialSurfaceEquation} and \ref{eq:LinearRegMatrixEquation}, this surface is fully defined. After fitting the surface to the data discussed in chapter \ref{sec:DataSection}, graphs similar to the ones shown in table \ref{tab:DeadliftPotentialSurfaceAcrossEffort} can be created. A full set of potential surface graphs for squat, bench, and deadlift across effort levels $5-10$ are available in appendix \ref{sec:AppendixA}. Many of the relationships discussed in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} are concerned with volume. To give some intuition for volume before moving on, equation \ref{eq:IntensitySubedInVolume} is the result of solving the potential surface for $I$ and substituting it in equation \ref{eq:IntensityBasedVolumeEquation}. The graphs shown in table \ref{tab:DeadliftVolumeAcrossEffort} show the volume surface generated from this potential surface.
+With equations \ref{eq:PotentialSurfaceEquation} and \ref{eq:LinearRegMatrixEquation}, this surface is fully defined. After fitting the surface to the data discussed in chapter \ref{sec:DataSection}, graphs similar to the ones shown in figure \ref{fig:DeadliftPotentialSurfaceAcrossEffort} can be created. A full set of potential surface graphs for squat, bench, and deadlift across effort levels $5-10$ are available in appendix \ref{sec:AppendixA}. Many of the relationships discussed in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} are concerned with volume. To give some intuition for volume before moving on, equation \ref{eq:IntensitySubedInVolume} is the result of solving the potential surface for $I$ and substituting it in equation \ref{eq:IntensityBasedVolumeEquation}. The graphs shown in table \ref{tab:DeadliftVolumeAcrossEffort} show the volume surface generated from this potential surface.
 
 \begin{equation}
     \label{eq:IntensitySubedInVolume}
@@ -343,15 +346,13 @@ With equations \ref{eq:PotentialSurfaceEquation} and \ref{eq:LinearRegMatrixEqua
     	\right)
 \end{equation}
 
-\begin{table}[h]
+\begin{figure}[h]
     \centering
-    \begin{tabular}{c}
-        \includegraphics[width=125mm]{./images/ch3/PotentialSurface/DeadliftEffort5.basic.png} \\
-        \includegraphics[width=125mm]{./images/ch3/PotentialSurface/DeadliftEffort10.basic.png} \\
-    \end{tabular}
+    \includegraphics[scale=0.55]{images/ch3/PotentialSurface/DualDeadlift.Effort[5,10].basic.png}
     \caption{The potential surface fitted to deadlift data at various effort levels. The window and trime frame values will be discussed in chapter \ref{sec:TimeFrame}.}
-    \label{tab:DeadliftPotentialSurfaceAcrossEffort}
-\end{table}
+    \label{fig:DeadliftPotentialSurfaceAcrossEffort}
+\end{figure}
+
 %
 %\begin{table}[]
 %    \centering
