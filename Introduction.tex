@@ -103,21 +103,21 @@ There are three more values that can be calculated from a workout program that c
 
 \begin{equation}
     \label{eq:BaseVolumeEquation}
-    v(s,r,w)=srw
+    v=srw
 \end{equation}
 
 The second value is \textit{intensity}. Intensity is represented as the ratio of the weight lifted to the lifters 1RM, for the same exercise. The closer a lifter is to there 1RM on an exercise the greater the intensity of the lift. Equation \ref{eq:BaseIntensityEquation} defines intensity.
 
 \begin{equation}
     \label{eq:BaseIntensityEquation}
-    I(w,l_{1RM})=\frac{w}{l_{1RM}}
+    I=\frac{w}{l_{1RM}}
 \end{equation}
 
 With the definition of intensity, equation \ref{eq:BaseVolumeEquation} can be easily be modified to accept intensity values instead of weight.
 
 \begin{equation}
     \label{eq:IntensityBasedVolumeEquation}
-    v(s,r,I,l_{1RM})=srIl_{1RM}
+    v=srIl_{1RM}
 \end{equation}
 
 The third value is \textit{frequency}. Frequency is simply how often a lift is performed across a microcycle on a per workout basis. Multiple sets of an exercise can be performed during a single workout and the frequency would only increment by one. However, as soon as those sets are split up into multiple workouts the frequency will increase. 
@@ -261,6 +261,7 @@ Many symbols will be used throughout the rest of this book. To aid in maintainin
         Frequency & $f$ & & \\
         Time & $t$ & & \\
         Performance & $P$ & & \\
+        Volume Skew & $v_s$ & & \\
         \hline
     \end{tabular}
     \caption{A table showing each value and it's associated symbol. Note the use of both an uppercase and lowercase $f$.}

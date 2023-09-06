@@ -28,33 +28,33 @@ The exercise being performed is largely dependent on what goals the lifter is pu
 
 The ultimate goal of this part of this book is to create a surface that represents what is possible for a lifter to do. To accomplish this, the nature of the surface must first be explored. This can be done by looking at the data as well as applying already established facts about lifting. Briefly, it is worth mentioning why this process is being done manually instead of through other processes common in machine learning. When processes similar to machine learning are conducted the nature of the surface is unknown, which can lead to problems when trying to verify the surface has the desired behavior. This is a known issue with machine learning, with it often being compared to a black box. Understanding the behavior of the surface is important to be able to constrain it so that it will not instruct a lifter to perform impossible tasks that will likely lead to injury. Being able to prove that the surface will not stray into the impossible is very important, and will require understanding of all the variables that define its behavior.
 
-Many of the variables that need to be looked at are extremely interdependent on each other. Sets and reps depend on each other, with an increase in one generally requiring a decrease in the other. Intensity depends on sets and reps, with higher intensities requiring possibly less sets and possibly reps. Going back to the relation to sets and reps however, if sets increases and weight decreases then reps could increase, decrease, or remain the same. Effort depends on intensity as well as sets and reps... The point should be clear. Trying to define behaviors based on all of these interdependent variables quickly gets out of hand. Instead of doing this, the behaviors of each variable will be defined in relation to volume where each variable is far more independent. Doing this also allows more abstract properties to be considered, such as volume tolerance. With that said, the rest of this section outlines the desired behaviors of the surface.
+Many of the variables that need to be looked at are extremely interdependent on each other. Sets and reps depend on each other, with an increase in one generally requiring a decrease in the other. Intensity depends on sets and reps, with higher intensities requiring possibly less sets and possibly reps. Going back to the relation to sets and reps however, if sets increases and weight decreases then reps could increase, decrease, or remain the same. Effort depends on intensity as well as sets and reps... The point should be clear. Trying to define behaviors based on all of these interdependent variables quickly gets out of hand. Instead of doing this, the behaviors of each variable will be defined in relation to volume where each variable can be viewed independently from the others. Doing this also allows more abstract properties to be considered, such as volume tolerance. With that said, the rest of this section outlines the desired behaviors of the surface.
 
 \subsection{Property 1: Volume and Intensity}
 \label{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariablesVolumeAndIntensity}
 
 A lifter has a \textit{volume tolerance}, which represents there work capacity. Given a certain volume tolerance, the only five variables that can change are weight, intensity, effort, sets, and reps. This is demonstrated in equations \ref{eq:BaseVolumeEquation} and \ref{eq:IntensityBasedVolumeEquation}.
 
-Weight and intensity are synonymous through the lens of volume, as the total amount of weight lifted is calculated regardless of the differing parameters. Looking at equations \ref{eq:BaseVolumeEquation} and \ref{eq:IntensityBasedVolumeEquation} it is natural to assume volume will increase with increased weight and intensity. Mathematically, this makes sense, but the limits of the human body need to be considered. As intensity approaches $100\%$ more effort is required to maintain the same amount of volume. Because effort is limited, volume will necessarily decrease at higher weights, to a point where it reverses the increase in volume from the increase in weight. An example may make this clearer. At $100\%$ intensity a lifter can realistically expect to obtain a volume equal to there 1RM, shown in equation \ref{eq:VolumeWithDiffereingIntensities1}. At $50\%$ intensity, all it takes is two reps to match the volume performed at $100\%$ intensity, which is shown in equation \ref{eq:VolumeWithDiffereingIntensities2}. At $50\%$ intensity, far more than one set of two reps can be performed, making it easy to surpass the volume done at $100\%$ intensity. The data discussed in chapter \ref{sec:DataSection} has many examples of this.
+Weight and intensity are synonymous through the lens of volume, as the total amount of weight lifted is calculated regardless of the differing parameters. Looking at equations \ref{eq:BaseVolumeEquation} and \ref{eq:IntensityBasedVolumeEquation} it is natural to assume volume will increase with increased weight and intensity. Mathematically, this makes sense, but the limits of the human body need to be considered. As intensity approaches $100\%$ more effort is required to maintain the same amount of volume. Because effort is limited, volume will necessarily decrease at higher weights, to a point where it reverses the increase in volume from the increase in weight. An example may make this clearer. At $100\%$ intensity a lifter can realistically expect to obtain a maximum volume near there 1RM, as shown in equation \ref{eq:VolumeWithDiffereingIntensities1}. \footnote{The actual volume reached as intensity increases may be slightly more or less than the lifters 1RM because of other limiting factors such as effort and fatigue, which will be discussed in the following sections. As the next sections will explore, if effort is maximized and fatigue is minimized then the maximum possible volume should be expected to be at or above the lifters 1RM.} At $50\%$ intensity, all it takes is two reps to match the volume performed at $100\%$ intensity, which is shown in equation \ref{eq:VolumeWithDiffereingIntensities2}. At $50\%$ intensity, far more than one set of two reps can be performed, making it easy to surpass the volume done at $100\%$ intensity. The data discussed in chapter \ref{sec:DataSection} has many examples of this.
 
 \begin{subequations}
     \begin{align}
         \label{eq:VolumeWithDiffereingIntensities1}
-        v_{I=1}=&v(1,1,l_{1RM})=l_{1RM} \\
+        v_{I=1}=&v(s=1,r=1,w=l_{1RM})=l_{1RM} \\
         \label{eq:VolumeWithDiffereingIntensities2}
-        v_{I=0.5}=&v(1,2,0.5l_{1RM})=l_{1RM}
+        v_{I=0.5}=&v(s=1,r=2,w=0.5l_{1RM})=l_{1RM}
     \end{align}
 \end{subequations}
 
 The fact that volume diminishes at higher intensities cannot be stressed enough, as it breaks any intuition gathered from equations \ref{eq:BaseVolumeEquation} and \ref{eq:IntensityBasedVolumeEquation}. These equations, serve as a way to \textit{measure} volume, not as a proxy to determine what is possible. These equations have no regard to the limitations of the human body. It is common knowledge among strength coaches that if you want to increase volume sets and reps need to be increased, not weight.
 
-Now, for lower intensities, it is tempting to say that as weight approaches $0$ volume will linearly decrease to $0$. Again, while mathematically true, the human body does not follow a linear decrease in volume. When weight diminishes it become easier to lift the weight. Common knowledge dictates that performing some small, light task it can be done many times. Now, this does not come for nothing, as when intensity decreases more endurance is required. However, generally speaking, the human body is made for endurance. Running for long distances is one of our strengths thanks to evolution. What this means for lifting is that as weight decreases so many more sets and reps can be done that the decrease in volume from the decrease in weight is overcome. Volume cannot indefinitely increase, there is a limit of course. This limit is known as the lifters volume tolerance. As weight decreases more sets and reps can be done until this limit is reached.
+Now, for lower intensities, it is tempting to say that as weight approaches $0$ volume will linearly decrease to $0$. Again, while mathematically true, the human body does not follow a linear decrease in volume. When weight diminishes it become easier to lift the weight. Common knowledge dictates that performing some small, light task it can be done many times. Now, this does not come at no cost, as when intensity decreases more endurance is required. However, generally speaking, the human body is made for endurance. Running for long distances is one of our strengths thanks to evolution. What this means for lifting is that as weight decreases so many more sets and reps can be done that the decrease in volume from the decrease in weight is overcome. Volume cannot indefinitely increase, there is a limit of course. This limit is known as the lifters volume tolerance. As weight decreases more sets and reps can be done until this limit is reached.
 
-Given the above discussion the following ideas can be gathered:
+Given the above discussion the following properties can be gathered:
 
 \begin{itemize}
-	\item As intensity approaches $100$\%  volume will decrease until it matches the lifters 1RM.
-	\item As intensity approaches $0$\% volume will approach some plateau, or asymptote in mathematical terms. The exact value of the plateau will need to be found from the data.
+	\item Property 1.a:  As intensity approaches $100$\%  volume will decrease until it is near the lifters 1RM.
+	\item Property 1.b: As intensity approaches $0$\% volume will approach some plateau, or asymptote in mathematical terms. The exact value of the plateau will need to be found from the data.
 \end{itemize}
 
 To confirm this behavior the data will need to be considered. Looking at figure \ref{fig:IntensityVsVolumeGraph}, it does not demonstrate this pattern very well. The first item of the above list is visible in the data as volume decreases past $80$\% intensity until it reaches the volume equivalent to a 1RM. The second item of the list however does not appear to be present in the data. Instead of reaching a rough plateau it reaches a peak and drops off linearly past the peak. This seemingly goes against the pattern that was discussed when considering the limits of the human body.
@@ -99,13 +99,13 @@ Fatigue will necessarily limit volume. The reasoning behind this is simple, the 
 \subsection{Property 4: Sets and Reps}
 \label{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariablesSetsAndReps}
 
-With effort, intensity, and fatigues relation to volume being explored, sets and reps are all that's left. It may be tempting to conclude that volume should be constant given a particular weight and effort. This conclusion can be reached by looking at equations \ref{eq:BaseVolumeEquation} and \ref{eq:IntensityBasedVolumeEquation}, where once the weight and effort are known sets and reps would just vary inversely to ensure volume remains constant. Again, while mathematically true, the limits of the human body need to be considered. Evidence that the relationship between sets and reps is not perfectly inverse is shown in figure \ref{fig:SetsVsReps}, where a drop in sets from the expected inverse pattern is seen. This favoritism between sets and reps will of course mean volume is no longer constant given a particular intensity and effort, and as such will be known as the \textit{volume skew}.
+With effort, intensity, and fatigues relation to volume being explored, sets and reps are all that's left. It may be tempting to conclude that volume should be constant given a particular weight and effort. This conclusion can be reached by looking at equations \ref{eq:BaseVolumeEquation} and \ref{eq:IntensityBasedVolumeEquation}, where once the weight and effort are known sets and reps would just vary inversely to ensure volume remains constant. Again, while mathematically true, the limits of the human body need to be considered. Evidence that the relationship between sets and reps is not perfectly inverse is shown in figure \ref{fig:SetsVsReps}, where a slight drop in sets from the expected inverse pattern is seen. This favoritism between sets and reps will of course mean volume is no longer constant given a particular intensity and effort, and as such will be known as the \textit{volume skew}.
 %This can be attributed to a lack of \textit{endurance}, where sets with a greater number of reps  require more endurance than sets with less reps. Powerlifters are eternally known for having no endurance, so it should come as no surprise that they will favor more sets over reps.
 
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.55]{images/ch3/SetsVsReps.png}
-    \caption{A graph comparing average reps and sets for main compound and main compound accessory lifts. Note how the relationship is not perfectly inverse. In this case, the lifter has a volume skew towards reps, where more reps are favored over more sets.}
+    \caption{A graph comparing average reps and sets for main compound and main compound accessory lifts. Note how the relationship is not perfectly inverse. Don't assume any volume skew seen in this graph is necessarily true for all the data, as this plot shows many exercises over a large time span. Finding volume skew will eventually need to be done on a per exercise basis across time.}
     \label{fig:SetsVsReps}
 \end{figure}
 
@@ -117,7 +117,7 @@ By this point it should be obvious the crux of the problem in question will requ
 
 Before moving forward with the goal of finding a surface of best fit using the data set and linear regression, the limits of linear regression need to be considered. Looking at the data set, it should be clear that it is a time series: the data points are collected over time, and data points nearer in time have greater importance than data points farther away in time. Linear regression assumes that all the data points are uncorrelated, which is clearly untrue with time series data. To reconcile the differences between working with linear regression and a time series data set, two things can be done.
 
-The first step that can be taken is to limit the time frame that linear regression is run over. Sets, reps, volume, and the volume skew can all vary through time, but not necessarily in direct linear relation to time. As an example of this, consider seasonal training, which some powerlifters choose to employ. In the off season intensities will drop, volume will increase, and the emphasis on training may shift to hypertrophy over strength. In the on season intensities will increase, volume will necessarily decrease, and the emphasis on training will shift to strength over hypertrophy. This will result in shifts in the number of sets and reps being done over time. To capture these changes over time, the data points used can be limited to a specific time frame, creating a form of moving average as a lifter continues to train. The exact equation that determines what data points are included and to what extent they are considered will be discussed more in chapter \ref{sec:TimeFrame}. That being said, some notation is required to continue, and the general notation used to show which data points will be used when performing linear regression is shown in equation \ref{eq:TimeFrame}. The exact length of the time frame, $t_f$, along with any other specifics, will be discussed in chapter \ref{sec:TimeFrame}. Throughout the rest of this book equation \ref{eq:TimeFrame} will be written short hand as $t_i\in \{ T \}$ In an effort to save space.
+The first step that can be taken is to limit the time frame that linear regression is run over. Sets, reps, volume, and the volume skew can all vary through time, but not necessarily in direct linear relation to time. As an example of this, consider seasonal training, which some powerlifters choose to employ. In the off season intensities will drop, volume will increase, and the emphasis on training may shift to hypertrophy over strength. In the on season intensities will increase, volume will necessarily decrease, and the emphasis on training will shift to strength over hypertrophy. This will result in shifts in the number of sets and reps being done over time. To capture these changes over time several techniques can be used. The exact equations that determine what data points are included and to what extent they are considered will be discussed more in chapter \ref{sec:TimeFrame}. That being said, some notation is required to continue. The general notation used to show which data points will be used when performing linear regression is shown in equation \ref{eq:TimeFrame}. The exact length of the time frame, $t_f$, along with any other specifics, will be discussed in chapter \ref{sec:TimeFrame}. Throughout the rest of this book equation \ref{eq:TimeFrame} will be written short hand as $t_i\in \{ T \}$ In an effort to save space.
 
 \begin{equation}
     \label{eq:TimeFrame}
@@ -145,7 +145,7 @@ Having an accurate tracking of a lifters 1RM over time becomes an important depe
 
 While exploring the intuitive relationships between variables a large amount of emphasis was placed on volume, with most variables being discussed in relation to volume. Despite this, this section is more concerned with how the surface is going to be defined, which will not involve directly involve volume. Instead, the general idea of how the surfaces presented in the next couple sections were conceptualized will be discussed. Within each surfaces chapter, there will be a discussion about how the surface abides by the intuitive behaviors, if at all.
 
-With that, the starting point of every surface is amusingly simple, and can be summed up in the following phrase: Performance is effort without fatigue. To be more specific, performance is equal to total effort without total fatigue. It is tempting to say that, for a powerlifter, performance is simply the weight that is lifted, making $P=w$. However, remembering that these surfaces will eventually be fitted to the data using linear regression and after the discussion in section \ref{sec:PotentialSurfaceLinearRegressionAndTimeSeriesProblems} it should be clear that intensity should be used in the place of weight to measure performance, making $P=I$. Equation \ref{eq:PerformanceProxy} shows an approximate form for the effort-fatigue model.
+With that, the starting point of every surface is amusingly simple, and can be summed up in the following phrase: Performance is effort diminished by fatigue. To be more specific, performance is equal to total effort diminished by total fatigue. It is tempting to say that, for a powerlifter, performance is simply the weight that is lifted, making $P=w$. However, remembering that these surfaces will eventually be fitted to the data using linear regression and after the discussion in section \ref{sec:PotentialSurfaceLinearRegressionAndTimeSeriesProblems} it should be clear that intensity should be used in the place of weight to measure performance, making $P=I$. Equation \ref{eq:PerformanceProxy} shows an approximate form for the effort-fatigue model.
 
 \begin{equation}
 	\label{eq:PerformanceProxy}
@@ -155,7 +155,7 @@ With that, the starting point of every surface is amusingly simple, and can be s
 	\end{split}
 \end{equation}
 
-The $\hat{=}$ symbol in this case means "something like". It is chosen to mean this over something like the $\approx$ symbol because these equations are approximations in the loosest sense. The equations in this section merely form a rough template for later chapters to fully realize. The $\hat{-}$ symbol means "without". The true mathematical interpretation of the $\hat{-}$ symbol is left for future chapters to define.
+The $\hat{=}$ symbol in this case means "something like". It is chosen to mean this over something like the $\approx$ symbol because these equations are approximations in the loosest sense. The equations in this section merely form a rough template for later chapters to fully realize. The $\hat{-}$ symbol means "diminished by". The true mathematical interpretation of the $\hat{-}$ symbol is left for future chapters to define.
 
 After performance, total effort is the next easiest term to understand as it directly correlates to how effort was discussed in section \ref{sec:CommonTermsSection}. The only effort that can be applied is by the lifter themselves, no other external factor can 'add effort' to a lifters workout. \footnote{An argument could be made for pre-workout, sugar rushes, a lifter 'getting in there head', or adrenaline dumps 'adding effort', but these are only tools to help a lifter to exert more effort, not tools to generate more effort in and of themselves. Even with these tools, at the end of the day, the effort still has to come from the lifter themselves.} Given this, $E_{tot}$ can be nicely summed up in equation \ref{eq:TotalEffort}. Because there is only one source of effort, a true equality sign can be used. $\epsilon_1$ is a constant that will need to be found after performing linear regression on whatever concrete representation of the surface the next few chapters decide upon.
 
@@ -194,30 +194,31 @@ Before going to the next chapters, it is worth mentioning that latent fatigue wi
 \chapter{Surface 1: The Basic Surface}
 \label{sec:PotentialSurfaceTheBasicSurface}
 
-The first surface to explore takes the effort-fatigue model in and makes as few changes as possible, treating the $\hat{-}$ symbol to mean literal subtraction. The first change it makes is to center the surface at $(s=1,r=2,I=1)$ so that the peak in intensity occurs with one set of one rep, matching the lifters 1RM. The second change is to add an error term, represented by $\epsilon$. The last, and most substantial change, is to total fatigue. The discussion in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} needs to be considered. One of the main takeaways from that section is that volume is limited by effort at high intensities. If the total fatigue template presented by the effort-fatigue model is taken as a literal equation, volume will not have the correct behavior as intensity approaches $100$\%. Namely, there will not be diminishing returns in volume as intensity increases because all the relationships with sets and reps are either linear or a linear combination of both of them. To correct for this, the terms containing sets and reps will be squared, creating diminishing returns to volume with respect to intensity that can be adjusted through the constant in front of each term. \footnote{Yes, there are more flexible ways to do this, but using those ways would make it so linear regression could not be performed due to the multiplicative combinations of constants.} With these changes, the total fatigue equation for the basic surface is shown below. 
+The first surface to explore takes the effort-fatigue model in and makes as few changes as possible, treating the $\hat{-}$ symbol to mean literal subtraction. The first change it makes is to center the surface at $(s=1,r=2,I=\epsilon)$ so that the peak in intensity occurs with one set of one rep, matching the lifters 1RM. Doing this will require an error term to be added, represented by $\epsilon$. The next, and most substantial change, is to total fatigue. The discussion in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} needs to be considered. One of the main takeaways from that section is that volume is limited by effort at high intensities. If the total fatigue template presented by the effort-fatigue model is taken as a literal equation, volume will not have the correct behavior as intensity approaches $100$\%. Namely, there will not be diminishing returns in volume as intensity increases because all the relationships with sets and reps are either linear or a linear combination of both of them. To correct for this, the terms containing sets and reps will be squared, creating diminishing returns to volume with respect to intensity that can be adjusted through the constant in front of each term. \footnote{Yes, there are more flexible ways to do this, but using those ways would make it so linear regression could not be performed due to the multiplicative combinations of constants.} With these changes, the total fatigue equation for the basic surface is shown below. 
 
 \begin{equation*}
 	F_{tot} = \epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+\epsilon_5 (s-1)^2(r-1)^2+\epsilon_6 (s-1)^2+\epsilon_7 (r-1)^2
 \end{equation*}
 
-The final form of the basic surface is shown in equation \ref{eq:BasicSurfaceEquation}. Several constraints are applied to the constants, the reasoning of which will be discussed later in the chapter, but the general idea behind them is to limit the surface to behavior that makes sense for the problem at hand. This equation attempts to fully realize all of the intuitive relationships discussed in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables}. Which intuitive relationships it fulfills and which it does not will be the topics of sections \ref{sec:PotentialSurfaceVolumePeak}-\ref{sec:PotentialSurfaceUnboundedVolume}.
+The final form of the basic surface is shown in equation \ref{eq:BasicSurfaceEquation}. Several constraints are applied to the constants, the reasoning of which will be discussed later in the chapter, but the general idea behind them is to limit the surface to behavior that makes sense for the problem at hand. This equation attempts to fully realize all of the intuitive relationships discussed in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables}. Which intuitive relationships it fulfills and which it does not will be the topics of sections \ref{sec:PotentialSurfaceAnalysisOfProperty2}-\ref{sec:PotentialSurfaceAnalysisOfProperty4}.
 
-\begin{equation}
-	\label{eq:BasicSurfaceEquation}
-	\begin{split}
-		I & =\epsilon+\epsilon_1 E-\left( 
-			\epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+\epsilon_5 (s-1)^2(r-1)^2+\epsilon_6 (s-1)^2+\epsilon_7 (r-1)^2
-		\right)
-	\end{split}
-\end{equation}
-\centerline{where}
-\begin{equation*}
-    \begin{split}
-        E & \in \{ 0,0.5,1,1.5,...,10 \} \\
-        \epsilon, \epsilon_2, \epsilon_3, \epsilon_4, \epsilon_5,\epsilon_6,\epsilon_7 & \ge 0 \\
-        \epsilon_1 & \le 0 \\
-    \end{split}
-\end{equation*}
+\begin{minipage}{\textwidth}
+	\begin{equation}
+		\label{eq:BasicSurfaceEquation}
+		\begin{split}
+			I & =\epsilon+\epsilon_1 E-\left( 
+				\epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+\epsilon_5 (s-1)^2(r-1)^2+\epsilon_6 (s-1)^2+\epsilon_7 (r-1)^2
+			\right)
+		\end{split}
+	\end{equation}
+	\centerline{where}
+	\begin{equation*}
+	    \begin{split}
+	        E & \in \{ 1,1.5,2,2.5, \dots ,10 \} \\
+	        \epsilon, \epsilon_1, \epsilon_2, \epsilon_3, \epsilon_4, \epsilon_5,\epsilon_6,\epsilon_7 & > 0 \\
+	    \end{split}
+	\end{equation*}
+\end{minipage}
 
 To run linear regression the error equation is needed, which is shown below.
 
@@ -330,68 +331,164 @@ After a similar process is carried out for each unknown constant, equation \ref{
     \right]
 \end{equation*}
 
-With equations \ref{eq:PotentialSurfaceEquation} and \ref{eq:LinearRegMatrixEquation}, this surface is fully defined. After fitting the surface to the data discussed in chapter \ref{sec:DataSection}, graphs similar to the ones shown in figure \ref{fig:DeadliftPotentialSurfaceAcrossEffort} can be created. A full set of potential surface graphs for squat, bench, and deadlift across effort levels $5-10$ are available in appendix \ref{sec:AppendixA}. Many of the relationships discussed in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} are concerned with volume. To give some intuition for volume before moving on, equation \ref{eq:IntensitySubedInVolume} is the result of solving the potential surface for $I$ and substituting it in equation \ref{eq:IntensityBasedVolumeEquation}. The graphs shown in table \ref{tab:DeadliftVolumeAcrossEffort} show the volume surface generated from this potential surface.
+With equations \ref{eq:PotentialSurfaceEquation} and \ref{eq:LinearRegMatrixEquation}, this surface is fully defined. After fitting the surface to the data discussed in chapter \ref{sec:DataSection}, graphs similar to the ones shown in figure \ref{fig:SquatPotentialSurfaceAcrossEffort} can be created. A full set of potential surface graphs for squat, bench, and deadlift across effort levels $5-10$ are available in appendix \ref{sec:AppendixA}. Many of the relationships discussed in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} are concerned with volume. To give some intuition for volume before moving on, equation \ref{eq:IntensitySubedInVolume} is the result of solving the potential surface for $I$ and substituting it in equation \ref{eq:IntensityBasedVolumeEquation}. The graphs shown in figure \ref{fig:SquatPotentialSurfaceVolumeAcrossEffort} show the volume surface generated from this potential surface.
 
 \begin{equation}
     \label{eq:IntensitySubedInVolume}
-    v(s,r,E)=sr\left( 
-    		\epsilon+
+    \begin{split}
+    		v = & srI \\
+    			= & sr \left( 
+    			\epsilon+
+    			\epsilon_1 E-
+    			\epsilon_2 F_l-
+    			\epsilon_3 F_w-
+    			\epsilon_4 F_e-
+    			\epsilon_5(s-1)^2(r-1)^2-
+    			\epsilon_6(s-1)^2-
+    			\epsilon_7(r-1)^2
+    		\right)
+    \end{split}
+\end{equation}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[scale=0.55]{images/ch3/PotentialSurface/DualSquat.Effort[5,10].basic.png}
+    \caption{The potential surface fitted to squat data at various effort levels. The window and time frame values will be discussed in chapter \ref{sec:TimeFrame}. For now, the $I(0,0)$ and MSE values are the most important.}
+    \label{fig:SquatPotentialSurfaceAcrossEffort}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[scale=0.55]{images/ch3/Volume/DualSquat.Effort[5,10].basic.png}
+    \caption{The volume surface resulting from the potential surface fitted to squat data at various effort levels.}
+    \label{fig:SquatPotentialSurfaceVolumeAcrossEffort}
+\end{figure}
+
+\section{Analysis of Property 1.a: Volume and Intensity}
+\label{sec:PotentialSurfaceAnalysisOfProperty1a}
+
+Property 1.a is that volume should approach the lifters 1RM as intensity increases. To prove this two things need to happen. It needs to be proven that equation \ref{eq:BasicSurfaceEquation} has a single global maximum and no minimum. This maximum should equal the lifters current 1RM. Given that this is the case, it then needs to be proven that equation \ref{eq:IntensitySubedInVolume} has a  minimum at the same point that equation \ref{eq:BaseIntensityEquation} has it's maximum. This minimum also needs to equal the value of equation \ref{eq:BaseIntensityEquation} at its maximum. Given all this, it can be said that the basic surface exhibits property 1.a because volume has a minimum at the same point where intensity has a global maximum, meaning intensity increases from all directions to that point where volume has a value equal to the lifters current 1RM.
+
+To begin, the maximum of equation \ref{eq:BaseIntensityEquation} needs to be found. This will require the gradient of that function, shown below.
+
+\begin{equation*}
+	\nabla I =
+	\left[
+	\begin{matrix}
+		\frac{\partial I}{\partial E} \\
+		\frac{\partial I}{\partial F_l} \\
+		\frac{\partial I}{\partial F_w} \\
+		\frac{\partial I}{\partial F_e} \\ 
+		\frac{\partial I}{\partial s} \\
+		\frac{\partial I}{\partial r} \\
+	\end{matrix}
+	\right] =
+	\left[
+	\begin{matrix}
+		\epsilon_1 \\
+		-\epsilon_2 \\
+		-\epsilon_3 \\
+		-\epsilon_4 \\
+		-2(s-1)\left( \epsilon_5(r-1)^2+\epsilon_6 \right) \\
+		-2(r-1)\left( \epsilon_5(s-1)^2+\epsilon_7 \right) \\
+	\end{matrix}
+	\right]
+\end{equation*}
+
+To find critical points where a maximum could occur the gradient will be set to zero, $\nabla I=0$, and all the variables can be solved for. However, there are only two variables remaining, $s$ and $r$. This means that all the variables $E$,$F_l$,$F_w$, and $F_e$ can be any value and the location of the maximum will remain unchanged. Given that only the last two equations of $\nabla I$ effect the result, the problem of finding critical points is essentially rendered to a two dimensional problem. After some algebraic manipulation, it can be shown that the only critical point is $(s=1,r=1)$.
+
+Now, given the critical point at $(s=1,r=1)$ it needs to be proven to be a maximum. The simplification to a two dimensional problem will be used here, and the standard determinant equation can be used to determine concavity.
+
+\begin{equation*}
+	\begin{split}
+		\partial_{ss}I & = -2\left( 
+			\epsilon_5(r-1)^2+\epsilon_6 
+		\right) \\
+		\partial_{rr}I & = -2\left( 
+			\epsilon_5(s-1)^2+\epsilon_7 
+		\right) \\
+		\partial_{sr}I & = -4 \epsilon_5 (s-1)(r-1) \\
+		D(s=1,r=1) & = \partial_{ss}I(1,1) \partial_{rr}I(1,1)-\left(
+			\partial_{sr} I(1,1)
+		\right)^2 = 4\epsilon_6 \epsilon_7
+	\end{split}
+\end{equation*}
+
+Given the constraints on equation \ref{eq:BaseIntensityEquation} it can be said that $D(s=1,r=1)>0$. Given this and the fact that $\partial_{ss}I(s=1,r=1)=-2\epsilon_6$, which is $<0$, it can be stated that the critical point $(s=1,r=1)$ is a maximum. This maximum needs to be shown to equal the lifters 1RM. To obtain this, equation \ref{eq:BaseIntensityEquation} is simply evaluated at $(s=1,r=1)$. The result is shown in equation \ref{eq:BasicSurface1RMPred}, which \ref{eq:BasicSurface1RMPred} represents what the model thinks the lifters 1RM is. This is an important concept, especially because of the discussion in section \ref{sec:PotentialSurfaceLinearRegressionAndTimeSeriesProblems}, and will be returned to in section \ref{sec:}.
+
+\begin{equation}
+	\label{eq:BasicSurface1RMPred}
+	I(s=1,r=1)=\epsilon+
     		\epsilon_1 E-
     		\epsilon_2 F_l-
     		\epsilon_3 F_w-
-    		\epsilon_4 F_e-
-    		\epsilon_5(s-1)^2(r-1)^2-
-    		\epsilon_6(s-1)^2-
-    		\epsilon_7(r-1)^2
-    	\right)
+    		\epsilon_4 F_e
 \end{equation}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.55]{images/ch3/PotentialSurface/DualDeadlift.Effort[5,10].basic.png}
-    \caption{The potential surface fitted to deadlift data at various effort levels. The window and trime frame values will be discussed in chapter \ref{sec:TimeFrame}.}
-    \label{fig:DeadliftPotentialSurfaceAcrossEffort}
-\end{figure}
+With that, the first part of the proof is complete. The intensity equation has a single max that represents the lifters current 1RM. The second part of the proof relies on finding a minimum of the volume function. To do this, the gradient of equation \ref{eq:IntensitySubedInVolume} is needed.
 
-%
-%\begin{table}[]
-%    \centering
-%    \begin{tabular}{c|c}
-%        RPE & Volume Graph \\%& Volume Across Intensities \\
-%        \hline \\
-%        
-%        5 &
-%        \includegraphics[width=139mm]{DeadliftVolume/5-1.png} \\%&  
-%        %\includegraphics[width=76mm]{DeadliftVolume/5-2.png} \\
-%        
-%        %8 & 
-%        %\includegraphics[width=90mm]{DeadliftVolume/8-1.png} \\%&
-%        %%\includegraphics[width=76mm]{DeadliftVolume/8-2.png} \\
-%        
-%        10 &
-%        \includegraphics[width=139mm]{DeadliftVolume/10-1.png} \\%&
-%        %\includegraphics[width=76mm]{DeadliftVolume/10-2.png} \\
-%    \end{tabular}
-%    \caption{The volume equation from deadlift data at various effort levels. Volume was scaled linearly by $l_{1RM}$, making the vertical axis just $srI$. Note how there is a clear peak in volume as well as a ridge where volume rapidly decreases after crossing.}
-%    \label{tab:DeadliftVolumeAcrossEffort}
-%\end{table}
-%
-%
+\begin{equation*}
+	\nabla v=\left[\begin{matrix}
+		\frac{\partial v}{\partial E} \\
+		\frac{\partial v}{\partial F_l} \\
+		\frac{\partial v}{\partial F_w} \\
+		\frac{\partial v}{\partial F_e} \\
+		\frac{\partial v}{\partial s} \\
+		\frac{\partial v}{\partial r} \\
+	\end{matrix}\right]=
+	\left[\begin{matrix}
+		\epsilon_1 sr \\
+		-\epsilon_2 sr \\
+		-\epsilon_3 sr \\
+		-\epsilon_4 sr \\
+		\epsilon s+
+		\epsilon_1 Es-
+		\epsilon_2 F_l s-
+		\epsilon_3 F_w s-
+		\epsilon_4 F_e s-
+		\epsilon_6 s(s-1)^2	-
+		\left( 
+			\epsilon_5 s(s-1)^2+\epsilon_7
+		\right)	
+		(3s^2-4s+1) \\
+		\epsilon r+
+		\epsilon_1 Er-
+		\epsilon_2 F_l r-
+		\epsilon_3 F_w r-
+		\epsilon_4 F_e r-
+		\epsilon_7 r(r-1)^2	-
+		\left( 
+			\epsilon_5 s(s-1)^2+\epsilon_6
+		\right)	
+		(3s^2-4s+1) \\
+	\end{matrix}\right]
+\end{equation*}
 
-\section{Analysis of Property 1: Volume and Intensity}
-\label{sec:BasicSurfaceAnalysisOfProperty1}
+This time the gradient does not remove any variables, making the simplification that was performed previously unusable. However, looking at the first four equations of the gradient in context of the last two it is clear that the only critical point occurs at $(s=0,r=0)$. Looking at figures \ref{fig:SquatPotentialSurfaceVolumeAcrossEffort} there appears to be another critical point that represents a maximum. The reason for that is because those graphs have constant values for $E$, $F_l$, $F_w$, and $F_e$. This removes the first four equations of the gradient and as such makes room for another critical point. Given the terms with the $E$, $F_l$, $F_w$, and $F_e$ variables are linear it should come as no surprise that those variables prevent a maximum from occurring, allowing infinite growth in relation to any of the variables.
+
+Going back to the critical point, it needs to be be proven that it is a minimum. However, without the previous simplification the determinant of the Jacobian matrix would be needed to specify if this critical point is a minimum or maximum. Solving that analytically is near impossible, so it will have to suffice looking at the graphs of figure \ref{fig:SquatPotentialSurfaceVolumeAcrossEffort} for proof that this critical point is a minimum. 
+
+Now, this critical point does not match the critical point found from the intensity equation. This presents a problem because unless the points are the same the whole proof falls apart. The saving nuance comes from the domain of the problem, with both $s$ and $r$ being restricted to being $\ge 1$ in section \ref{sec:UnitsOfMeasurement}. This restriction means the minimum in relation to this problem is $(s=1,r=1)$, matching the maximum of equation \ref{eq:BasicSurfaceEquation}. Given this, all that is left to prove is that volume at this critical point is equal to the lifters current 1RM found previously, which is shown in the equation below. With that, it is proven that this surface exhibits property 1.a.
+
+\begin{equation}
+	v(s=1,r=1)=
+    			\epsilon+
+    			\epsilon_1 E-
+    			\epsilon_2 F_l-
+    			\epsilon_3 F_w-
+    			\epsilon_4 F_e = I(s=1,r=1)
+\end{equation}
 
 
 \section{Analysis of Property 2: Volume and Effort}
-\label{sec:BasicSurfaceAnalysisOfProperty2}
+\label{sec:PotentialSurfaceAnalysisOfProperty2}
 
 It needs to be shown that volume increases with increased effort and decreases with decreased effort. As such, the changes in $v$ relating to changes in $E$ are desired, requiring the partial derivative of equation \ref{eq:IntensitySubedInVolume} with respect to $E$.
 
-\begin{equation}
-    \label{eq:VolumeEPartialDerivative}
+\begin{equation*}
     \begin{split}
     		\frac{\partial v}{\partial E} & =
-    		\frac{\partial}{\partial E}sr\left( 
+    		\frac{\partial}{\partial E} l_{1RM}sr\left( 
     			\epsilon+
     			\epsilon_1 E-
     			\epsilon_2 F_l-
@@ -401,9 +498,9 @@ It needs to be shown that volume increases with increased effort and decreases w
     			\epsilon_6(s-1)^2-
     			\epsilon_7(r-1)^2
     		\right) \\
-    		& =-\epsilon_1 sr
+    		& =\epsilon_1 l_{1RM} sr
     \end{split}
-\end{equation}
+\end{equation*}
 
 If $\partial_{E}v$ is always $>0$, then it can be said the function is strictly increasing, meaning volume strictly increases with increased effort. The following inequalities are given in section \ref{sec:UnitsOfMeasurement}.
 
@@ -411,298 +508,485 @@ If $\partial_{E}v$ is always $>0$, then it can be said the function is strictly 
     \begin{split}
         s \ge & 1 \\
         r \in & \{ \mathbb{R}\ge 1 \} \\
+        w > & 0
     \end{split}
 \end{equation*}
 
-Looking at the above inequalities, the following conclusion can be made.
+Given that $l_{1RM}$ is a weight, the following conclusion can be made from the above inequalities.
 
 \begin{equation*}
-    -\epsilon_1 sr> 0 \textbf{ iff } \epsilon_1< 0
+    \epsilon_1 l_{1RM} sr> 0 \textbf{ iff } \epsilon_1> 0
 \end{equation*}
 
-Therefore, it can be concluded that volume increases with increased effort if and only if $\epsilon_1< 0$. A similar argument can be made that proves volume decreases with decreased effort if and only if $\epsilon_1< 0$. Having the restriction that $\epsilon_1\le 0$ may seem problematic, but the $\epsilon_1$ values for three different exercises are all shown in table \ref{tab:EpsilonAcrossExercies}, and are all negative. It is clear the model is correctly identifying patterns from the training data and making volume increase with effort. Of course, this behavior will need to be ensured, so a constraint will be placed on $\epsilon_1$. This constraint is listed in equation \ref{eq:PotentialSurfaceEquation}.
+Therefore, it can be concluded that volume increases with increased effort if and only if $\epsilon_1> 0$. A similar argument can be made that proves volume decreases with decreased effort if and only if $\epsilon_1> 0$. Of course, this behavior will need to be ensured, so a constraint is be placed on $\epsilon_1$. This constraint is listed in equation \ref{eq:PotentialSurfaceEquation}.
+
+\section{Analysis of Property 3: Volume and Fatigue}
+\label{sec:PotentialSurfaceAnalysisOfProperty3}
+
+For property 2, it needs to be shown that volume decreases with increased fatigue. Similar to the previous section, partial derivatives is required. A partial derivative is needed for every fatigue term. Luckily all the fatigue terms are similar in nature, so for brevity only one will be analyzed here and it should be known that the other fatigue terms will follow the same behaviors. To begin, the partial derivative of equation \ref{eq:IntensitySubedInVolume} with respect to $F_l$ is required.
+
+\begin{equation*}
+    \begin{split}
+    		\frac{\partial v}{\partial F_l} & =
+    		\frac{\partial}{\partial F_l} l_{1RM} sr\left( 
+    			\epsilon+
+    			\epsilon_1 E-
+    			\epsilon_2 F_l-
+    			\epsilon_3 F_w-
+    			\epsilon_4 F_e-
+    			\epsilon_5(s-1)^2(r-1)^2-
+    			\epsilon_6(s-1)^2-
+    			\epsilon_7(r-1)^2
+    		\right) \\
+    		& = -\epsilon_2 l_{1RM} sr
+    \end{split}
+\end{equation*}
+
+This time, if $\partial_{F_l}v$ is always $<0$ then it can be said the function is strictly decreasing and volume decreases with increased fatigue. The same inequalities that were presented in previous section can be used here and the following statement can be made.
+
+\begin{equation*}
+    -\epsilon_2 l_{1RM} sr< 0 \textbf{ iff } \epsilon_2> 0
+\end{equation*}
+
+This proves that volume decreases with fatigue if and only if $\epsilon_2>0$. Just like the previous section, a similar argument can be made to prove that volume increases with decreased fatigue. This constraint will need to be applied to $e_2$,$e_3$, and $e_4$ and is listed in equation \ref{eq:PotentialSurfaceEquation}. The next section should offer a break from the monotony of this section.
+
+%\section{Analysis of Property 1: Volume and Intensity}
+%\label{sec:PotentialSurfaceAnalysisOfProperty1}
+%
+%Two things will need to be proven to satisfy property 1. The first of which is that volume should approach the lifters 1RM as intensity increases. This is easier said than done however. The first thing to consider is that volume is not constant at a given intensity. So what really needs to be proven is that the maximum volume at a given combination of sets, reps, effort, and fatigue approaches a minimum value $\le l_{1RM}$ as intensity increases. In order to do this the results from the previous two sections will be  used, as they guarantee that volume increases from increases in effort and decreases from increases in fatigue. Given these assumptions volume will be partially maximized when effort is maximized and fatigue is minimized. Looking at the domain of effort and fatigue from section \ref{sec:} this will occur when $E=10$ and $F_l=F_w=F_e=0$. If it can be proven that volume has a minimum under these maximal conditions and that this minimum is $\le l_{1RM}$ then the first part of property 1 will be satisfied.
+%
+%
+%If it can be proven that volume is equal to the lifters $l_{1RM}$ under these conditions then it will be true that volume is $\le l_{1RM}$ under any condition.
+%
+%% Volume needs to have minimum at s=1, r=1
+%% Show that minimum is eq 1RM
+%
+%Looking at equation \ref{eq:IntensitySubedInVolume} it is tempting to say that because $\lim_{I\to1}v(s=1,r=1,I)=l_{1RM}$ the problem is solved. However, in that line of logic it is assumed that when $I\to l_{1RM}$, $s,r\to 1$. While this behavior makes sense it needs to be proven before it can be said that the first part of property 1 is satisfied. 
+%
+%
+%To do this it helps to remember that the terms associated with sets and reps are part of the total fatigue equation. Following the logic of the previous paragraph, this means that volume will be maximized when these terms are minimized. Looking at the terms related to sets and reps, it is clear they are minimized as $s,r\to 1$. 
+%
+%
+%To start, it needs to first be proven that when $s\to1$, $I\to l_{1RM}$.
+%
+%\begin{equation*}
+%	\begin{split}
+%		\lim_{s\to 1} & I = \\
+%		\lim_{s\to 1} &
+%			\epsilon+
+%			\epsilon_1 E-
+%			\left( 
+%				\epsilon_2 F_l+
+%				\epsilon_3 F_w+
+%				\epsilon_4 F_e+
+%				\epsilon_5 (s-1)^2(r-1)^2+
+%				\epsilon_6 (s-1)^2+
+%				\epsilon_7 (r-1)^2
+%			\right) = \\
+%		& \epsilon+
+%		\epsilon_1 E-
+%		\left( 
+%			\epsilon_2 F_l+
+%			\epsilon_3 F_w+
+%			\epsilon_4 F_e+
+%			\epsilon_7 (r-1)^2
+%		\right) = \\
+%	\end{split}
+%\end{equation*}
+
+
+\section{Analysis of Property 4: Sets and Reps}
+\label{sec:PotentialSurfaceAnalysisOfProperty4}
+
+Property 4 is concerned with how sets and reps change, mainly with regard to volume skew. As such, it needs to be shown that the model is capable of determining volume skew. An initial look at the potential surface can't hurt. Looking at the potential surface equation the only place where differences between $s$ and $r$ can arise are with the $\epsilon_6$ and $\epsilon_7$ terms, so it makes sense to reason that ratio of those constants will somehow measure volume skew. Exactly how they measure volume skew will need to be determined by calculating the volume underneath the volume surface on either side of the plane $s=r$. Once that is done, the ratio of total volume skewing towards sets and reps respectively can be calculated. 
+
+To measure the total volume on either side of the plane $s=r$ several double integrals will need to be calculated. Given the non-concave nature of the volume surface, calculating the total volume on either side of the $s=r$ plane will require the volume surface to be broken up into $4$ regions. These regions are:
+
+\begin{itemize}
+	\item $1\le r\le s$ and $0\le s \le S_d$ where $S_d$ is the point where the volume surface intersects the line $s=r$ on the $sr$ plane.
+	\item $1\le s\le r$ and $0\le r \le R_d$ where $R_d$ is the point where the volume surface intersects the line $s=r$ on the $sr$ plane.
+	\item $1\le r\le S_t$ and $S_d \le s\le S_e$ where $S_t$ is the intersection of the volume surface on the $sr$ plane solved for $s$ and $S_e$ is the the point where the volume surface intersects the $s=1$ line on the $sr$ plane.
+	\item $1\le s\le R_t$ and $R_d \le r\le R_e$ where $R_t$ is the intersection of the volume surface on the $sr$ plane solved for $r$ and $R_e$ is the the point where the volume surface intersects the $r=1$ line on the $sr$ plane.
+\end{itemize}
+
+Note that due to the nature of the line $s=r$, $S_d=R_d$. In integral form, the equation will take the form shown in equation \ref{eq:BasicSurfaceVolumeSkew}. Note that this equation creates a fraction of sets over reps. The inverse of equation \ref{eq:BasicSurfaceVolumeSkew} would represent reps over sets. Either way would work as long as it is known which form is used, so, to be clear, the form of sets over reps will be used for the rest of this section.
+
+\begin{minipage}{\textwidth}
+	\begin{equation}
+	   \label{eq:BasicSurfaceVolumeSkew}
+	   v_s=\frac{
+	   	\int_{1}^{S_d}\int_{1}^{s}v\;drds+
+	   	\int_{S_d}^{S_e}\int_{1}^{R_t}v\;drds
+	   }{
+	   	\int_{1}^{R_d}\int_{1}^{r}v\;dsdr+
+	   	\int_{R_d}^{R_e}\int_{1}^{S_t}v\;dsdr
+	   }
+	\end{equation}
+	\centerline{where}
+	\begin{equation*}
+		\begin{split}
+			v & \equiv \text{ equation \ref{eq:IntensitySubedInVolume}} \\
+			S_d=R_d & =\left(
+				\frac{
+	   				-\epsilon_6-\epsilon_7+\sqrt{
+	   					(\epsilon_6+\epsilon_7)^2+
+	   					4\epsilon_5(
+	   						\epsilon+
+	   						\epsilon_1E-
+	   						\epsilon_2F_l-
+	   						\epsilon_3F_w-
+	   						\epsilon_4F_e
+	   					)
+	   				}
+	   			}{
+	   				2\epsilon_5
+			   	}\right)^{\frac{1}{2}} +1 \\
+			S_e & =\left(
+				\frac{
+					\epsilon+
+					\epsilon_1E-
+					\epsilon_2F_l-
+					\epsilon_3F_w-
+					\epsilon_4F_e
+				}{
+					\epsilon_6
+				}
+			\right)^{\frac{1}{2}}+1 \\
+			R_e & =\left(
+				\frac{
+					\epsilon+
+					\epsilon_1E-
+					\epsilon_2F_l-
+					\epsilon_3F_w-
+					\epsilon_4F_e
+				}{
+					\epsilon_7
+				}
+			\right)^{\frac{1}{2}}+1 \\
+			S_t & =\left(
+				\frac{
+					\epsilon+
+					\epsilon_1E-
+					\epsilon_2F_l-
+					\epsilon_3F_w-
+					\epsilon_4F_e-
+					\epsilon_7(r-1)^2		
+				}{
+					\epsilon_5(r-1)^2+
+					\epsilon_6
+				}
+			\right)^{\frac{1}{2}}+1 \\
+			R_t & =\left(
+				\frac{
+					\epsilon+
+					\epsilon_1E-
+					\epsilon_2F_l-
+					\epsilon_3F_w-
+					\epsilon_4F_e-
+					\epsilon_6(s-1)^2		
+				}{
+					\epsilon_5(s-1)^2+
+					\epsilon_7
+				}
+			\right)^{\frac{1}{2}}+1 \\
+		\end{split}
+	\end{equation*}
+\end{minipage}
+
+Given this equation, the following statements can be made:
+
+\begin{enumerate}
+    \item If $v_s<1$ then the total volume from reps is greater than the total volume from sets, which implies that the lifter favors reps for the given exercise, or has a volume skew towards reps for the given exercise.
+    \item If $v_s>1$ then the total volume from sets is greater than the total volume from reps, which implies that the lifter favors sets for the given exercise, or has a volume skew towards sets for the given exercise.
+    \item If $v_s=1$, then the lifter has no volume skew. \footnote{This can bring problems of its own, which will be discussed in section \ref{sec:}.}
+    %\item If $\epsilon_6=0$ or $\epsilon_7=0$ then a lifter has the maximum possible skew towards sets or reps respectively. \footnote{This idea will be explored more from volumes perspective in section \ref{sec:PotentialSurfaceUnboundedVolume}.}
+\end{enumerate}
+
+Several things are of immediate interest from equation \ref{eq:BasicSurfaceVolumeSkew}. The first is whether or not the top and bottom of the fraction are equivalent. If they are equivalent then this means the surface cannot measure volume skew. Luckily they are not equivalent due to the small differences in the placement of the $\epsilon_6$ and $\epsilon_7$ terms in the integral bounds. The first term on the top and bottom of the fraction may look equivalent because the bounds of integration are the same for both terms, but the order of the variables being integrated prevents this, this time because of the difference between the $\epsilon_6$ and $\epsilon_7$ terms in the volume equation. With this, property 4 is proven to be satisfied as the surface can measure volume skew.
+
+The second thing of interest is that this equation is utterly unusable algebraically. It would be quite nice to see the fraction reduce down to some jumble of constants that would be somewhat palatable, but the second term on the top and bottom of the fraction makes this impossible. The first term on the top and bottom of the fraction would be very tedious to compute by hand, but would technically be possible due to the simplicity of the inner integrals bounds. However, in the second term the $R_t$ and $S_t$ equations present a rather nasty upper bound on the inner integral that would have to be integrated after substituting it in the integral of the volume equation. This just results in more of a mess than it is worth trying to untangle. Because of this, an alternate way to measure volume skew would be helpful to have.
+
+The starting point for creating an approximation for volume skew is noticing that, generally, $S_e$ and $R_e$ each increase with the total volume on there respective sides of the $s=r$ plane. As such, the approximation for volume skew can be represented as the ratio of those terms, shown in equation \ref{eq:BasicSurfaceApproxVolumeSkew}. In order to match equation \ref{eq:BasicSurfaceVolumeSkew}, this equation will also create a fraction of sets over reps.
+
+\begin{equation}
+	\label{eq:BasicSurfaceApproxVolumeSkew}
+	\begin{split}
+		v_s \approx \frac{S_e}{R_e} & =\frac{
+			\left(
+				\frac{
+					\epsilon+
+					\epsilon_1E-
+					\epsilon_2F_l-
+					\epsilon_3F_w-
+					\epsilon_4F_e
+				}{
+					\epsilon_6
+				}
+			\right)^{\frac{1}{2}}+1
+		}{
+			\left(
+				\frac{
+					\epsilon+
+					\epsilon_1E-
+					\epsilon_2F_l-
+					\epsilon_3F_w-
+					\epsilon_4F_e
+				}{
+					\epsilon_7
+				}
+			\right)^{\frac{1}{2}}+1
+		} \\
+		& = \frac{
+			\epsilon_7^{\frac{1}{2}} \left(
+				\left(
+					\epsilon+
+					\epsilon_1E-
+					\epsilon_2F_l-
+					\epsilon_3F_w-
+					\epsilon_4F_e
+				\right)^{\frac{1}{2}}+
+				\epsilon_6^{\frac{1}{2}}
+			\right)		
+		}{
+			\epsilon_6^{\frac{1}{2}} \left(
+				\left(
+					\epsilon+
+					\epsilon_1E-
+					\epsilon_2F_l-
+					\epsilon_3F_w-
+					\epsilon_4F_e
+				\right)^{\frac{1}{2}}+
+				\epsilon_7^{\frac{1}{2}}
+			\right)		
+		}
+	\end{split}
+\end{equation}
+
+Because equation \ref{eq:BaseVolumeEquation} cannot be algebraically manipulated, the efficacy of this approximation will need to be shown analytically. The graphs in figure \ref{fig:ApproximateVsActualVolumeSkew} show the true volume skew compared to the approximation for varying values of different $\epsilon$ constants. As the graphs show, the approximation holds well enough to be considered a valid approximation. Of note is that when the actual volume skew equals $1$ so does the approximation. This is important because this is a critical point where the direction of the skew changes, so exactly matching this value in the approximation is important. Also of note is that as the approximation strays from $1$ it gets worse, with large $\epsilon_7$ values being particularly troublesome. The reason $\epsilon_7$ values have a greater error relates to the nature of the fraction. Having a skew towards reps constrains volume skew to be between $0\le v_s<1$ whereas a skew towards sets constrains the fraction to be between $1<v_s\le \infty$. Both scenarios need to represent the same range of values, but the skew towards reps has a much smaller range to do so, which also leaves much less space for error.
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[scale=0.55]{images/ch3/ApproxVsActualVolumeSkew.basic.png}
+    \caption{Graphs comparing the approximate and actual volume skew over varrying $\epsilon$ values. Note how the approximation follows the same direction of rate of change of the true volume skew, making it a reasonable approximation for this particular use case.}
+    \label{fig:ApproximateVsActualVolumeSkew}
+\end{figure}
+
+Before moving on, there has been so much attention on $\epsilon_6$ and $\epsilon_7$ that $\epsilon_5$ has not been discussed, despite having $s$ and $r$ terms associated with it. The constant $\epsilon_5$ represents the volume that should be possible no matter the magnitude of the volume skew. For example, if $\epsilon_6=0$ and $\epsilon_7>0$ for a given exercise, then the following can be stated about the lifter and the way they perform that particular exercise:
+
+\begin{itemize}
+    \item The lifter has a volume skew towards reps.
+    \item As the lifter leaves there normal volume skew, they should still be able to perform volume in proportion to $\epsilon_5$ even when $r\to 1$ and the contributions from $\epsilon_7$ diminish.
+    \item The volume from $\epsilon_5$ is less than any volume that would have been present if $\epsilon_6>0$ because the relation between $\epsilon_5$ and $\epsilon_6$ is additive.
+\end{itemize}
+
+Having this representation for baseline work capacity in the opposing volume skew is important. If it was not present the model would assume when a lifter has a certain volume skew, any volume from the opposing skew would simply not be possible. In reality, this is not the case, some baseline level of volume will always be possible, even in the opposite skew. Do not get this confused with volume tolerance, which represents a maximal volume that a lifter can tolerate rather than a baseline of possible volume.
+
+\section{Analysis of Property 1.b: Volume and Intensity}
+\label{sec:PotentialSurfaceAnalysisOfProperty1b}
+
+Unbounded volume occurs when volume continually increases, allowing for the potential surface to ask for an infinite amount of work to be done. This presents a serious issue because this is not possible for a lifter to complete, and is especially problematic considering the purpose of this entire chapter is to establish what is possible and what is not possible. Also, if a surface has unbounded volume then property 1.b is proven to not exhibited by this surface because property 1.b needs a volume tolerance to be reached and not surpassed. It needs to be shown that this potential surface doesn't exhibit unbounded volume, or if it does, to establish the boundary where it occurs so it can be avoided when this surface is used in practice.
+%
+%If volume can be shown to have a global maximum it can be stated that volume is bounded, or does not increase indefinitely. Proving that volume has a peak will require the gradient of $v$.
+%
+%\begin{equation*}
+%	\nabla v=\left[\begin{matrix}
+%		\frac{\partial v}{\partial E} \\
+%		\frac{\partial v}{\partial F_l} \\
+%		\frac{\partial v}{\partial F_w} \\
+%		\frac{\partial v}{\partial F_e} \\
+%		\frac{\partial v}{\partial s} \\
+%		\frac{\partial v}{\partial r} \\
+%	\end{matrix}\right]=
+%	\left[\begin{matrix}
+%		\epsilon_1 \\
+%		-\epsilon_2 \\
+%		-\epsilon_3 \\
+%		-\epsilon_4 \\
+%		-2s\left(\epsilon_5(r-1)^2-\epsilon_6\right)+2\epsilon_5(r-1)^2-2\epsilon_6 \\
+%		-2r\left(\epsilon_5(s-1)^2-\epsilon_7\right)+2\epsilon_5(s-1)^2-2\epsilon_7 \\
+%	\end{matrix}\right]
+%\end{equation*}
+
+Rather than trying to prove that volume has a global maximum, it will be shown that 
+
+To prove volume has a peak requires the first partial and second partial derivative of $v$. The partial derivative with respect to $s$ was chosen. It will be discussed later what changes when the partial derivative with respect to $r$ is chosen instead.
+
+\begin{equation}
+    \label{eq:IntensitySubedInVolume}
+    v(s,r,E)=sr\left( d-a(s-1)^2(r-1)^2-b(s-1)^2-c(r-1)^2-\epsilon E \right)
+\end{equation}
+\begin{equation}
+    \label{eq:VolumeSPartialDerivative}
+    \frac{\partial v}{\partial s}=rd-r\epsilon E-cr(r-1)^2-r\left( a(r-1)^2+b \right)\left( 3s^2-4s+1 \right)
+\end{equation}
+\begin{equation}
+    \label{eq:VolumeSSecondPartialDerivative}
+    \frac{\partial v'}{\partial s}=-(r)\left( a(r-1)^2+b \right)(6s-4)
+\end{equation}
+
+A global maximum occurs when $\partial_{ss} v<0$. In order for this to be the case an even number of the above parenthetical groupings need to be negative. The first parenthetical grouping is always guaranteed to be greater than $1$ from the constraints placed on $r$ in section \ref{sec:UnitsOfMeasurement}. The last parenthetical grouping will be $>0$ if $s>\frac{2}{3}$, which is again guaranteed to be true because of the constraints placed on $s$ in section \ref{sec:UnitsOfMeasurement}. This guarantees two of the three parenthetical groupings to be positive, which forces the middle parenthetical grouping to be positive for $\partial_{ss} v$ to be $<0$. The sign of $a$ changes the set of inequalities that define when the middle parenthetical group is $>0$, and hence when a maximum can occur. Table \ref{tab:BoundedVolumeRanges} shows the inequalities and ranges when volume is bounded for various values of $a$ and $b$.
+
+Care has to be taken when $a=0$ or $b=0$, as the behavior of the inequalities is not fully captured by substituting $0$ for $a$ or $b$. A traditional limit cannot be used because inequalities are one sided, and a limit expects a continuous function. Instead, the four scenarios where $a=0$ and $b=0$ will be treated as one sided limits which will be approached from the side where the behavior is already known. By doing this, the sign can be inferred and the one sided nature of the problem can be handled. \footnote{The notation used in table \ref{tab:BoundedVolumeRanges} is as follows: given a number $x$, $x^-$ is a smaller number approaching $x$, and $x^+$ is a larger number approaching $x$. This allows for one sided analysis to be completed.} The scenarios where the root is imaginary are also troublesome. However, the same one sided analysis can be extended and used again. Looking at table \ref{tab:BoundedVolumeRanges} it should be clear how the one sided limit works as well as how the ranges over which volume is bounded respond.
 
 \begin{table}[h]
     \centering
-    \begin{tabular}{c|c}
-        Exercise & $\epsilon_1$ \\
+    \begin{tabular}{c|p{6cm}|c}
+        Values for $a$ and $b$ & Inequalities & Range Where Volume is Bounded \\
         \hline
-        Squat & -0.0461\\
-        Bench & -0.0363\\
-        Deadlift & -0.0555\\
+
+        $a>0$ and $b<0$
+        &
+        $r> \left(-\frac{b}{a}\right)^\frac{1}{2}+1$
+        \newline
+        $r< -\left(-\frac{b}{a}\right)^\frac{1}{2}+1$
+        &
+        $\left( r>\left| \frac{b}{a} \right|^\frac{1}{2}+1 \right) \cup \left( r< -\left| \frac{b}{a} \right|^\frac{1}{2}+1 \right)$
+        \\
+        \hline
+        
+        $a>0$ and $b=0$
+        &
+        $r> \left(-\frac{0^-}{a}\right)^\frac{1}{2}+1$
+        \newline
+        $r< -\left(-\frac{0^-}{a}\right)^\frac{1}{2}+1$
+        &
+        $\left( r> 1^+ \right) \cup \left( r<1^- \right)$, a.k.a. $r\ne 1$
+        \\
+        \hline
+        
+        $a>0$ and $b>0$
+        &
+        $r> (0+\beta i)+1$
+        \newline
+        $r< (-0-\beta i)+1$
+        &
+        $(r>1)\cup (r<1)$ a.k.a. All $r$
+        \\
+        \hline
+        
+        $a=0$ and $b>0$
+        &
+        $r> \left(-\frac{b}{0^+}\right)^\frac{1}{2}+1=(0+\infty i)+1$
+        \newline
+        $r< -\left(-\frac{b}{0^+}\right)^\frac{1}{2}+1=(-0-\infty i)+1$
+        &
+        $(r>1)\cup (r<1)$ a.k.a. All $r$
+        \\
+        \hline
+        
+        $a<0$ and $b>0$
+        &
+        $r< \left(-\frac{b}{a}\right)^\frac{1}{2}+1$
+        \newline
+        $r> -\left(-\frac{b}{a}\right)^\frac{1}{2}+1$
+        &
+        $-\left| \frac{b}{a} \right|^\frac{1}{2}+1 < r< \left| \frac{b}{a} \right|^\frac{1}{2}+1$
+        \\
+        \hline
+        
+        $a<0$ and $b=0$
+        &
+        $r< \left(-\frac{0^+}{a}\right)^\frac{1}{2}+1$
+        \newline
+        $r> -\left(-\frac{0^+}{a}\right)^\frac{1}{2}+1$
+        &
+        $1^- < r< 1^+$, a.k.a. Never
+        \\
+        \hline
+        
+        $a<0$ and $b<0$
+        &
+        $r< (0+\beta i)+1$
+        \newline
+        $r> (-0-\beta i)+1$
+        &
+        $1<r<1$ a.k.a. Never
+        \\
+        \hline
+        
+        $a=0$ and $b<0$
+        &
+        $r< \left(-\frac{b}{0^-}\right)^\frac{1}{2}+1=(0+\infty i)+1$
+        \newline
+        $r> -\left(-\frac{b}{0^-}\right)^\frac{1}{2}+1=(-0-\infty i)+1$
+        &
+        $1<r<1$ a.k.a. Never
+        \\
     \end{tabular}
-    \caption{The $\epsilon_1$ values for three different exercises. They are all negative, meaning the model is correctly making volume increase with effort.}
-    \label{tab:EpsilonAcrossExercies}
+    \caption{Various values for $a$ and $b$ as well as there resulting ranges where volume is bounded.}
+    \label{tab:BoundedVolumeRanges}
 \end{table}
 
-\section{Analysis and Application: Volume Skew and Abstractly Describing Training}
-\label{sec:PotentialSurfaceAbstractlyDescribingTraining}
+Given the ranges where a maximum could occur, a critical point is still needs to be found, which will require setting $\partial_sv$ equal to $0$. After algebraic manipulation, equation \ref{eq:VolumeRidgeConstR} is generated.
+%Using the quadratic formula and substituting $\alpha_s$ in place of the fraction for ease of writing, the following points are generated as critical points.
 
-One of the behaviors discussed in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} is volume skew. As such, it needs to be shown that the model is capable of determining volume skew. Looking at figure \ref{fig:DeadliftIntensityCriticalPointsOnVolume} there is a clear skew towards sets with the surface reaching greater values on the set axis than the rep axis. This is consistent with the data presented in figure \ref{fig:SetsVsReps}, and is all that is needed to prove that the model can correctly identify volume skew.
-
-Given the model can determine a volume skew, a way to represent it would be convenient. The meaning of the constants that were presented in the linear regression should be considered. The relative magnitude of constants $\epsilon_6$, and $\epsilon_7$ control how much volume can be completed favoring sets or reps respectively. As such, the ratio of $\epsilon_6$ to $\epsilon_7$, shown in equation \ref{eq:VolumeSkew}, presents itself as a way to measure volume skew. By measuring volume skew using the constants from linear regression, it is averaged across all weights and effort levels.
-
+%the equation below is generated.
 \begin{equation}
-    \label{eq:VolumeSkew}
-    v_s(\epsilon_6,\epsilon_7)=\frac{\epsilon_6}{\epsilon_7}
+    \label{eq:VolumeRidgeConstR}
+    3s^2-4s+\left( 1-\frac{d-c(r-1)^2-\epsilon E}{a(r-1)^2-b} \right)=0
 \end{equation}
 
-Before continuing, the effects on equation \ref{eq:PotentialSurfaceEquation} from changes to $\epsilon_6$ and $\epsilon_7$ need to be considered. As such, equation \ref{eq:PotentialSurfaceEquation} is solved for $I$ and the partial derivative with respect to $\epsilon_6$ is taken. 
-
-\begin{equation}
-    \label{eq:VolumeBPartialDerivative}
-    \frac{\partial I}{\partial b}=
-            \frac{\partial}{\partial b} \left( d-a(s-1)^2(r-1)^2-b(s-1)^2-c(r-1)^2-\epsilon E \right)
-\end{equation}
-
-If $\partial_{b}I$ is always $\le 0$, then it can be said the function is strictly decreasing.
-
+ Using the quadratic formula and substituting $\alpha_s$ in place of the fraction for ease of writing, the following points are generated as critical points.
+ 
 \begin{equation*}
-    \frac{\partial}{\partial b} \left( d-a(s-1)^2(r-1)^2-b(s-1)^2-c(r-1)^2-\epsilon E \right) \le 0
-\end{equation*}
-\begin{equation*}
-    (s-1)^2 \ge 0
-\end{equation*}
-\begin{equation*}
-    s \ge 1
+    s=\frac{2\pm \sqrt{1+3\alpha_s}}{3}
 \end{equation*}
 
-From section \ref{sec:UnitsOfMeasurement} it is guaranteed that $s\ge 1$, meaning that $I$ increases with decreases in $b$. A similar argument can be made that proves $I$ increases with decreases in $c$.
-
-Keeping in mind how changes to $b$ and $c$ effect equation \ref{eq:PotentialSurfaceEquation}, a few initial observations can be made about equation \ref{eq:VolumeSkew}.
+From here the determinant can be used to show where critical points well occur.
 
 \begin{enumerate}
-    \item If $v_s<1$ then $b<c$, which implies that the lifter favors sets for the given exercise, or has a volume skew towards sets for the given exercise.
-    \item If $v_s>1$ then $b>c$, which implies that the lifter favors reps for the given exercise, or has a volume skew towards reps for the given exercise.
-    \item If $v_s=1$, then the lifter has no volume skew.
-    \item If $b=0$ or $c=0$ then a lifter has the maximum possible skew towards sets or reps respectively. \footnote{This idea will be explored more from volumes perspective in section \ref{sec:PotentialSurfaceUnboundedVolume}.}
+    \item $\alpha_s < -\frac{1}{3}$: No critical points
+    \item $\alpha_s = -\frac{1}{3}$: Indeterminate critical point
+    \item $\alpha_s > -\frac{1}{3}$: Two critical points
 \end{enumerate}
-%
-%Table \ref{tab:VolumeSkewAcrossExercises} shows the constants and volume skew for three different exercises. As anticipated from the data in figure \ref{fig:SetsVsReps}, the volume skew favors sets over reps for all three exercises.
-%
-%\begin{table}[h]
-%    \centering
-%    \begin{tabular}{c|c|c|c|c}
-%        Exercise & $b$ & $c$ & $v_s$ & Skew \\
-%        \hline
-%        Squat & $0.0001$ & $0.0020$ & $0.0272$ & Sets \\
-%        Bench & $0.0000$ & $0.0028$ & $0.0000$ & Sets \\
-%        Deadlift & $0.0027$ & $0.0029$ & $0.9495$ & Sets \\
-%    \end{tabular}
-%    \caption{Constants and the associated volume skew for three exercises.}
-%    \label{tab:VolumeSkewAcrossExercises}
-%\end{table}
-%
-%The constant $a$ forms the \textit{volume base}, or the volume that should be possible no matter the magnitude of the volume skew. For example, if $b=0$ and $c>0$, then the following can be stated about the lifter and the way they perform a particular exercise:
-%
-%\begin{itemize}
-%    \item The lifter has a volume skew towards sets because $b<c$.
-%    \item As the lifter leaves there normal volume skew, they should still be able to perform volume in proportion to $a$ even when $s\to 1$ and the contributions from $b$ diminish.
-%    \item The volume from $a$ is less than any volume that would have been present if $b>0$ because the relation between $a$ and $b$ is additive.
-%\end{itemize}
-%
-%Having this natural representation for a volume base is important. If it was not present the model would assume when a lifter has a certain volume skew, any volume from the opposing skew would simply not be possible. In reality, this is not the case, some baseline level of volume will always be possible, even in the opposite skew.
-%
-%%TODO - give examples from when linear regression was run on the data set
-%
-%%Combining the above discussion about the representation of the constants with the time frame discussed in section \ref{sec:PotentialSurfaceLinearRegressionAndTimeSeriesProblems}, a new way to abstractly describe training over time is possible. Changes in $a$, $b$, and $c$ can be tracked over time to give insight as to how a lifter trained during a particular time frame. Figure \ref{fig:DeadliftConstantsOverTime} shows the constants $a$, $b$, and $c$ over time and figure \ref{fig:DeadliftVolumeSkewOverTime} shows volume skew over time. The large spike in volume skew near $30$ days is the result of the lifter utilizing AMRAP (As Many Reps As Possible) sets during training. When using AMRAP's, typically only one AMRAP set is performed. This makes for a large skew towards reps, which is evident in the volume skew graph. While presented here as an application of the model outlined so far, more will be gained from figures \ref{fig:DeadliftConstantsOverTime} and \ref{fig:DeadliftVolumeSkewOverTime} in section \ref{sec:Macrocycle}.
-%%
-%%\begin{figure}[h]
-%%    \centering
-%%    \includegraphics[width=140mm]{DeadliftConstants/abc.png}
-%%    \caption{The value of constants over time for deadlift when using a time frame of $120$ days. As the graph moves to the right the values are older.}
-%%    \label{fig:DeadliftConstantsOverTime}
-%%\end{figure}
-%%\begin{figure}[h]
-%%    \centering
-%%    \includegraphics[width=140mm]{DeadliftConstants/VolumeSkew.png}
-%%    \caption{Volume skew over time for deadlift when using a time frame of $120$ days. As the graph moves to the right the values are older.}
-%%    \label{fig:DeadliftVolumeSkewOverTime}
-%%\end{figure}
-%
-%\section{Analysis: Unbounded Volume}
-%\label{sec:PotentialSurfaceUnboundedVolume}
-%
-%Unbounded volume occurs when volume continually increases. Unbounded volume is obviously not possible for a lifter to complete, and is especially problematic considering the purpose of this entire section is to establish what is possible and what is not possible. The boundary between bounded and unbounded volume needs to be found so that when this model is used in practice it works as anticipated.
-%
-%If volume can be shown to have a global maximum, it can be stated that volume is bounded, or does not increase indefinitely. To prove volume has a peak requires the first partial and second partial derivative of $v$. The partial derivative with respect to $s$ was chosen. It will be discussed later what changes when the partial derivative with respect to $r$ is chosen instead.
-%
-%\begin{equation}
-%    \label{eq:IntensitySubedInVolume}
-%    v(s,r,E)=sr\left( d-a(s-1)^2(r-1)^2-b(s-1)^2-c(r-1)^2-\epsilon E \right)
-%\end{equation}
-%\begin{equation}
-%    \label{eq:VolumeSPartialDerivative}
-%    \frac{\partial v}{\partial s}=rd-r\epsilon E-cr(r-1)^2-r\left( a(r-1)^2+b \right)\left( 3s^2-4s+1 \right)
-%\end{equation}
-%\begin{equation}
-%    \label{eq:VolumeSSecondPartialDerivative}
-%    \frac{\partial v'}{\partial s}=-(r)\left( a(r-1)^2+b \right)(6s-4)
-%\end{equation}
-%
-%A global maximum occurs when $\partial_{ss} v<0$. In order for this to be the case an even number of the above parenthetical groupings need to be negative. The first parenthetical grouping is always guaranteed to be greater than $1$ from the constraints placed on $r$ in section \ref{sec:UnitsOfMeasurement}. The last parenthetical grouping will be $>0$ if $s>\frac{2}{3}$, which is again guaranteed to be true because of the constraints placed on $s$ in section \ref{sec:UnitsOfMeasurement}. This guarantees two of the three parenthetical groupings to be positive, which forces the middle parenthetical grouping to be positive for $\partial_{ss} v$ to be $<0$. The sign of $a$ changes the set of inequalities that define when the middle parenthetical group is $>0$, and hence when a maximum can occur. Table \ref{tab:BoundedVolumeRanges} shows the inequalities and ranges when volume is bounded for various values of $a$ and $b$.
-%
-%Care has to be taken when $a=0$ or $b=0$, as the behavior of the inequalities is not fully captured by substituting $0$ for $a$ or $b$. A traditional limit cannot be used because inequalities are one sided, and a limit expects a continuous function. Instead, the four scenarios where $a=0$ and $b=0$ will be treated as one sided limits which will be approached from the side where the behavior is already known. By doing this, the sign can be inferred and the one sided nature of the problem can be handled. \footnote{The notation used in table \ref{tab:BoundedVolumeRanges} is as follows: given a number $x$, $x^-$ is a smaller number approaching $x$, and $x^+$ is a larger number approaching $x$. This allows for one sided analysis to be completed.} The scenarios where the root is imaginary are also troublesome. However, the same one sided analysis can be extended and used again. Looking at table \ref{tab:BoundedVolumeRanges} it should be clear how the one sided limit works as well as how the ranges over which volume is bounded respond.
-%
-%\begin{table}[h]
-%    \centering
-%    \begin{tabular}{c|p{6cm}|c}
-%        Values for $a$ and $b$ & Inequalities & Range Where Volume is Bounded \\
-%        \hline
-%
-%        $a>0$ and $b<0$
-%        &
-%        $r> \left(-\frac{b}{a}\right)^\frac{1}{2}+1$
-%        \newline
-%        $r< -\left(-\frac{b}{a}\right)^\frac{1}{2}+1$
-%        &
-%        $\left( r>\left| \frac{b}{a} \right|^\frac{1}{2}+1 \right) \cup \left( r< -\left| \frac{b}{a} \right|^\frac{1}{2}+1 \right)$
-%        \\
-%        \hline
-%        
-%        $a>0$ and $b=0$
-%        &
-%        $r> \left(-\frac{0^-}{a}\right)^\frac{1}{2}+1$
-%        \newline
-%        $r< -\left(-\frac{0^-}{a}\right)^\frac{1}{2}+1$
-%        &
-%        $\left( r> 1^+ \right) \cup \left( r<1^- \right)$, a.k.a. $r\ne 1$
-%        \\
-%        \hline
-%        
-%        $a>0$ and $b>0$
-%        &
-%        $r> (0+\beta i)+1$
-%        \newline
-%        $r< (-0-\beta i)+1$
-%        &
-%        $(r>1)\cup (r<1)$ a.k.a. All $r$
-%        \\
-%        \hline
-%        
-%        $a=0$ and $b>0$
-%        &
-%        $r> \left(-\frac{b}{0^+}\right)^\frac{1}{2}+1=(0+\infty i)+1$
-%        \newline
-%        $r< -\left(-\frac{b}{0^+}\right)^\frac{1}{2}+1=(-0-\infty i)+1$
-%        &
-%        $(r>1)\cup (r<1)$ a.k.a. All $r$
-%        \\
-%        \hline
-%        
-%        $a<0$ and $b>0$
-%        &
-%        $r< \left(-\frac{b}{a}\right)^\frac{1}{2}+1$
-%        \newline
-%        $r> -\left(-\frac{b}{a}\right)^\frac{1}{2}+1$
-%        &
-%        $-\left| \frac{b}{a} \right|^\frac{1}{2}+1 < r< \left| \frac{b}{a} \right|^\frac{1}{2}+1$
-%        \\
-%        \hline
-%        
-%        $a<0$ and $b=0$
-%        &
-%        $r< \left(-\frac{0^+}{a}\right)^\frac{1}{2}+1$
-%        \newline
-%        $r> -\left(-\frac{0^+}{a}\right)^\frac{1}{2}+1$
-%        &
-%        $1^- < r< 1^+$, a.k.a. Never
-%        \\
-%        \hline
-%        
-%        $a<0$ and $b<0$
-%        &
-%        $r< (0+\beta i)+1$
-%        \newline
-%        $r> (-0-\beta i)+1$
-%        &
-%        $1<r<1$ a.k.a. Never
-%        \\
-%        \hline
-%        
-%        $a=0$ and $b<0$
-%        &
-%        $r< \left(-\frac{b}{0^-}\right)^\frac{1}{2}+1=(0+\infty i)+1$
-%        \newline
-%        $r> -\left(-\frac{b}{0^-}\right)^\frac{1}{2}+1=(-0-\infty i)+1$
-%        &
-%        $1<r<1$ a.k.a. Never
-%        \\
-%    \end{tabular}
-%    \caption{Various values for $a$ and $b$ as well as there resulting ranges where volume is bounded.}
-%    \label{tab:BoundedVolumeRanges}
-%\end{table}
-%
-%Given the ranges where a maximum could occur, a critical point is still needs to be found, which will require setting $\partial_sv$ equal to $0$. After algebraic manipulation, equation \ref{eq:VolumeRidgeConstR} is generated.
-%%Using the quadratic formula and substituting $\alpha_s$ in place of the fraction for ease of writing, the following points are generated as critical points.
-%
-%%the equation below is generated.
-%\begin{equation}
-%    \label{eq:VolumeRidgeConstR}
-%    3s^2-4s+\left( 1-\frac{d-c(r-1)^2-\epsilon E}{a(r-1)^2-b} \right)=0
-%\end{equation}
-%
-% Using the quadratic formula and substituting $\alpha_s$ in place of the fraction for ease of writing, the following points are generated as critical points.
-% 
-%\begin{equation*}
-%    s=\frac{2\pm \sqrt{1+3\alpha_s}}{3}
-%\end{equation*}
-%
-%From here the determinant can be used to show where critical points well occur.
-%
-%\begin{enumerate}
-%    \item $\alpha_s < -\frac{1}{3}$: No critical points
-%    \item $\alpha_s = -\frac{1}{3}$: Indeterminate critical point
-%    \item $\alpha_s > -\frac{1}{3}$: Two critical points
-%\end{enumerate}
-%
-%Given the above scenarios for critical points, only option $(3)$ is of interest. As shown below, if $\alpha_s> -\frac{1}{3}$ one critical point is generated on either side of $s=\frac{2}{3}$, the exact $s$ boundary where $\partial_{ss} v$ changes sign. Again, $\partial_{ss} v$ needs to $<0$ for a maximum to be found, requiring the parenthetical relating to $s$ in $\partial_{ss} v$ to be $>0$. This further narrows down the critical points to only include the one that is $>\frac{2}{3}$. It is worth mentioning that this is also the only valid critical point from the context of the problem, with $s$ being constrained to be $>1$ in section \ref{sec:UnitsOfMeasurement}.
-%
-%\begin{equation*}
-%    s=\frac{2\pm \sqrt{1+3\left( -\frac{1}{3} \right)^+}}{3}=\frac{2\pm 0^+}{3}=\left( \frac{2}{3} \right)^-, \left( \frac{2}{3} \right)^+
-%\end{equation*}
-%
-%Given that $\alpha_s>-\frac{1}{3}$, there will be a critical point. This can now be combined with the ranges where volume is bounded as well as the context of the problem to create the following statements:
-%
-%\begin{enumerate}
-%    \item Volume is fully bounded for all $r$ when $a,b>0$.
-%    \item When $a>0$ and $b=0$ volume is fully bounded for all $r\ne 1$.
-%    \item When $a<0$ and $b=0$ volume is never bounded.
-%    \item When $a=0$ and $b>0$, volume is fully bounded.
-%    \item When $a=0$ and $b<0$, volume is never bounded.
-%    \item When $a>0$ and $b<0$, volume is bounded for $r>\left| \frac{b}{a} \right|^\frac{1}{2}+1$.
-%    \item When $a<0$ and $b>0$, volume is bounded for $1\le r < \left| \frac{b}{a} \right|^\frac{1}{2}+1$
-%\end{enumerate}
-%
-%This analysis only looked at sets, which was an assumption made from the very beginning when the partial derivative of $v$ was taken with respect to $s$. If instead, the partial derivative was taken with respect to $r$, an analogous process would be followed. Due to the symmetry from $\partial_sv$ and $\partial_rv$, the only differences will be $c$ replacing $b$, $\alpha_r$ replacing $\alpha_s$ and, obviously, $s$ and $r$ switching roles. This creates the following additional statements given that $\alpha_r>-\frac{1}{3}$:
-%
-%\begin{enumerate}
-%    \setcounter{enumi}{7}
-%    \item Volume is fully bounded for all $s$ when $a,c>0$.
-%    \item When $a>0$ and $c=0$ volume is fully bounded for all $s\ne 1$.
-%    \item When $a<0$ and $c=0$ volume is never bounded.
-%    \item When $a=0$ and $c>0$, volume is fully bounded.
-%    \item When $a=0$ and $c<0$, volume is never bounded.
-%    \item When $a>0$ and $c<0$, volume is bounded for $s>\left| \frac{c}{a} \right|^\frac{1}{2}+1$.
-%    \item When $a<0$ and $c>0$, volume is bounded for $1\le s < \left| \frac{c}{a} \right|^\frac{1}{2}+1$
-%\end{enumerate}
-%
-%For peace of mind, figure \ref{fig:VolumeConstSRPeak} shows the peak volume identified by the above algebraic analysis. There is a peak for all $s$ and $r$ values, which means that volume is fully bounded. This also matches the statements above as $a=1.6\times 10^{-4}$, $b=2.7\times 10^{-3}$, and $c=2.9\times 10^{-3}$, which are all greater than $0$.
-%
-%\begin{figure}[h]
-%    \centering
-%    \includegraphics[width=170mm]{DeadliftVolume/FailedRidgeIdentification-2.png}
-%    \caption{The peak identified in volume given constant $s$ and $r$ values. This may look similar to figure \ref{fig:DeadliftIntensityCriticalPointsOnVolume} but they are two different graphs that were generated from two different approaches.}
-%    \label{fig:VolumeConstSRPeak}
-%\end{figure}
-%
-%The above statements make sense in isolation, but when considered together things can contradict each other. If $a<0$, $b=0$, and $c>0$, then  statement $(3)$ states volume is never bounded, but statement $(14)$ states volume is bounded for a specific region. Again, this is the result of looking at a three dimensional problem from two dimensions, and is the same reason why the two peak volume lines in figure \ref{fig:VolumeConstSRPeak} do not coincide. While this does create some problems, the above statements are still is able to give some intuition for the problem at hand. Revisiting the example stated previously, it is saying that volume from reps is never bounded, and volume from sets is only bounded over a region. This intuition can be used to adjust training appropriately to avoid unbounded volume.
-%
-%It is tempting to say the bounds in the above statements can be used in practice to limit the lifter from doing to much volume, but just because volume is bounded does not mean it is reasonable. Just because it can be proven that volume has a peak does not prove that the peak volume is attainable. This is a limitation of the model that stems from using linear regression to fit a surface to the data. Linear regression will implicitly extrapolate what amount of volume can be done given the data it has. Extrapolation is a known weakness of linear regression, making its predicted volume sometimes inaccurate.
-%
-%To simplify the model, $b$ and $c$ can be limited to being $\ge 0$ so that volume will only ever be unbounded when $b=0$ or $c=0$. Not only does this remove the complexities of defining ranges over which the potential surface has bounded volume, but it makes intuitive sense to limit the model to only describing what is possible.
-%
-%
+
+Given the above scenarios for critical points, only option $(3)$ is of interest. As shown below, if $\alpha_s> -\frac{1}{3}$ one critical point is generated on either side of $s=\frac{2}{3}$, the exact $s$ boundary where $\partial_{ss} v$ changes sign. Again, $\partial_{ss} v$ needs to $<0$ for a maximum to be found, requiring the parenthetical relating to $s$ in $\partial_{ss} v$ to be $>0$. This further narrows down the critical points to only include the one that is $>\frac{2}{3}$. It is worth mentioning that this is also the only valid critical point from the context of the problem, with $s$ being constrained to be $>1$ in section \ref{sec:UnitsOfMeasurement}.
+
+\begin{equation*}
+    s=\frac{2\pm \sqrt{1+3\left( -\frac{1}{3} \right)^+}}{3}=\frac{2\pm 0^+}{3}=\left( \frac{2}{3} \right)^-, \left( \frac{2}{3} \right)^+
+\end{equation*}
+
+Given that $\alpha_s>-\frac{1}{3}$, there will be a critical point. This can now be combined with the ranges where volume is bounded as well as the context of the problem to create the following statements:
+
+\begin{enumerate}
+    \item Volume is fully bounded for all $r$ when $a,b>0$.
+    \item When $a>0$ and $b=0$ volume is fully bounded for all $r\ne 1$.
+    \item When $a<0$ and $b=0$ volume is never bounded.
+    \item When $a=0$ and $b>0$, volume is fully bounded.
+    \item When $a=0$ and $b<0$, volume is never bounded.
+    \item When $a>0$ and $b<0$, volume is bounded for $r>\left| \frac{b}{a} \right|^\frac{1}{2}+1$.
+    \item When $a<0$ and $b>0$, volume is bounded for $1\le r < \left| \frac{b}{a} \right|^\frac{1}{2}+1$
+\end{enumerate}
+
+This analysis only looked at sets, which was an assumption made from the very beginning when the partial derivative of $v$ was taken with respect to $s$. If instead, the partial derivative was taken with respect to $r$, an analogous process would be followed. Due to the symmetry from $\partial_sv$ and $\partial_rv$, the only differences will be $c$ replacing $b$, $\alpha_r$ replacing $\alpha_s$ and, obviously, $s$ and $r$ switching roles. This creates the following additional statements given that $\alpha_r>-\frac{1}{3}$:
+
+\begin{enumerate}
+    \setcounter{enumi}{7}
+    \item Volume is fully bounded for all $s$ when $a,c>0$.
+    \item When $a>0$ and $c=0$ volume is fully bounded for all $s\ne 1$.
+    \item When $a<0$ and $c=0$ volume is never bounded.
+    \item When $a=0$ and $c>0$, volume is fully bounded.
+    \item When $a=0$ and $c<0$, volume is never bounded.
+    \item When $a>0$ and $c<0$, volume is bounded for $s>\left| \frac{c}{a} \right|^\frac{1}{2}+1$.
+    \item When $a<0$ and $c>0$, volume is bounded for $1\le s < \left| \frac{c}{a} \right|^\frac{1}{2}+1$
+\end{enumerate}
+
+For peace of mind, figure \ref{fig:VolumeConstSRPeak} shows the peak volume identified by the above algebraic analysis. There is a peak for all $s$ and $r$ values, which means that volume is fully bounded. This also matches the statements above as $a=1.6\times 10^{-4}$, $b=2.7\times 10^{-3}$, and $c=2.9\times 10^{-3}$, which are all greater than $0$.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=170mm]{DeadliftVolume/FailedRidgeIdentification-2.png}
+    \caption{The peak identified in volume given constant $s$ and $r$ values. This may look similar to figure \ref{fig:DeadliftIntensityCriticalPointsOnVolume} but they are two different graphs that were generated from two different approaches.}
+    \label{fig:VolumeConstSRPeak}
+\end{figure}
+
+The above statements make sense in isolation, but when considered together things can contradict each other. If $a<0$, $b=0$, and $c>0$, then  statement $(3)$ states volume is never bounded, but statement $(14)$ states volume is bounded for a specific region. Again, this is the result of looking at a three dimensional problem from two dimensions, and is the same reason why the two peak volume lines in figure \ref{fig:VolumeConstSRPeak} do not coincide. While this does create some problems, the above statements are still is able to give some intuition for the problem at hand. Revisiting the example stated previously, it is saying that volume from reps is never bounded, and volume from sets is only bounded over a region. This intuition can be used to adjust training appropriately to avoid unbounded volume.
+
+It is tempting to say the bounds in the above statements can be used in practice to limit the lifter from doing to much volume, but just because volume is bounded does not mean it is reasonable. Just because it can be proven that volume has a peak does not prove that the peak volume is attainable. This is a limitation of the model that stems from using linear regression to fit a surface to the data. Linear regression will implicitly extrapolate what amount of volume can be done given the data it has. Extrapolation is a known weakness of linear regression, making its predicted volume sometimes inaccurate.
+
+To simplify the model, $b$ and $c$ can be limited to being $\ge 0$ so that volume will only ever be unbounded when $b=0$ or $c=0$. Not only does this remove the complexities of defining ranges over which the potential surface has bounded volume, but it makes intuitive sense to limit the model to only describing what is possible.
+
+
 %
 %\section{Analysis: Proving Volume Increases With Weight Until a Peak Is Reached}
 %\label{sec:PotentialSurfaceVolumePeak}
