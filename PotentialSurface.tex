@@ -53,8 +53,8 @@ Now, for lower intensities, it is tempting to say that as weight approaches $0$ 
 Given the above discussion the following properties can be gathered:
 
 \begin{itemize}
-	\item Property 1.a:  As intensity approaches $100$\%  volume will decrease until it is near the lifters 1RM.
-	\item Property 1.b: As intensity approaches $0$\% volume will approach some plateau, or asymptote in mathematical terms. The exact value of the plateau will need to be found from the data.
+	\item Property 1.a:  As intensity approaches $100\%$  volume will decrease until it is near the lifters 1RM.
+	\item Property 1.b: As intensity approaches $0\%$ volume will approach some plateau, or asymptote in mathematical terms. The exact value of the plateau will need to be found from the data.
 \end{itemize}
 
 To confirm this behavior the data will need to be considered. Looking at figure \ref{fig:IntensityVsVolumeGraph}, it does not demonstrate this pattern very well. The first item of the above list is visible in the data as volume decreases past $80$\% intensity until it reaches the volume equivalent to a 1RM. The second item of the list however does not appear to be present in the data. Instead of reaching a rough plateau it reaches a peak and drops off linearly past the peak. This seemingly goes against the pattern that was discussed when considering the limits of the human body.
@@ -87,7 +87,7 @@ The next question is what happens when effort increases or decreases across all 
     \label{fig:EffortVsIntensity}
 \end{figure}
 
-However, in figure \ref{fig:EffortVsVolumeGraph}, which compares volume and effort, volume does not seem to correlate with effort as previously mentioned. Only at the extreme values of each RPE rating does the behavior seem to follow. When looking at the graph as a whole there appears to be no pattern. The reason for this is the same as the previous section. A powerlifter collected the data and the goal of a powerlifter, above all, is to maximize weight. This goal can be seen in figure \ref{fig:EffortVsIntensity}, where intensity positively correlates with effort. What figure \ref{fig:EffortVsIntensity} is saying is that as effort increases the lifter chose to increase weight over sets and reps. Increasing weight, or intensity, will not increase volume as much as if sets and reps were increased due to the previously established fact that volume at higher intensities is necessarily limited by effort. This is a clear bias in the data set, and explains why volume is seemingly constant in figure \ref{fig:EffortVsVolumeGraph}. Given a sport that is more concerned with rep maxes, such as Crossfit, the effort vs intensity graph would level out because lower intensities would be pushed for as many reps as possible, creating maximal effort sets with lower intensities. \footnote{This is a perfect example to demonstrate how effort and intensity are two different concepts.} In order to have maximal effort sets with lower intensities either sets, reps, or both sets and reps will need to increase, forcing volume to increase considerably and restoring the correlation between effort and volume previously discussed.
+However, in figure \ref{fig:EffortVsVolumeGraph}, which compares volume and effort, volume does not seem to correlate with effort as previously mentioned. Only at the extreme values of each RPE rating does the behavior seem to follow. When looking at the graph as a whole there appears to be no pattern. The reason for this is the same as the previous section. A powerlifter collected the data and the goal of a powerlifter, above all, is to maximize weight. This goal can be seen in figure \ref{fig:EffortVsIntensity}, where intensity positively correlates with effort. What figure \ref{fig:EffortVsIntensity} is saying is that as effort increases the lifter chose to increase weight over sets and reps. Increasing weight, or intensity, will not increase volume as much as if sets and reps were increased due to the previously established fact that volume at higher intensities is necessarily limited by effort. This is a clear bias in the data set, and explains why volume is seemingly constant in figure \ref{fig:EffortVsVolumeGraph}. Given a sport that is more concerned with rep maxes, such as crossfit, the effort vs intensity graph would level out because lower intensities would be pushed for as many reps as possible, creating maximal effort sets with lower intensities. \footnote{This is a perfect example to demonstrate how effort and intensity are two different concepts.} In order to have maximal effort sets with lower intensities either sets, reps, or both sets and reps will need to increase, forcing volume to increase considerably and restoring the correlation between effort and volume previously discussed.
 
 
 \subsection{Property 3: Volume and Fatigue}
@@ -367,7 +367,7 @@ With equations \ref{eq:PotentialSurfaceEquation} and \ref{eq:LinearRegMatrixEqua
 \section{Analysis of Property 1.a: Volume and Intensity}
 \label{sec:PotentialSurfaceAnalysisOfProperty1a}
 
-Property 1.a is that volume should approach the lifters 1RM as intensity increases. To prove this two things need to happen. It needs to be proven that equation \ref{eq:BasicSurfaceEquation} has a single global maximum and no minimum. This maximum should equal the lifters current 1RM. Given that this is the case, it then needs to be proven that equation \ref{eq:IntensitySubedInVolume} has a  minimum at the same point that equation \ref{eq:BaseIntensityEquation} has it's maximum. This minimum also needs to equal the value of equation \ref{eq:BaseIntensityEquation} at its maximum. Given all this, it can be said that the basic surface exhibits property 1.a because volume has a minimum at the same point where intensity has a global maximum, meaning intensity increases from all directions to that point where volume has a value equal to the lifters current 1RM.
+Property 1.a states that volume should approach the lifters 1RM as intensity increases. To prove this two things need to happen. It needs to be proven that equation \ref{eq:BasicSurfaceEquation} has a single global maximum and no minimum. This maximum should equal the lifters current 1RM. Given that this is the case, it then needs to be proven that equation \ref{eq:IntensitySubedInVolume} has a  minimum at the same point that equation \ref{eq:BaseIntensityEquation} has it's maximum. This minimum also needs to equal the value of equation \ref{eq:BaseIntensityEquation} at its maximum. Given that all of that is true, it can be said that the basic surface exhibits property 1.a because volume has a minimum at the same location intensity has a global maximum, meaning intensity increases from all directions to that point where volume has a value equal to the lifters current 1RM.
 
 To begin, the maximum of equation \ref{eq:BaseIntensityEquation} needs to be found. This will require the gradient of that function, shown below.
 
@@ -468,7 +468,7 @@ This time the gradient does not remove any variables, making the simplification 
 
 Going back to the critical point, it needs to be be proven that it is a minimum. However, without the previous simplification the determinant of the Jacobian matrix would be needed to specify if this critical point is a minimum or maximum. Solving that analytically is near impossible, so it will have to suffice looking at the graphs of figure \ref{fig:SquatPotentialSurfaceVolumeAcrossEffort} for proof that this critical point is a minimum. 
 
-Now, this critical point does not match the critical point found from the intensity equation. This presents a problem because unless the points are the same the whole proof falls apart. The saving nuance comes from the domain of the problem, with both $s$ and $r$ being restricted to being $\ge 1$ in section \ref{sec:UnitsOfMeasurement}. This restriction means the minimum in relation to this problem is $(s=1,r=1)$, matching the maximum of equation \ref{eq:BasicSurfaceEquation}. Given this, all that is left to prove is that volume at this critical point is equal to the lifters current 1RM found previously, which is shown in the equation below. With that, it is proven that this surface exhibits property 1.a.
+Now, this critical point does not match the critical point found from the intensity equation. This presents a problem because unless the points are the same the whole proof falls apart. The saving nuance comes from the domain of the problem, with both $s$ and $r$ being restricted to being $\ge 1$ in section \ref{sec:UnitsOfMeasurement}. This restriction means the minimum in relation to this problem is $(s=1,r=1)$, matching the maximum of equation \ref{eq:BasicSurfaceEquation}. Given this, all that is left to prove is that volume at this critical point is equal to the lifters current 1RM found previously, which is shown in the equation below. With that, it is proven that this surface properly exhibits property 1.a.
 
 \begin{equation}
 	v(s=1,r=1)=
@@ -479,6 +479,10 @@ Now, this critical point does not match the critical point found from the intens
     			\epsilon_4 F_e = I(s=1,r=1)
 \end{equation}
 
+\section{Analysis of Property 1.b: Volume and Intensity}
+\label{sec:PotentialSurfaceAnalysisOfProperty1b}
+
+Property 1.b states that as intensity reaches $0\%$ volume should approach a plateau. However, based on the discussion from the previous section as well as from looking at the graphs in figure \ref{fig:SquatPotentialSurfaceVolumeAcrossEffort} it is already clear that property 1.b is not exhibited by this surface. The previous section found that if $E$, $F_l$, $F_w$, and $F_e$ are considered to be constant then a maximum can occur in the volume surface. Having a maximum removes any possibility of volume reaching a plateau. This is a clear problem with this surface, but despite this the surfaces shown in figure \ref{fig:SquatPotentialSurfaceAcrossEffort} seem to have appropriate behavior and have reasonable mean square errors (MSEs). This is likely because the data collected does not have many points below $50\%$ intensity. The region from $0\%$ to $50\%$ is where the plateau would really start to take effect, with volume above $50\%$ intensity being limited by effort. This means that for a powerlifter, this surface may still be able to produce reasonable results as long as intensity stays above $50\%$ for the vast majority of lifts. For any sport that does push volume at lower intensities, such as crossfit, this surface would not produce good results at all.
 
 \section{Analysis of Property 2: Volume and Effort}
 \label{sec:PotentialSurfaceAnalysisOfProperty2}
@@ -549,51 +553,6 @@ This time, if $\partial_{F_l}v$ is always $<0$ then it can be said the function 
 \end{equation*}
 
 This proves that volume decreases with fatigue if and only if $\epsilon_2>0$. Just like the previous section, a similar argument can be made to prove that volume increases with decreased fatigue. This constraint will need to be applied to $e_2$,$e_3$, and $e_4$ and is listed in equation \ref{eq:PotentialSurfaceEquation}. The next section should offer a break from the monotony of this section.
-
-%\section{Analysis of Property 1: Volume and Intensity}
-%\label{sec:PotentialSurfaceAnalysisOfProperty1}
-%
-%Two things will need to be proven to satisfy property 1. The first of which is that volume should approach the lifters 1RM as intensity increases. This is easier said than done however. The first thing to consider is that volume is not constant at a given intensity. So what really needs to be proven is that the maximum volume at a given combination of sets, reps, effort, and fatigue approaches a minimum value $\le l_{1RM}$ as intensity increases. In order to do this the results from the previous two sections will be  used, as they guarantee that volume increases from increases in effort and decreases from increases in fatigue. Given these assumptions volume will be partially maximized when effort is maximized and fatigue is minimized. Looking at the domain of effort and fatigue from section \ref{sec:} this will occur when $E=10$ and $F_l=F_w=F_e=0$. If it can be proven that volume has a minimum under these maximal conditions and that this minimum is $\le l_{1RM}$ then the first part of property 1 will be satisfied.
-%
-%
-%If it can be proven that volume is equal to the lifters $l_{1RM}$ under these conditions then it will be true that volume is $\le l_{1RM}$ under any condition.
-%
-%% Volume needs to have minimum at s=1, r=1
-%% Show that minimum is eq 1RM
-%
-%Looking at equation \ref{eq:IntensitySubedInVolume} it is tempting to say that because $\lim_{I\to1}v(s=1,r=1,I)=l_{1RM}$ the problem is solved. However, in that line of logic it is assumed that when $I\to l_{1RM}$, $s,r\to 1$. While this behavior makes sense it needs to be proven before it can be said that the first part of property 1 is satisfied. 
-%
-%
-%To do this it helps to remember that the terms associated with sets and reps are part of the total fatigue equation. Following the logic of the previous paragraph, this means that volume will be maximized when these terms are minimized. Looking at the terms related to sets and reps, it is clear they are minimized as $s,r\to 1$. 
-%
-%
-%To start, it needs to first be proven that when $s\to1$, $I\to l_{1RM}$.
-%
-%\begin{equation*}
-%	\begin{split}
-%		\lim_{s\to 1} & I = \\
-%		\lim_{s\to 1} &
-%			\epsilon+
-%			\epsilon_1 E-
-%			\left( 
-%				\epsilon_2 F_l+
-%				\epsilon_3 F_w+
-%				\epsilon_4 F_e+
-%				\epsilon_5 (s-1)^2(r-1)^2+
-%				\epsilon_6 (s-1)^2+
-%				\epsilon_7 (r-1)^2
-%			\right) = \\
-%		& \epsilon+
-%		\epsilon_1 E-
-%		\left( 
-%			\epsilon_2 F_l+
-%			\epsilon_3 F_w+
-%			\epsilon_4 F_e+
-%			\epsilon_7 (r-1)^2
-%		\right) = \\
-%	\end{split}
-%\end{equation*}
-
 
 \section{Analysis of Property 4: Sets and Reps}
 \label{sec:PotentialSurfaceAnalysisOfProperty4}
@@ -699,7 +658,7 @@ Given this equation, the following statements can be made:
     \item If $v_s<1$ then the total volume from reps is greater than the total volume from sets, which implies that the lifter favors reps for the given exercise, or has a volume skew towards reps for the given exercise.
     \item If $v_s>1$ then the total volume from sets is greater than the total volume from reps, which implies that the lifter favors sets for the given exercise, or has a volume skew towards sets for the given exercise.
     \item If $v_s=1$, then the lifter has no volume skew. \footnote{This can bring problems of its own, which will be discussed in section \ref{sec:}.}
-    %\item If $\epsilon_6=0$ or $\epsilon_7=0$ then a lifter has the maximum possible skew towards sets or reps respectively. \footnote{This idea will be explored more from volumes perspective in section \ref{sec:PotentialSurfaceUnboundedVolume}.}
+    \item If $\epsilon_6=0$ or $\epsilon_7=0$ then a lifter has the maximum possible skew towards sets or reps respectively. \footnote{This idea will be explored more from volumes perspective in section \ref{sec:PotentialSurfaceUnboundedVolume}.}
 \end{enumerate}
 
 Several things are of immediate interest from equation \ref{eq:BasicSurfaceVolumeSkew}. The first is whether or not the top and bottom of the fraction are equivalent. If they are equivalent then this means the surface cannot measure volume skew. Luckily they are not equivalent due to the small differences in the placement of the $\epsilon_6$ and $\epsilon_7$ terms in the integral bounds. The first term on the top and bottom of the fraction may look equivalent because the bounds of integration are the same for both terms, but the order of the variables being integrated prevents this, this time because of the difference between the $\epsilon_6$ and $\epsilon_7$ terms in the volume equation. With this, property 4 is proven to be satisfied as the surface can measure volume skew.
@@ -781,38 +740,17 @@ Before moving on, there has been so much attention on $\epsilon_6$ and $\epsilon
 
 Having this representation for baseline work capacity in the opposing volume skew is important. If it was not present the model would assume when a lifter has a certain volume skew, any volume from the opposing skew would simply not be possible. In reality, this is not the case, some baseline level of volume will always be possible, even in the opposite skew. Do not get this confused with volume tolerance, which represents a maximal volume that a lifter can tolerate rather than a baseline of possible volume.
 
-\section{Analysis of Property 1.b: Volume and Intensity}
-\label{sec:PotentialSurfaceAnalysisOfProperty1b}
+\section{Analysis: Unbounded Volume}
+\label{sec:PotentialSurfaceUnboundedVolume}
 
 Unbounded volume occurs when volume continually increases, allowing for the potential surface to ask for an infinite amount of work to be done. This presents a serious issue because this is not possible for a lifter to complete, and is especially problematic considering the purpose of this entire chapter is to establish what is possible and what is not possible. Also, if a surface has unbounded volume then property 1.b is proven to not exhibited by this surface because property 1.b needs a volume tolerance to be reached and not surpassed. It needs to be shown that this potential surface doesn't exhibit unbounded volume, or if it does, to establish the boundary where it occurs so it can be avoided when this surface is used in practice.
-%
-%If volume can be shown to have a global maximum it can be stated that volume is bounded, or does not increase indefinitely. Proving that volume has a peak will require the gradient of $v$.
-%
-%\begin{equation*}
-%	\nabla v=\left[\begin{matrix}
-%		\frac{\partial v}{\partial E} \\
-%		\frac{\partial v}{\partial F_l} \\
-%		\frac{\partial v}{\partial F_w} \\
-%		\frac{\partial v}{\partial F_e} \\
-%		\frac{\partial v}{\partial s} \\
-%		\frac{\partial v}{\partial r} \\
-%	\end{matrix}\right]=
-%	\left[\begin{matrix}
-%		\epsilon_1 \\
-%		-\epsilon_2 \\
-%		-\epsilon_3 \\
-%		-\epsilon_4 \\
-%		-2s\left(\epsilon_5(r-1)^2-\epsilon_6\right)+2\epsilon_5(r-1)^2-2\epsilon_6 \\
-%		-2r\left(\epsilon_5(s-1)^2-\epsilon_7\right)+2\epsilon_5(s-1)^2-2\epsilon_7 \\
-%	\end{matrix}\right]
-%\end{equation*}
 
 Rather than trying to prove that volume has a global maximum, it will be shown that 
 
 To prove volume has a peak requires the first partial and second partial derivative of $v$. The partial derivative with respect to $s$ was chosen. It will be discussed later what changes when the partial derivative with respect to $r$ is chosen instead.
 
 \begin{equation}
-    \label{eq:IntensitySubedInVolume}
+    \label{eq:_IntensitySubedInVolume}
     v(s,r,E)=sr\left( d-a(s-1)^2(r-1)^2-b(s-1)^2-c(r-1)^2-\epsilon E \right)
 \end{equation}
 \begin{equation}
@@ -985,6 +923,7 @@ The above statements make sense in isolation, but when considered together thing
 It is tempting to say the bounds in the above statements can be used in practice to limit the lifter from doing to much volume, but just because volume is bounded does not mean it is reasonable. Just because it can be proven that volume has a peak does not prove that the peak volume is attainable. This is a limitation of the model that stems from using linear regression to fit a surface to the data. Linear regression will implicitly extrapolate what amount of volume can be done given the data it has. Extrapolation is a known weakness of linear regression, making its predicted volume sometimes inaccurate.
 
 To simplify the model, $b$ and $c$ can be limited to being $\ge 0$ so that volume will only ever be unbounded when $b=0$ or $c=0$. Not only does this remove the complexities of defining ranges over which the potential surface has bounded volume, but it makes intuitive sense to limit the model to only describing what is possible.
+
 
 
 %
