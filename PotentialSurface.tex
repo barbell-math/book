@@ -336,8 +336,8 @@ With equations \ref{eq:PotentialSurfaceEquation} and \ref{eq:LinearRegMatrixEqua
 \begin{equation}
     \label{eq:IntensitySubedInVolume}
     \begin{split}
-    		v = & srI \\
-    			= & sr \left( 
+    		v = & srI l_{1RM} \\
+    			= & l_{1RM} sr \left( 
     			\epsilon+
     			\epsilon_1 E-
     			\epsilon_2 F_l-
@@ -414,54 +414,64 @@ Now, given the critical point at $(s=1,r=1)$ it needs to be proven to be a maxim
 	\end{split}
 \end{equation*}
 
-Given the constraints on equation \ref{eq:BaseIntensityEquation} it can be said that $D(s=1,r=1)>0$. Given this and the fact that $\partial_{ss}I(s=1,r=1)=-2\epsilon_6$, which is $<0$, it can be stated that the critical point $(s=1,r=1)$ is a maximum. This maximum needs to be shown to equal the lifters 1RM. To obtain this, equation \ref{eq:BaseIntensityEquation} is simply evaluated at $(s=1,r=1)$. The result is shown in equation \ref{eq:BasicSurface1RMPred}, which \ref{eq:BasicSurface1RMPred} represents what the model thinks the lifters 1RM is. This is an important concept, especially because of the discussion in section \ref{sec:PotentialSurfaceLinearRegressionAndTimeSeriesProblems}, and will be returned to in section \ref{sec:}.
+Given the constraints on equation \ref{eq:BaseIntensityEquation} it can be said that $D(s=1,r=1)>0$. Given this and the fact that $\partial_{ss}I(s=1,r=1)=-2\epsilon_6$, which is $<0$, it can be stated that the critical point $(s=1,r=1)$ is a maximum. This maximum needs to be shown to equal the lifters 1RM. To obtain this, equation \ref{eq:BaseIntensityEquation} is simply evaluated at $(s=1,r=1)$ and scaled by $l_{1RM}$ to get weight instead of intensity. The result is shown in equation \ref{eq:BasicSurface1RMPred}, which \ref{eq:BasicSurface1RMPred} represents what the model thinks the lifters 1RM is. This is an important concept, especially because of the discussion in section \ref{sec:PotentialSurfaceLinearRegressionAndTimeSeriesProblems}, and will be returned to in section \ref{sec:}.
 
 \begin{equation}
 	\label{eq:BasicSurface1RMPred}
-	I(s=1,r=1)=\epsilon+
+	l_{1RM} I(s=1,r=1)=l_{1RM} \left(
+		\epsilon+
     		\epsilon_1 E-
     		\epsilon_2 F_l-
     		\epsilon_3 F_w-
     		\epsilon_4 F_e
+    	\right)
 \end{equation}
 
 With that, the first part of the proof is complete. The intensity equation has a single max that represents the lifters current 1RM. The second part of the proof relies on finding a minimum of the volume function. To do this, the gradient of equation \ref{eq:IntensitySubedInVolume} is needed.
 
 \begin{equation*}
-	\nabla v=\left[\begin{matrix}
-		\frac{\partial v}{\partial E} \\
-		\frac{\partial v}{\partial F_l} \\
-		\frac{\partial v}{\partial F_w} \\
-		\frac{\partial v}{\partial F_e} \\
-		\frac{\partial v}{\partial s} \\
-		\frac{\partial v}{\partial r} \\
-	\end{matrix}\right]=
-	\left[\begin{matrix}
-		\epsilon_1 sr \\
-		-\epsilon_2 sr \\
-		-\epsilon_3 sr \\
-		-\epsilon_4 sr \\
-		\epsilon s+
-		\epsilon_1 Es-
-		\epsilon_2 F_l s-
-		\epsilon_3 F_w s-
-		\epsilon_4 F_e s-
-		\epsilon_6 s(s-1)^2	-
-		\left( 
-			\epsilon_5 s(s-1)^2+\epsilon_7
-		\right)	
-		(3s^2-4s+1) \\
-		\epsilon r+
-		\epsilon_1 Er-
-		\epsilon_2 F_l r-
-		\epsilon_3 F_w r-
-		\epsilon_4 F_e r-
-		\epsilon_7 r(r-1)^2	-
-		\left( 
-			\epsilon_5 s(s-1)^2+\epsilon_6
-		\right)	
-		(3s^2-4s+1) \\
-	\end{matrix}\right]
+	\begin{split}
+		\nabla v = & \left[\begin{matrix}
+			\frac{\partial v}{\partial E} \\
+			\frac{\partial v}{\partial F_l} \\
+			\frac{\partial v}{\partial F_w} \\
+			\frac{\partial v}{\partial F_e} \\
+			\frac{\partial v}{\partial s} \\
+			\frac{\partial v}{\partial r} \\
+		\end{matrix}\right]=
+		\left[\begin{matrix}
+			l_{1RM} \epsilon_1 sr \\
+			-l_{1RM} \epsilon_2 sr \\
+			-l_{1RM} \epsilon_3 sr \\
+			-l_{1RM} \epsilon_4 sr \\
+			\partial_s v \\
+			\partial_r v\\
+		\end{matrix}\right] \\
+		\partial_s v = & l_{1RM} \left(
+			\epsilon s+
+			\epsilon_1 Es-
+			\epsilon_2 F_l s-
+			\epsilon_3 F_w s-
+			\epsilon_4 F_e s-
+			\epsilon_6 s(s-1)^2	-
+			\left( 
+				\epsilon_5 s(s-1)^2+\epsilon_7
+			\right)	
+			(3s^2-4s+1)
+		\right) \\
+		\partial_r v = & l_{1RM} \left(
+			\epsilon r+
+			\epsilon_1 Er-
+			\epsilon_2 F_l r-
+			\epsilon_3 F_w r-
+			\epsilon_4 F_e r-
+			\epsilon_7 r(r-1)^2	-
+			\left( 
+				\epsilon_5 s(s-1)^2+\epsilon_6
+			\right)	
+			(3s^2-4s+1)
+		\right) \\
+	\end{split}
 \end{equation*}
 
 This time the gradient does not remove any variables, making the simplification that was performed previously unusable. However, looking at the first four equations of the gradient in context of the last two it is clear that the only critical point occurs at $(s=0,r=0)$. Looking at figures \ref{fig:SquatPotentialSurfaceVolumeAcrossEffort} there appears to be another critical point that represents a maximum. The reason for that is because those graphs have constant values for $E$, $F_l$, $F_w$, and $F_e$. This removes the first four equations of the gradient and as such makes room for another critical point. Given the terms with the $E$, $F_l$, $F_w$, and $F_e$ variables are linear it should come as no surprise that those variables prevent a maximum from occurring, allowing infinite growth in relation to any of the variables.
@@ -471,12 +481,13 @@ Going back to the critical point, it needs to be be proven that it is a minimum.
 Now, this critical point does not match the critical point found from the intensity equation. This presents a problem because unless the points are the same the whole proof falls apart. The saving nuance comes from the domain of the problem, with both $s$ and $r$ being restricted to being $\ge 1$ in section \ref{sec:UnitsOfMeasurement}. This restriction means the minimum in relation to this problem is $(s=1,r=1)$, matching the maximum of equation \ref{eq:BasicSurfaceEquation}. Given this, all that is left to prove is that volume at this critical point is equal to the lifters current 1RM found previously, which is shown in the equation below. With that, it is proven that this surface properly exhibits property 1.a.
 
 \begin{equation}
-	v(s=1,r=1)=
+	v(s=1,r=1)=l_{1RM} \left(
     			\epsilon+
     			\epsilon_1 E-
     			\epsilon_2 F_l-
     			\epsilon_3 F_w-
-    			\epsilon_4 F_e = I(s=1,r=1)
+    			\epsilon_4 F_e 
+    	\right) = I(s=1,r=1)
 \end{equation}
 
 \section{Analysis of Property 1.b: Volume and Intensity}
@@ -743,24 +754,17 @@ Having this representation for baseline work capacity in the opposing volume ske
 \section{Analysis: Unbounded Volume}
 \label{sec:PotentialSurfaceUnboundedVolume}
 
-Unbounded volume occurs when volume continually increases, allowing for the potential surface to ask for an infinite amount of work to be done. This presents a serious issue because this is not possible for a lifter to complete, and is especially problematic considering the purpose of this entire chapter is to establish what is possible and what is not possible. Also, if a surface has unbounded volume then property 1.b is proven to not exhibited by this surface because property 1.b needs a volume tolerance to be reached and not surpassed. It needs to be shown that this potential surface doesn't exhibit unbounded volume, or if it does, to establish the boundary where it occurs so it can be avoided when this surface is used in practice.
+Unbounded volume occurs when volume continually increases, allowing for the potential surface to ask for an infinite amount of work to be done. This presents a serious issue because this is not possible for a lifter to complete, and is especially problematic considering the purpose of this entire chapter is to establish what is possible and what is not possible. It needs to be shown that this potential surface doesn't exhibit unbounded volume, or if it does, to establish the boundary where it occurs so it can be avoided when this surface is used in practice.
 
-Rather than trying to prove that volume has a global maximum, it will be shown that 
-
+One way to prove volume is bounded is to prove that it has a maximum value. Given the discussion in section \ref{sec:PotentialSurfaceAnalysisOfProperty1a} this maximum does appear to be present when $E$, $F_l$, $F_w$, and $F_e$ are all considered to be constant. The question now is if that maximum is always present. 
 To prove volume has a peak requires the first partial and second partial derivative of $v$. The partial derivative with respect to $s$ was chosen. It will be discussed later what changes when the partial derivative with respect to $r$ is chosen instead.
 
-\begin{equation}
-    \label{eq:_IntensitySubedInVolume}
-    v(s,r,E)=sr\left( d-a(s-1)^2(r-1)^2-b(s-1)^2-c(r-1)^2-\epsilon E \right)
-\end{equation}
-\begin{equation}
-    \label{eq:VolumeSPartialDerivative}
+\begin{equation*}
     \frac{\partial v}{\partial s}=rd-r\epsilon E-cr(r-1)^2-r\left( a(r-1)^2+b \right)\left( 3s^2-4s+1 \right)
-\end{equation}
-\begin{equation}
-    \label{eq:VolumeSSecondPartialDerivative}
-    \frac{\partial v'}{\partial s}=-(r)\left( a(r-1)^2+b \right)(6s-4)
-\end{equation}
+\end{equation*}
+\begin{equation*}
+    \frac{\partial v}{\partial ss}=-(r)\left( a(r-1)^2+b \right)(6s-4)
+\end{equation*}
 
 A global maximum occurs when $\partial_{ss} v<0$. In order for this to be the case an even number of the above parenthetical groupings need to be negative. The first parenthetical grouping is always guaranteed to be greater than $1$ from the constraints placed on $r$ in section \ref{sec:UnitsOfMeasurement}. The last parenthetical grouping will be $>0$ if $s>\frac{2}{3}$, which is again guaranteed to be true because of the constraints placed on $s$ in section \ref{sec:UnitsOfMeasurement}. This guarantees two of the three parenthetical groupings to be positive, which forces the middle parenthetical grouping to be positive for $\partial_{ss} v$ to be $<0$. The sign of $a$ changes the set of inequalities that define when the middle parenthetical group is $>0$, and hence when a maximum can occur. Table \ref{tab:BoundedVolumeRanges} shows the inequalities and ranges when volume is bounded for various values of $a$ and $b$.
 
@@ -924,100 +928,10 @@ It is tempting to say the bounds in the above statements can be used in practice
 
 To simplify the model, $b$ and $c$ can be limited to being $\ge 0$ so that volume will only ever be unbounded when $b=0$ or $c=0$. Not only does this remove the complexities of defining ranges over which the potential surface has bounded volume, but it makes intuitive sense to limit the model to only describing what is possible.
 
+\section{Application: 1RM Estimations}
+\label{sec:PotentialSurface1RMEstimations}
 
 
-%
-%\section{Analysis: Proving Volume Increases With Weight Until a Peak Is Reached}
-%\label{sec:PotentialSurfaceVolumePeak}
-%
-%It needs to be shown that, given a constant effort, volume increases with weight until a peak is reached at which point volume decreases. Analytically, this translates to finding the critical points and concavity of the volume equation. After solving equation \ref{eq:PotentialSurfaceEquation} for $s$ and substituting it in equation \ref{eq:IntensityBasedVolumeEquation}, equation \ref{eq:SetsSubedInVolume} is created and the process of finding critical points can be started. For simplicity, the volume equation will be scaled by $l_{1RM}$, removing its presence on the right hand side of the equation. The first and second partial derivatives of $v$ with respect to $I$ will also be needed.
-%
-%\begin{equation}
-%    \label{eq:SetsSubedInVolume}
-%    v(r,I,E)=rI\left( \left( \frac{d-I-c(r-1)^2-\epsilon E}{a(r-1)^2+b} \right)^\frac{1}{2} +1 \right)
-%\end{equation}
-%\begin{equation}
-%    \label{eq:VolumeIPartialDerivative}
-%    \frac{\partial v}{\partial I} = 
-%    r+
-%    r\left( a(r-1)^2+b \right)^{-\frac{1}{2}} 
-%    \left( d-I-c(r-1)^2-\epsilon E \right)^\frac{1}{2}
-%    \left(
-%        1-\frac{I}{2}\left( d-I-c(r-1)^2-\epsilon E \right)^{-\frac{3}{2}}
-%    \right)
-%\end{equation}
-%\begin{equation}
-%    \label{eq:VolumeISecondPartialDerivative}
-%    \frac{\partial v'}{\partial I}=
-%    -r\left( a(r-1)^2+b \right)^{-\frac{1}{2}}
-%    \left( d-I-c(r-1)^2-\epsilon E \right)^{-\frac{1}{2}}
-%    \left(
-%        1+\frac{I}{4}\left( d-I-c(r-1)^2-\epsilon E \right)^{-1}
-%    \right)
-%\end{equation}
-%
-%Both $\partial_Iv$ and $\partial_{II}v$ will need to be set to $0$ and solved for. When looking at $\partial_{II}v$, in order for a maximum to occur $\partial_{II}v<0$. Looking at the parenthetical groups of $\partial_{II}v$, the first two are guaranteed to be $\ge 0$.
-%
-%\begin{enumerate}
-%    \item $r\ge0$ from section \ref{sec:UnitsOfMeasurement}
-%    \item $\left( a(r-1)^2+b \right)^{-\frac{1}{2}}>0$ from section \ref{sec:UnitsOfMeasurement} and the constraints placed on $a$ and $b$ in equation \ref{eq:PotentialSurfaceEquation}
-%\end{enumerate}
-%
-%The third parenthetical group creates a further constraint for the current problem in question, and is shown in the inequality below. This constraint guarantees that the third parenthetical group is $>0$.
-%
-%\begin{equation*}
-%    d-I-c(r-1)^2-\epsilon E>0
-%\end{equation*}
-%
-%Given that the first three parenthetical groups are all $>0$, the last one must also be $>0$ in order for $\partial_{II}v$ to be $<0$. The inequality from the fourth parenthetical grouping is shown below. The constraint above nicely eliminates the imaginary part of the inequality.
-%
-%\begin{equation*}
-%    I<\frac{4}{3}\left( d-c(r-1)^2-\epsilon E \right)
-%\end{equation*}
-%
-%Before moving on, it is worth exploring what the above inequality has to say. As $r$ increases the range over which a maximum can occur in $I$ decreases. This may seem counter intuitive, but when considered from the perspective of volume it makes more sense. At the extreme, as the number of reps continue to increase volume continues to increase, which necessitates weight decreasing, making $I$ decrease. This is important because it shows the model respects the limitations that volume presents on weight.
-%
-%Given the range where a maximum can occur, a critical point still needs to be found. This is not so easily done, and requires a computational approach. Using deadlift data, figure \ref{fig:DeadliftIntensityCriticalPoints} shows where the critical points are in relation to the region where a maximum can occur. It is clear that the critical points are all within the appropriate region to guarantee a maximum occurs.
-%
-%\begin{figure}
-%    \centering
-%    \includegraphics[width=140mm]{DeadliftConstants/IntensityCriticalPoints.png}
-%    \caption{Critical points for intensity from deadlift data and a time frame of 120 days with an effort of $E=5$. Note how they are all within the boundary where a maximum can occur.}
-%    \label{fig:DeadliftIntensityCriticalPoints}
-%\end{figure}
-%
-%Before carrying on, it is worth mentioning that the same process used to find intensity critical points can be carried out but instead of solving equation \ref{eq:PotentialSurfaceEquation} for $s$, it can be solved for $r$. Doing this produces analogous analytical results, with $b$ and $c$ switching places along with $s$ and $r$. In order for the true peak in $I$ to be found, both approaches need to correspond to the same set of critical points. To help visualize any differences, the two sets of critical points can be plotted on top of the volume surface, as shown in figure \ref{fig:DeadliftIntensityCriticalPointsOnVolume}. From this figure, it should be clear that the two different ways to identify the peak in $I$ do not produce the same result.
-%
-%\begin{figure}
-%    \centering
-%    \includegraphics[width=140mm]{DeadliftConstants/IntensityCriticalPointsOnVolume.png}
-%    \caption{Intensity critical points graphed on the volume surface. These lines represent where intensity is maximized, in relation to constant $s$ and $r$ values.}
-%    \label{fig:DeadliftIntensityCriticalPointsOnVolume}
-%\end{figure}
-%
-%The reason for the discrepancies in results can be explained by simplifying the problem to two dimensional approaches. The original three dimensional problem was reduced down to two different two dimensional problems, creating two separate ways to view the problem, and hence two different solutions. With an analytical approach failing to create consistent results, the graphs in table \ref{tab:DeadliftVolumeAcrossEffortOnlyIntensity} serve as the best proof that volume increases with effort until a peak is reached. These graphs do show some of the problems of viewing the problem from two dimensions. They show that volume does not always increase or decrease across intensity for all values of $r$. What does appear to increase across $I$ until a peak is reached is the peak volume.
-%
-%\begin{table}
-%    \centering
-%    \begin{tabular}{c|c}
-%        RPE & Volume Across Intensities \\
-%        \hline
-%        
-%        5 &
-%        \includegraphics[width=140mm]{DeadliftVolume/5-2.png} \\
-%        
-%        %8 &
-%        %\includegraphics[width=76mm]{DeadliftVolume/8-2.png} \\
-%        
-%        10 &
-%        \includegraphics[width=140mm]{DeadliftVolume/10-2.png} \\
-%    \end{tabular}
-%    \caption{The same volume equation from table \ref{tab:DeadliftVolumeAcrossEffort} but only graphed across different intensities. Again, the vertical axis scaled by $l_{1RM}$. The intensity lines on the graphs in table \ref{tab:DeadliftVolumeAcrossEffort} correspond to the same intensity lines on these graphs.}
-%    \label{tab:DeadliftVolumeAcrossEffortOnlyIntensity}
-%\end{table}
-%
-%
-%
 %\section{Application: Solving for the Unknown}
 %\label{sec:PotentialSurfaceSolvingForTheUnknown}
 %
