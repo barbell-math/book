@@ -8,7 +8,8 @@
 \usepackage{amsmath}
 %\usepackage{mathrsfs}
 %\usepackage{latexsym}
-\usepackage{amssymb}	
+\usepackage{amssymb}
+\usepackage{pifont}%	
 \usepackage{amsfonts}
 \usepackage{theorem}
 \usepackage{graphicx}
@@ -33,6 +34,7 @@
 %\usepackage{colortbl,rotating,booktabs} % required packages for Excel2Latex
 \usepackage{wrapfig}
 \usepackage{listings}
+\usepackage{csvsimple}
 \usepackage[backend=biber]{biblatex}
 \addbibresource{bibliography.bib} %Import the bibliography file
 
@@ -84,6 +86,9 @@
 
 \renewcommand{\familydefault}{\sfdefault} % font
 \linespread{1.2} % increase line spacing
+
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
 
 %---------------------------------------------------------------------------
 \begin{document} % every document starts with \begin{document}

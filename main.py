@@ -79,6 +79,7 @@ class Data(object):
     e=pd.read_csv("../data/testData/ExerciseTestData.csv")
     ms=pd.read_csv("../data/generatedData/Client1.ms.csv")
     vs=pd.read_csv("../data/generatedData/Client1.volSkew.csv")
+    pred=pd.read_csv("../data/generatedData/Client1.pred.csv")
     approxVolSkew={
         f[f.rfind('/')+1:f.rfind('.')]: pd.read_csv(f)
         for f in glob.glob("../data/generatedData/basicSurfVolSkewApprox/*.csv")

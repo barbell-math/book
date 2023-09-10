@@ -448,18 +448,6 @@ With that, the first part of the proof is complete. The intensity equation has a
 			\partial_r v\\
 		\end{matrix}\right] \\
 		\partial_s v = & l_{1RM} \left(
-			\epsilon s+
-			\epsilon_1 Es-
-			\epsilon_2 F_l s-
-			\epsilon_3 F_w s-
-			\epsilon_4 F_e s-
-			\epsilon_6 s(s-1)^2	-
-			\left( 
-				\epsilon_5 s(s-1)^2+\epsilon_7
-			\right)	
-			(3s^2-4s+1)
-		\right) \\
-		\partial_r v = & l_{1RM} \left(
 			\epsilon r+
 			\epsilon_1 Er-
 			\epsilon_2 F_l r-
@@ -467,14 +455,26 @@ With that, the first part of the proof is complete. The intensity equation has a
 			\epsilon_4 F_e r-
 			\epsilon_7 r(r-1)^2	-
 			\left( 
-				\epsilon_5 s(s-1)^2+\epsilon_6
+				\epsilon_5 r(r-1)^2+\epsilon_6 r
 			\right)	
 			(3s^2-4s+1)
+		\right) \\
+		\partial_r v = & l_{1RM} \left(
+			\epsilon s+
+			\epsilon_1 Es-
+			\epsilon_2 F_l s-
+			\epsilon_3 F_w s-
+			\epsilon_4 F_e s-
+			\epsilon_6 s(s-1)^2	-
+			\left( 
+				\epsilon_5 r(r-1)^2+\epsilon_7 s
+			\right)	
+			(3r^2-4r+1)
 		\right) \\
 	\end{split}
 \end{equation*}
 
-This time the gradient does not remove any variables, making the simplification that was performed previously unusable. However, looking at the first four equations of the gradient in context of the last two it is clear that the only critical point occurs at $(s=0,r=0)$. Looking at figures \ref{fig:SquatPotentialSurfaceVolumeAcrossEffort} there appears to be another critical point that represents a maximum. The reason for that is because those graphs have constant values for $E$, $F_l$, $F_w$, and $F_e$. This removes the first four equations of the gradient and as such makes room for another critical point. Given the terms with the $E$, $F_l$, $F_w$, and $F_e$ variables are linear it should come as no surprise that those variables prevent a maximum from occurring, allowing infinite growth in relation to any of the variables.
+This time the gradient does not remove any variables, making the simplification that was performed previously unusable. However, looking at the first four equations of the gradient in context of the last two it is clear that the only critical point occurs at $(s=0,r=0)$. However, looking at figures \ref{fig:SquatPotentialSurfaceVolumeAcrossEffort} there appears to be another critical point that represents a maximum. The reason for that is because those graphs have constant values for $E$, $F_l$, $F_w$, and $F_e$. This removes the first four equations of the gradient and as such makes room for another critical point. Given the terms with the $E$, $F_l$, $F_w$, and $F_e$ variables are linear it should come as no surprise that those variables prevent a maximum from occurring, allowing infinite growth in relation to any of the variables.
 
 Going back to the critical point, it needs to be be proven that it is a minimum. However, without the previous simplification the determinant of the Jacobian matrix would be needed to specify if this critical point is a minimum or maximum. Solving that analytically is near impossible, so it will have to suffice looking at the graphs of figure \ref{fig:SquatPotentialSurfaceVolumeAcrossEffort} for proof that this critical point is a minimum. 
 
@@ -668,7 +668,7 @@ Given this equation, the following statements can be made:
 \begin{enumerate}
     \item If $v_s<1$ then the total volume from reps is greater than the total volume from sets, which implies that the lifter favors reps for the given exercise, or has a volume skew towards reps for the given exercise.
     \item If $v_s>1$ then the total volume from sets is greater than the total volume from reps, which implies that the lifter favors sets for the given exercise, or has a volume skew towards sets for the given exercise.
-    \item If $v_s=1$, then the lifter has no volume skew. \footnote{This can bring problems of its own, which will be discussed in section \ref{sec:}.}
+    \item If $v_s=1$, then the lifter has no volume skew.
     \item If $\epsilon_6=0$ or $\epsilon_7=0$ then a lifter has the maximum possible skew towards sets or reps respectively. \footnote{This idea will be explored more from volumes perspective in section \ref{sec:PotentialSurfaceUnboundedVolume}.}
 \end{enumerate}
 
@@ -756,47 +756,61 @@ Having this representation for baseline work capacity in the opposing volume ske
 
 Unbounded volume occurs when volume continually increases, allowing for the potential surface to ask for an infinite amount of work to be done. This presents a serious issue because this is not possible for a lifter to complete, and is especially problematic considering the purpose of this entire chapter is to establish what is possible and what is not possible. It needs to be shown that this potential surface doesn't exhibit unbounded volume, or if it does, to establish the boundary where it occurs so it can be avoided when this surface is used in practice.
 
-One way to prove volume is bounded is to prove that it has a maximum value. Given the discussion in section \ref{sec:PotentialSurfaceAnalysisOfProperty1a} this maximum does appear to be present when $E$, $F_l$, $F_w$, and $F_e$ are all considered to be constant. The question now is if that maximum is always present. 
-To prove volume has a peak requires the first partial and second partial derivative of $v$. The partial derivative with respect to $s$ was chosen. It will be discussed later what changes when the partial derivative with respect to $r$ is chosen instead.
+One way to prove volume is bounded is to prove that it has a maximum value. Given the discussion in section \ref{sec:PotentialSurfaceAnalysisOfProperty1a} this maximum does appear to be present when $E$, $F_l$, $F_w$, and $F_e$ are all considered to be constant. The question now is if that maximum is always present. Figuring that out will require finding the solution to the $\partial_sv$ and $\partial_rv$ system of equations shown in the gradient of $v$ in section \ref{sec:PotentialSurfaceAnalysisOfProperty1a}. However, analytically solving that system of equations is impossible. To get around this, the problem will be looked at from the perspectives of $\partial_sv$ and $\partial_rv$ individually. As such, the first and second partial derivatives of $v$ with respect to $s$ are shown below. It will be discussed later what changes when the partial derivative with respect to $r$ is chosen instead.
 
 \begin{equation*}
-    \frac{\partial v}{\partial s}=rd-r\epsilon E-cr(r-1)^2-r\left( a(r-1)^2+b \right)\left( 3s^2-4s+1 \right)
+    \partial_s v = l_{1RM} \left(
+			\epsilon r+
+			\epsilon_1 Er-
+			\epsilon_2 F_l r-
+			\epsilon_3 F_w r-
+			\epsilon_4 F_e r-
+			\epsilon_7 r(r-1)^2	-
+			\left( 
+				\epsilon_5 r(r-1)^2+\epsilon_6 r
+			\right)
+			(3s^2-4s+1)
+		\right)
 \end{equation*}
 \begin{equation*}
-    \frac{\partial v}{\partial ss}=-(r)\left( a(r-1)^2+b \right)(6s-4)
+    \partial_{ss}v=-l_{1RM} r
+    		\left( 
+			\epsilon_5 (r-1)^2+\epsilon_6
+		\right)
+		(6s-4)
 \end{equation*}
 
-A global maximum occurs when $\partial_{ss} v<0$. In order for this to be the case an even number of the above parenthetical groupings need to be negative. The first parenthetical grouping is always guaranteed to be greater than $1$ from the constraints placed on $r$ in section \ref{sec:UnitsOfMeasurement}. The last parenthetical grouping will be $>0$ if $s>\frac{2}{3}$, which is again guaranteed to be true because of the constraints placed on $s$ in section \ref{sec:UnitsOfMeasurement}. This guarantees two of the three parenthetical groupings to be positive, which forces the middle parenthetical grouping to be positive for $\partial_{ss} v$ to be $<0$. The sign of $a$ changes the set of inequalities that define when the middle parenthetical group is $>0$, and hence when a maximum can occur. Table \ref{tab:BoundedVolumeRanges} shows the inequalities and ranges when volume is bounded for various values of $a$ and $b$.
+A global maximum occurs when $\partial_{ss} v<0$. In order for this to be the case either none of the parenthetical groupings needs to be negative or an even number of the above parenthetical groupings need to be negative. Thr first parenthetical grouping is guarintted to be positive due to the constraints placed on $r$ in section \ref{sec:UnitsOfMeasurement}. The last parenthetical grouping will be $>0$ if $s>\frac{2}{3}$, which is again guaranteed to be true because of the constraints placed on $s$ in section \ref{sec:UnitsOfMeasurement}. This guarantees two of the three parenthetical groupings to be positive, which forces the middle parenthetical grouping to be positive for $\partial_{ss} v$ to be $<0$. The sign of $\epsilon_5$ changes the set of inequalities that define when the middle parenthetical group is $>0$, and hence when a maximum can occur. Table \ref{tab:BoundedVolumeRanges} shows the inequalities and ranges when volume is bounded for various values of $\epsilon_5$ and $\epsilon_6$.
 
-Care has to be taken when $a=0$ or $b=0$, as the behavior of the inequalities is not fully captured by substituting $0$ for $a$ or $b$. A traditional limit cannot be used because inequalities are one sided, and a limit expects a continuous function. Instead, the four scenarios where $a=0$ and $b=0$ will be treated as one sided limits which will be approached from the side where the behavior is already known. By doing this, the sign can be inferred and the one sided nature of the problem can be handled. \footnote{The notation used in table \ref{tab:BoundedVolumeRanges} is as follows: given a number $x$, $x^-$ is a smaller number approaching $x$, and $x^+$ is a larger number approaching $x$. This allows for one sided analysis to be completed.} The scenarios where the root is imaginary are also troublesome. However, the same one sided analysis can be extended and used again. Looking at table \ref{tab:BoundedVolumeRanges} it should be clear how the one sided limit works as well as how the ranges over which volume is bounded respond.
+Care has to be taken when $\epsilon_5=0$ or $\epsilon_6=0$, as the behavior of the inequalities is not fully captured by substituting $0$ for $\epsilon_5$ or $\epsilon_6$. A traditional limit cannot be used because inequalities are one sided, and a limit expects a continuous function. Instead, the four scenarios where $\epsilon_5=0$ and $\epsilon_6=0$ will be treated as one sided limits which will be approached from the side where the behavior is already known. By doing this, the sign can be inferred and the one sided nature of the problem. \footnote{The notation used in table \ref{tab:BoundedVolumeRanges} is as follows: given a number $x$, $x^-$ is a smaller number approaching $x$, and $x^+$ is a larger number approaching $x$. This allows for one sided analysis to be completed.} The scenarios where the root is imaginary are also troublesome. However, the same one sided analysis can be extended and used again. Table \ref{tab:BoundedVolumeRanges} shows how the one sided limit works as well as how the ranges over which volume is bounded respond.
 
 \begin{table}[h]
     \centering
     \begin{tabular}{c|p{6cm}|c}
-        Values for $a$ and $b$ & Inequalities & Range Where Volume is Bounded \\
+        Values for $\epsilon_5$ and $\epsilon_6$ & Inequalities & Range Where Volume is Bounded \\
         \hline
 
-        $a>0$ and $b<0$
+        $\epsilon_5>0$ and $\epsilon_6<0$
         &
-        $r> \left(-\frac{b}{a}\right)^\frac{1}{2}+1$
+        $r> \left(-\frac{\epsilon_6}{\epsilon_5}\right)^\frac{1}{2}+1$
         \newline
-        $r< -\left(-\frac{b}{a}\right)^\frac{1}{2}+1$
+        $r< -\left(-\frac{\epsilon_6}{\epsilon_5}\right)^\frac{1}{2}+1$
         &
-        $\left( r>\left| \frac{b}{a} \right|^\frac{1}{2}+1 \right) \cup \left( r< -\left| \frac{b}{a} \right|^\frac{1}{2}+1 \right)$
+        $\left( r>\left| \frac{\epsilon_6}{\epsilon_5} \right|^\frac{1}{2}+1 \right) \cup \left( r< -\left| \frac{\epsilon_6}{\epsilon_5} \right|^\frac{1}{2}+1 \right)$
         \\
         \hline
         
-        $a>0$ and $b=0$
+        $\epsilon_5>0$ and $\epsilon_6=0$
         &
-        $r> \left(-\frac{0^-}{a}\right)^\frac{1}{2}+1$
+        $r> \left(-\frac{0^-}{\epsilon_5}\right)^\frac{1}{2}+1$
         \newline
-        $r< -\left(-\frac{0^-}{a}\right)^\frac{1}{2}+1$
+        $r< -\left(-\frac{0^-}{\epsilon_5}\right)^\frac{1}{2}+1$
         &
         $\left( r> 1^+ \right) \cup \left( r<1^- \right)$, a.k.a. $r\ne 1$
         \\
         \hline
         
-        $a>0$ and $b>0$
+        $\epsilon_5>0$ and $\epsilon_6>0$
         &
         $r> (0+\beta i)+1$
         \newline
@@ -806,37 +820,37 @@ Care has to be taken when $a=0$ or $b=0$, as the behavior of the inequalities is
         \\
         \hline
         
-        $a=0$ and $b>0$
+        $\epsilon_5=0$ and $\epsilon_6>0$
         &
-        $r> \left(-\frac{b}{0^+}\right)^\frac{1}{2}+1=(0+\infty i)+1$
+        $r> \left(-\frac{\epsilon_6}{0^+}\right)^\frac{1}{2}+1=(0+\infty i)+1$
         \newline
-        $r< -\left(-\frac{b}{0^+}\right)^\frac{1}{2}+1=(-0-\infty i)+1$
+        $r< -\left(-\frac{\epsilon_6}{0^+}\right)^\frac{1}{2}+1=(-0-\infty i)+1$
         &
         $(r>1)\cup (r<1)$ a.k.a. All $r$
         \\
         \hline
         
-        $a<0$ and $b>0$
+        $\epsilon_5<0$ and $\epsilon_6>0$
         &
-        $r< \left(-\frac{b}{a}\right)^\frac{1}{2}+1$
+        $r< \left(-\frac{\epsilon_6}{\epsilon_5}\right)^\frac{1}{2}+1$
         \newline
-        $r> -\left(-\frac{b}{a}\right)^\frac{1}{2}+1$
+        $r> -\left(-\frac{\epsilon_6}{\epsilon_5}\right)^\frac{1}{2}+1$
         &
-        $-\left| \frac{b}{a} \right|^\frac{1}{2}+1 < r< \left| \frac{b}{a} \right|^\frac{1}{2}+1$
+        $-\left| \frac{\epsilon_6}{\epsilon_5} \right|^\frac{1}{2}+1 < r< \left| \frac{\epsilon_6}{\epsilon_5} \right|^\frac{1}{2}+1$
         \\
         \hline
         
-        $a<0$ and $b=0$
+        $\epsilon_5<0$ and $\epsilon_6=0$
         &
-        $r< \left(-\frac{0^+}{a}\right)^\frac{1}{2}+1$
+        $r< \left(-\frac{0^+}{\epsilon_5}\right)^\frac{1}{2}+1$
         \newline
-        $r> -\left(-\frac{0^+}{a}\right)^\frac{1}{2}+1$
+        $r> -\left(-\frac{0^+}{\epsilon_5}\right)^\frac{1}{2}+1$
         &
         $1^- < r< 1^+$, a.k.a. Never
         \\
         \hline
         
-        $a<0$ and $b<0$
+        $\epsilon_5<0$ and $\epsilon_6<0$
         &
         $r< (0+\beta i)+1$
         \newline
@@ -846,16 +860,16 @@ Care has to be taken when $a=0$ or $b=0$, as the behavior of the inequalities is
         \\
         \hline
         
-        $a=0$ and $b<0$
+        $\epsilon_5=0$ and $\epsilon_6<0$
         &
-        $r< \left(-\frac{b}{0^-}\right)^\frac{1}{2}+1=(0+\infty i)+1$
+        $r< \left(-\frac{\epsilon_6}{0^-}\right)^\frac{1}{2}+1=(0+\infty i)+1$
         \newline
-        $r> -\left(-\frac{b}{0^-}\right)^\frac{1}{2}+1=(-0-\infty i)+1$
+        $r> -\left(-\frac{\epsilon_6}{0^-}\right)^\frac{1}{2}+1=(-0-\infty i)+1$
         &
         $1<r<1$ a.k.a. Never
         \\
     \end{tabular}
-    \caption{Various values for $a$ and $b$ as well as there resulting ranges where volume is bounded.}
+    \caption{Various values for $\epsilon_5$ and $\epsilon_6$ as well as there resulting ranges where volume is bounded.}
     \label{tab:BoundedVolumeRanges}
 \end{table}
 
@@ -865,71 +879,123 @@ Given the ranges where a maximum could occur, a critical point is still needs to
 %the equation below is generated.
 \begin{equation}
     \label{eq:VolumeRidgeConstR}
-    3s^2-4s+\left( 1-\frac{d-c(r-1)^2-\epsilon E}{a(r-1)^2-b} \right)=0
+    3s^2-4s+\left( 1-\frac{
+    		\epsilon r+
+		\epsilon_1 r-
+		\epsilon_2 r-
+		\epsilon_3 r-
+		\epsilon_4 r-
+		\epsilon_7 r(r-1)^2		
+	}{
+		\epsilon_5(r-1)^2-\epsilon_6
+	}
+    \right)=0
 \end{equation}
 
- Using the quadratic formula and substituting $\alpha_s$ in place of the fraction for ease of writing, the following points are generated as critical points.
+ Using the quadratic formula and substituting $\eta_s$ in place of the fraction for ease of writing, the following points are generated as critical points.
  
 \begin{equation*}
-    s=\frac{2\pm \sqrt{1+3\alpha_s}}{3}
+    s=\frac{2\pm \sqrt{1+3\eta_s}}{3}
 \end{equation*}
 
-From here the determinant can be used to show where critical points well occur.
+From here the determinant can be used to show where critical points will occur.
 
 \begin{enumerate}
-    \item $\alpha_s < -\frac{1}{3}$: No critical points
-    \item $\alpha_s = -\frac{1}{3}$: Indeterminate critical point
-    \item $\alpha_s > -\frac{1}{3}$: Two critical points
+    \item $\eta_s < -\frac{1}{3}$: No critical points
+    \item $\eta_s = -\frac{1}{3}$: Indeterminate critical point
+    \item $\eta_s > -\frac{1}{3}$: Two critical points
 \end{enumerate}
 
-Given the above scenarios for critical points, only option $(3)$ is of interest. As shown below, if $\alpha_s> -\frac{1}{3}$ one critical point is generated on either side of $s=\frac{2}{3}$, the exact $s$ boundary where $\partial_{ss} v$ changes sign. Again, $\partial_{ss} v$ needs to $<0$ for a maximum to be found, requiring the parenthetical relating to $s$ in $\partial_{ss} v$ to be $>0$. This further narrows down the critical points to only include the one that is $>\frac{2}{3}$. It is worth mentioning that this is also the only valid critical point from the context of the problem, with $s$ being constrained to be $>1$ in section \ref{sec:UnitsOfMeasurement}.
+Given the above scenarios for critical points, only option $(3)$ is of interest. As shown below, if $\eta_s> -\frac{1}{3}$ one critical point is generated on either side of $s=\frac{2}{3}$, the exact $s$ boundary where $\partial_{ss} v$ changes sign. Again, $\partial_{ss} v$ needs to $<0$ for a maximum to be found, requiring the parenthetical relating to $s$ in $\partial_{ss} v$ to be $>0$. This further narrows down the critical points to only include the one that is $>\frac{2}{3}$. It is worth mentioning that this is also the only valid critical point from the context of the problem, with $s$ being constrained to be $>1$ in section \ref{sec:UnitsOfMeasurement}.
 
 \begin{equation*}
     s=\frac{2\pm \sqrt{1+3\left( -\frac{1}{3} \right)^+}}{3}=\frac{2\pm 0^+}{3}=\left( \frac{2}{3} \right)^-, \left( \frac{2}{3} \right)^+
 \end{equation*}
 
-Given that $\alpha_s>-\frac{1}{3}$, there will be a critical point. This can now be combined with the ranges where volume is bounded as well as the context of the problem to create the following statements:
+Given that $\eta_s>-\frac{1}{3}$, there will be a critical point. This can now be combined with the ranges where volume is bounded as well as the context of the problem to create the following statements:
 
 \begin{enumerate}
-    \item Volume is fully bounded for all $r$ when $a,b>0$.
-    \item When $a>0$ and $b=0$ volume is fully bounded for all $r\ne 1$.
-    \item When $a<0$ and $b=0$ volume is never bounded.
-    \item When $a=0$ and $b>0$, volume is fully bounded.
-    \item When $a=0$ and $b<0$, volume is never bounded.
-    \item When $a>0$ and $b<0$, volume is bounded for $r>\left| \frac{b}{a} \right|^\frac{1}{2}+1$.
-    \item When $a<0$ and $b>0$, volume is bounded for $1\le r < \left| \frac{b}{a} \right|^\frac{1}{2}+1$
+    \item Volume is fully bounded for all $r$ when $\epsilon_5,\epsilon_6>0$.
+    \item When $\epsilon_5>0$ and $\epsilon_6=0$ volume is fully bounded for all $r\ne 1$.
+    \item When $\epsilon_5<0$ and $\epsilon_6=0$ volume is never bounded.
+    \item When $\epsilon_5=0$ and $\epsilon_6>0$, volume is fully bounded.
+    \item When $\epsilon_5=0$ and $\epsilon_6<0$, volume is never bounded.
+    \item When $\epsilon_5>0$ and $\epsilon_6<0$, volume is bounded for $r>\left| \frac{\epsilon_6}{\epsilon_5} \right|^\frac{1}{2}+1$.
+    \item When $\epsilon_5<0$ and $\epsilon_6>0$, volume is bounded for $1\le r < \left| \frac{\epsilon_6}{\epsilon_5} \right|^\frac{1}{2}+1$
 \end{enumerate}
 
-This analysis only looked at sets, which was an assumption made from the very beginning when the partial derivative of $v$ was taken with respect to $s$. If instead, the partial derivative was taken with respect to $r$, an analogous process would be followed. Due to the symmetry from $\partial_sv$ and $\partial_rv$, the only differences will be $c$ replacing $b$, $\alpha_r$ replacing $\alpha_s$ and, obviously, $s$ and $r$ switching roles. This creates the following additional statements given that $\alpha_r>-\frac{1}{3}$:
+This analysis only looked at sets, which was an assumption made from the very beginning when the partial derivative of $v$ was taken with respect to $s$. If instead, the partial derivative was taken with respect to $r$, an analogous process would be followed. Due to the symmetry from $\partial_sv$ and $\partial_r v$, the only differences will be $\epsilon_7$ replacing $\epsilon_6$, $\eta_r$ replacing $\eta_s$ and, obviously, $s$ and $r$ switching roles. This creates the following additional statements given that $\eta_r>-\frac{1}{3}$:
 
 \begin{enumerate}
     \setcounter{enumi}{7}
-    \item Volume is fully bounded for all $s$ when $a,c>0$.
-    \item When $a>0$ and $c=0$ volume is fully bounded for all $s\ne 1$.
-    \item When $a<0$ and $c=0$ volume is never bounded.
-    \item When $a=0$ and $c>0$, volume is fully bounded.
-    \item When $a=0$ and $c<0$, volume is never bounded.
-    \item When $a>0$ and $c<0$, volume is bounded for $s>\left| \frac{c}{a} \right|^\frac{1}{2}+1$.
-    \item When $a<0$ and $c>0$, volume is bounded for $1\le s < \left| \frac{c}{a} \right|^\frac{1}{2}+1$
+    \item Volume is fully bounded for all $s$ when $\epsilon_5,c>0$.
+    \item When $\epsilon_5>0$ and $\epsilon_7=0$ volume is fully bounded for all $s\ne 1$.
+    \item When $\epsilon_5<0$ and $\epsilon_7=0$ volume is never bounded.
+    \item When $\epsilon_5=0$ and $\epsilon_7>0$, volume is fully bounded.
+    \item When $\epsilon_5=0$ and $\epsilon_7<0$, volume is never bounded.
+    \item When $\epsilon_5>0$ and $\epsilon_7<0$, volume is bounded for $s>\left| \frac{c}{\epsilon_5} \right|^\frac{1}{2}+1$.
+    \item When $\epsilon_5<0$ and $\epsilon_7>0$, volume is bounded for $1\le s < \left| \frac{c}{\epsilon_5} \right|^\frac{1}{2}+1$
 \end{enumerate}
 
-For peace of mind, figure \ref{fig:VolumeConstSRPeak} shows the peak volume identified by the above algebraic analysis. There is a peak for all $s$ and $r$ values, which means that volume is fully bounded. This also matches the statements above as $a=1.6\times 10^{-4}$, $b=2.7\times 10^{-3}$, and $c=2.9\times 10^{-3}$, which are all greater than $0$.
+%For peace of mind, figure \ref{fig:VolumeConstSRPeak} shows the peak volume identified by the above algebraic analysis. There is a peak for all $s$ and $r$ values, which means that volume is fully bounded. This also matches the statements above as $a=1.6\times 10^{-4}$, $b=2.7\times 10^{-3}$, and $c=2.9\times 10^{-3}$, which are all greater than $0$.
+%
+%\begin{figure}[h]
+%    \centering
+%    \includegraphics[width=170mm]{DeadliftVolume/FailedRidgeIdentification-2.png}
+%    \caption{The peak identified in volume given constant $s$ and $r$ values. This may look similar to figure \ref{fig:DeadliftIntensityCriticalPointsOnVolume} but they are two different graphs that were generated from two different approaches.}
+%    \label{fig:VolumeConstSRPeak}
+%\end{figure}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=170mm]{DeadliftVolume/FailedRidgeIdentification-2.png}
-    \caption{The peak identified in volume given constant $s$ and $r$ values. This may look similar to figure \ref{fig:DeadliftIntensityCriticalPointsOnVolume} but they are two different graphs that were generated from two different approaches.}
-    \label{fig:VolumeConstSRPeak}
-\end{figure}
-
-The above statements make sense in isolation, but when considered together things can contradict each other. If $a<0$, $b=0$, and $c>0$, then  statement $(3)$ states volume is never bounded, but statement $(14)$ states volume is bounded for a specific region. Again, this is the result of looking at a three dimensional problem from two dimensions, and is the same reason why the two peak volume lines in figure \ref{fig:VolumeConstSRPeak} do not coincide. While this does create some problems, the above statements are still is able to give some intuition for the problem at hand. Revisiting the example stated previously, it is saying that volume from reps is never bounded, and volume from sets is only bounded over a region. This intuition can be used to adjust training appropriately to avoid unbounded volume.
+The above statements make sense in isolation, but when considered together things can contradict each other. If $\epsilon_5<0$, $\epsilon_6=0$, and $\epsilon_7>0$, then  statement $(3)$ states volume is never bounded, but statement $(14)$ states volume is bounded for a specific region. This is the result of looking at a three dimensional problem from two dimensions. While this does create some problems, the above statements are still is able to give some intuition for the problem at hand. Revisiting the example stated previously, it is saying that volume from reps is never bounded, and volume from sets is only bounded over a specific region.
 
 It is tempting to say the bounds in the above statements can be used in practice to limit the lifter from doing to much volume, but just because volume is bounded does not mean it is reasonable. Just because it can be proven that volume has a peak does not prove that the peak volume is attainable. This is a limitation of the model that stems from using linear regression to fit a surface to the data. Linear regression will implicitly extrapolate what amount of volume can be done given the data it has. Extrapolation is a known weakness of linear regression, making its predicted volume sometimes inaccurate.
 
-To simplify the model, $b$ and $c$ can be limited to being $\ge 0$ so that volume will only ever be unbounded when $b=0$ or $c=0$. Not only does this remove the complexities of defining ranges over which the potential surface has bounded volume, but it makes intuitive sense to limit the model to only describing what is possible.
+To simplify the model, $\epsilon_5$, $\epsilon_6$ and $\epsilon_7$ can be limited to being $\ge 0$ so that volume could only ever be unbounded when $\epsilon_5=0$, $\epsilon_6=0$ or $\epsilon_7=0$. Not only does this remove the complexities of defining ranges over which the potential surface has bounded volume, but it makes intuitive sense to limit the model to only describing what is possible. These constraints are shown in equation \ref{eq:BasicSurfaceEquation}.
 
 \section{Application: 1RM Estimations}
 \label{sec:PotentialSurface1RMEstimations}
+
+Being able to accurately predict a lifters 1RM is extremely important. There are several reasons knowing a lifters current 1RM is important. First of all is because of the models dependence on knowing the lifters current 1RM which was discussed in section \ref{sec:PotentialSurfaceLinearRegressionAndTimeSeriesProblems}. Secondly, it is an important piece of information for tracking progress. The entire goal of a powerlifter is to increase there 1RM over time which makes it a good measure of progress. Lastly, it is simply just good information for the lifter to know. If the prediction is good enough then it can be used to tell a lifter what weight is safe to attempt.
+
+This estimation will only be as useful as it is accurate. Before moving forward an acceptable error needs to be established. If the predicted intensity is, on average, within $1\%$ of the actual intensity then the model will be considered 'accurate', although greater accuracy could not hurt. Table \ref{tab:BasicSurface1RMEstimations} shows the models predicted 1RM vs the actual weight that was lifted. It should be clear from this table that the model consistently under-predicts the lifters actual 1RM with an error much greater than $1\%$. The model almost never predicts above $100\%$ intensity, which is required for a new 1RM. The only exception was for heeled squat on $9/10/2022$ but even then the model significantly under-predicted the lifters actual performance.
+
+\begin{table}[htb]
+    \centering
+	\csvautotabular{../data/generatedData/Client1.1RMPred.slidingWindow.basic.csv}
+	\caption{A table showing predicted vs actual 1RM intensities. Note that the model consistently under predicts the lifters current 1RM. The first intensity prediction is $0\%$ because that data point is near the start of the data, meaning that at that time the model did not have enough data to make a reliable prediction. This limitation of needed a certain amount of data before predictions can be made will be discussed in part 2.}
+	\label{tab:BasicSurface1RMEstimations}
+\end{table}
+
+There are a couple reasons the model could be exhibiting this behavior. The most prominent however is due to a decision that was made all the way back at the beginning of this chapter. When setting up the $F_{tot}$ equation the terms containing $s$ and $r$ were arbitrarily squared. It is important to note that squaring the terms lead to a better model than if they were left linear, but the choice of squaring the terms was arbitrary. By choosing a power of $2$ the surface was automatically constrained to a certain range of behaviors, and one of the behaviors was how quickly the surface reaches its maximum. Seeing that the model is consistently under-predicting the lifters 1RM, this may be indicative that the surface is leveling off too quick and hence is not able to reach the lifters 1RM appropriately. So what should this constant be? Rather than choosing an arbitrary value, it's value needs to be appropriately chosen from the data, just like the other constants in the surface equation.
+
+\section{Summary}
+
+Before moving forward it is worth quickly noting the success and failures of this surface so that it can be compared to the surfaces presented in the next few chapters. Out of all four properties, this surface exhibited three correctly. The only property that was not met was property 1.b because the surface did not reach a plateau representing volume base. Despite this hindrance, the surface did seem to exhibit reasonable behavior above $50\%$ intensity, which could make it a viable surface to use as long as this limitation is kept in mind.
+
+Other than property 1.b, this surface had a couple other things that need to be kept in mind when using the surface. The first was unbounded volume. Constraints were placed on the surface limit this occurrence of unbounded volume, but there can still be scenarios where $\epsilon_5=0$, $\epsilon_6=0$, or $\epsilon_7=0$ and unbounded volume will occur. The second thing was that the surface consistently under-predicts the lifters 1RM. This is problematic for several reasons, but largely because a lifters goal is to increase there 1RM, making accurate 1RM estimations necessary to track progress. Table \ref{tab:BasicSurfacePropertiesAndBehaviorsSummary} lists the properties and short comings of this surface. It is clear this surface is far from perfect, and the chapter \ref{sec:} will attempt to address the previously outlined issues with an updated surface.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|}
+    		\hline
+    		Property/Behavior & Properly Exhibited & Not Properly Exhibited \\
+    		\hline
+    		Property 1.a & \cmark & \\
+    		Property 1.b & & \xmark \\\    		
+    		Property 2 & \cmark & \\
+    		Property 3 & \cmark & \\
+    		Property 4 & \cmark & \\
+    		Bounded Volume & & \xmark \\
+    		1RM Estimation & & \xmark \\
+    		\hline
+    \end{tabular}
+    \caption{Properties and behaviors and whether or not they are exhibited by this surface.}
+    \label{tab:BasicSurfacePropertiesAndBehaviorsSummary}
+\end{table}
+
+
+\chapter{Surface 2: The Basic Surface}
+\label{sec:PotentialSurfaceTheBasicSurface}
 
 
 %\section{Application: Solving for the Unknown}
