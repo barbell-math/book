@@ -109,6 +109,16 @@ With effort, intensity, and fatigues relation to volume being explored, sets and
     \label{fig:SetsVsReps}
 \end{figure}
 
+\subsection{Property 5: Bounded Volume}
+\label{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariablesBoundedVolume}
+
+Unbounded volume occurs when volume continually increases, allowing for the model to ask for an infinite amount of work to be done. This presents a serious issue because this is not possible for a lifter to complete, and is especially problematic considering the purpose of this entire chapter is to establish what is possible and what is not possible. As such, volume will need to be bounded. This could mean that volume reaches a global maximum or, preferably to allow for property 1.b to be true, it reaches a plateau. Either way, once volume is bounded a maximum achievable volume can be established.
+
+\subsection{Property 6: 1RM Estimations}
+\label{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables1RMEstimations}
+
+Being able to accurately predict a lifters 1RM is extremely important. There are several reasons knowing a lifters current 1RM is important. First is because of the models dependence on knowing the lifters current 1RM which will be discussed in section \ref{sec:PotentialSurfaceLinearRegressionAndTimeSeriesProblems}. Secondly, it is an important piece of information for tracking progress. The entire goal of a powerlifter is to increase there 1RM over time, which makes it a good measure of progress. Lastly, it is simply just good information for the lifter to know. If the prediction is good enough then it can be used to tell a lifter what weight is safe to load when attempting a new 1RM. This estimation will only be as useful as it is accurate, so, before moving forward an acceptable error needs to be established. If the predicted intensity is, on average, within $1\%$ of the actual intensity then the model will be considered 'accurate', although greater accuracy could not hurt.
+
 By this point it should be obvious the crux of the problem in question will require finding a lifters volume tolerance across intensity and effort, as well as the lifters volume skew between sets and reps. In order to solve this problem, a surface will need to be found that exhibits the appropriate behaviors and then that surface will need to be fitted to the data. These surfaces will be called \textit{potential surfaces}, because they represent a lifters potential performance. It is important to conceptualize that every combination of sets, reps, weight, and effort defined by a potential surface is theoretically possible for a lifter to complete. This is the foundation this entire book will build off of.
 
 
@@ -474,7 +484,7 @@ With that, the first part of the proof is complete. The intensity equation has a
 	\end{split}
 \end{equation*}
 
-This time the gradient does not remove any variables, making the simplification that was performed previously unusable. However, looking at the first four equations of the gradient in context of the last two it is clear that the only critical point occurs at $(s=0,r=0)$. However, looking at figures \ref{fig:SquatPotentialSurfaceVolumeAcrossEffort} there appears to be another critical point that represents a maximum. The reason for that is because those graphs have constant values for $E$, $F_l$, $F_w$, and $F_e$. This removes the first four equations of the gradient and as such makes room for another critical point. Given the terms with the $E$, $F_l$, $F_w$, and $F_e$ variables are linear it should come as no surprise that those variables prevent a maximum from occurring, allowing infinite growth in relation to any of the variables.
+This time the gradient does not remove any variables, making the simplification that was previously performed unusable. However, looking at the first four equations of the gradient in context of the last two it is clear that the only critical point occurs at $(s=0,r=0)$. However, looking at figures \ref{fig:SquatPotentialSurfaceVolumeAcrossEffort} there appears to be another critical point that represents a maximum. The reason for that is because those graphs have constant values for $E$, $F_l$, $F_w$, and $F_e$. This removes the first four equations of the gradient and as such makes room for another critical point. Given the terms with the $E$, $F_l$, $F_w$, and $F_e$ variables are linear it should come as no surprise that those variables prevent a maximum from occurring, allowing infinite growth in relation to any of the variables.
 
 Going back to the critical point, it needs to be be proven that it is a minimum. However, without the previous simplification the determinant of the Jacobian matrix would be needed to specify if this critical point is a minimum or maximum. Solving that analytically is near impossible, so it will have to suffice looking at the graphs of figure \ref{fig:SquatPotentialSurfaceVolumeAcrossEffort} for proof that this critical point is a minimum. 
 
@@ -751,12 +761,10 @@ Before moving on, there has been so much attention on $\epsilon_6$ and $\epsilon
 
 Having this representation for baseline work capacity in the opposing volume skew is important. If it was not present the model would assume when a lifter has a certain volume skew, any volume from the opposing skew would simply not be possible. In reality, this is not the case, some baseline level of volume will always be possible, even in the opposite skew. Do not get this confused with volume tolerance, which represents a maximal volume that a lifter can tolerate rather than a baseline of possible volume.
 
-\section{Analysis: Unbounded Volume}
+\section{Analysis of Property 5: (Un)Bounded Volume}
 \label{sec:PotentialSurfaceUnboundedVolume}
 
-Unbounded volume occurs when volume continually increases, allowing for the potential surface to ask for an infinite amount of work to be done. This presents a serious issue because this is not possible for a lifter to complete, and is especially problematic considering the purpose of this entire chapter is to establish what is possible and what is not possible. It needs to be shown that this potential surface doesn't exhibit unbounded volume, or if it does, to establish the boundary where it occurs so it can be avoided when this surface is used in practice.
-
-One way to prove volume is bounded is to prove that it has a maximum value. Given the discussion in section \ref{sec:PotentialSurfaceAnalysisOfProperty1a} this maximum does appear to be present when $E$, $F_l$, $F_w$, and $F_e$ are all considered to be constant. The question now is if that maximum is always present. Figuring that out will require finding the solution to the $\partial_sv$ and $\partial_rv$ system of equations shown in the gradient of $v$ in section \ref{sec:PotentialSurfaceAnalysisOfProperty1a}. However, analytically solving that system of equations is impossible. To get around this, the problem will be looked at from the perspectives of $\partial_sv$ and $\partial_rv$ individually. As such, the first and second partial derivatives of $v$ with respect to $s$ are shown below. It will be discussed later what changes when the partial derivative with respect to $r$ is chosen instead.
+One way to prove volume is bounded, and hence prove the surface properly exhibits property 5, is to prove that it has a maximum value. Given the discussion in section \ref{sec:PotentialSurfaceAnalysisOfProperty1a} this maximum does appear to be present when $E$, $F_l$, $F_w$, and $F_e$ are all considered to be constant. The question now is if that maximum is always present. Figuring that out will require finding the solution to the $\partial_sv$ and $\partial_rv$ system of equations shown in the gradient of $v$ in section \ref{sec:PotentialSurfaceAnalysisOfProperty1a}. However, analytically solving that system of equations is impossible. To get around this, the problem will be looked at from the perspectives of $\partial_sv$ and $\partial_rv$ individually. As such, the first and second partial derivatives of $v$ with respect to $s$ are shown below. It will be discussed later what changes when the partial derivative with respect to $r$ is chosen instead.
 
 \begin{equation*}
     \partial_s v = l_{1RM} \left(
@@ -933,8 +941,8 @@ This analysis only looked at sets, which was an assumption made from the very be
     \item When $\epsilon_5<0$ and $\epsilon_7=0$ volume is never bounded.
     \item When $\epsilon_5=0$ and $\epsilon_7>0$, volume is fully bounded.
     \item When $\epsilon_5=0$ and $\epsilon_7<0$, volume is never bounded.
-    \item When $\epsilon_5>0$ and $\epsilon_7<0$, volume is bounded for $s>\left| \frac{c}{\epsilon_5} \right|^\frac{1}{2}+1$.
-    \item When $\epsilon_5<0$ and $\epsilon_7>0$, volume is bounded for $1\le s < \left| \frac{c}{\epsilon_5} \right|^\frac{1}{2}+1$
+    \item When $\epsilon_5>0$ and $\epsilon_7<0$, volume is bounded for $s>\left| \frac{\epsilon_7}{\epsilon_5} \right|^\frac{1}{2}+1$.
+    \item When $\epsilon_5<0$ and $\epsilon_7>0$, volume is bounded for $1\le s < \left| \frac{\epsilon_7}{\epsilon_5} \right|^\frac{1}{2}+1$
 \end{enumerate}
 
 %For peace of mind, figure \ref{fig:VolumeConstSRPeak} shows the peak volume identified by the above algebraic analysis. There is a peak for all $s$ and $r$ values, which means that volume is fully bounded. This also matches the statements above as $a=1.6\times 10^{-4}$, $b=2.7\times 10^{-3}$, and $c=2.9\times 10^{-3}$, which are all greater than $0$.
@@ -950,15 +958,19 @@ The above statements make sense in isolation, but when considered together thing
 
 It is tempting to say the bounds in the above statements can be used in practice to limit the lifter from doing to much volume, but just because volume is bounded does not mean it is reasonable. Just because it can be proven that volume has a peak does not prove that the peak volume is attainable. This is a limitation of the model that stems from using linear regression to fit a surface to the data. Linear regression will implicitly extrapolate what amount of volume can be done given the data it has. Extrapolation is a known weakness of linear regression, making its predicted volume sometimes inaccurate.
 
-To simplify the model, $\epsilon_5$, $\epsilon_6$ and $\epsilon_7$ can be limited to being $\ge 0$ so that volume could only ever be unbounded when $\epsilon_5=0$, $\epsilon_6=0$ or $\epsilon_7=0$. Not only does this remove the complexities of defining ranges over which the potential surface has bounded volume, but it makes intuitive sense to limit the model to only describing what is possible. These constraints are shown in equation \ref{eq:BasicSurfaceEquation}.
+To simplify the model, $\epsilon_5$, $\epsilon_6$ and $\epsilon_7$ can be limited to being $\ge 0$ so that volume could only ever be unbounded when $\epsilon_5=0$, $\epsilon_6=0$ or $\epsilon_7=0$. Not only does this remove the complexities of defining ranges over which the potential surface has bounded volume, but it makes intuitive sense to limit the model to only describing what is possible. These constraints are shown in equation \ref{eq:BasicSurfaceEquation}. After all this work, it can safely be stated that equation \ref{eq:BasicSurfaceEquation} does not properly exhibit property 5.
 
-\section{Application: 1RM Estimations}
+\section{Analysis of Property 6: 1RM Estimations}
 \label{sec:PotentialSurface1RMEstimations}
 
-Being able to accurately predict a lifters 1RM is extremely important. There are several reasons knowing a lifters current 1RM is important. First of all is because of the models dependence on knowing the lifters current 1RM which was discussed in section \ref{sec:PotentialSurfaceLinearRegressionAndTimeSeriesProblems}. Secondly, it is an important piece of information for tracking progress. The entire goal of a powerlifter is to increase there 1RM over time which makes it a good measure of progress. Lastly, it is simply just good information for the lifter to know. If the prediction is good enough then it can be used to tell a lifter what weight is safe to attempt.
+Property 6 is concerned with 1RM estimations, with it defining an acceptable boundary of accuracy. Table \ref{tab:BasicSurface1RMEstimations} and figure \ref{fig:ApproximateVsActual1RMIntensity} show the models predicted 1RM vs the actual weight that was lifted. \footnote{The lifter did not have access to any of the models estimations when the 1RM attempts were performed, removing any bias from the data that would have been present if the lifter was told the models estimates.} It should be clear from this table that the model consistently under-predicts the lifters actual 1RM with an error much greater than $1\%$. The model almost never predicts above $100\%$ intensity, which is required for a new 1RM. The only exception was for heeled squat on $9/10/2022$ but even then the model significantly under-predicted the lifters actual performance.
 
-This estimation will only be as useful as it is accurate. Before moving forward an acceptable error needs to be established. If the predicted intensity is, on average, within $1\%$ of the actual intensity then the model will be considered 'accurate', although greater accuracy could not hurt. Table \ref{tab:BasicSurface1RMEstimations} shows the models predicted 1RM vs the actual weight that was lifted. It should be clear from this table that the model consistently under-predicts the lifters actual 1RM with an error much greater than $1\%$. The model almost never predicts above $100\%$ intensity, which is required for a new 1RM. The only exception was for heeled squat on $9/10/2022$ but even then the model significantly under-predicted the lifters actual performance.
-
+\begin{figure}[htb]
+    \centering
+    \includegraphics[scale=0.55]{images/ch3/PredVsActual1RM.basic.png}
+    \caption{Graphs comparing the approximate and actual 1RM intensity values. Note how the model nearly always under predicts the lifters current 1RM. The initial value where the prediction was $0$ is not shown in these figures to allow the graphs to be scaled appropriately to show the smaller differences in the predicted vs actual values.}
+    \label{fig:ApproximateVsActual1RMIntensity}
+\end{figure}
 \begin{table}[htb]
     \centering
 	\csvautotabular{../data/generatedData/Client1.1RMPred.slidingWindow.basic.csv}
@@ -970,32 +982,34 @@ There are a couple reasons the model could be exhibiting this behavior. The most
 
 \section{Summary}
 
-Before moving forward it is worth quickly noting the success and failures of this surface so that it can be compared to the surfaces presented in the next few chapters. Out of all four properties, this surface exhibited three correctly. The only property that was not met was property 1.b because the surface did not reach a plateau representing volume base. Despite this hindrance, the surface did seem to exhibit reasonable behavior above $50\%$ intensity, which could make it a viable surface to use as long as this limitation is kept in mind.
+Before moving forward it is worth quickly noting the success and failures of this surface so that it can be compared to the surfaces presented in the next few chapters. Out of all six properties, this surface exhibited four correctly. The fist property that was not met was property 1.b because the surface did not reach a plateau representing volume base. Despite this hindrance, the surface did seem to exhibit reasonable behavior above $50\%$ intensity, which could make it a viable surface to use as long as this limitation is kept in mind.
 
-Other than property 1.b, this surface had a couple other things that need to be kept in mind when using the surface. The first was unbounded volume. Constraints were placed on the surface limit this occurrence of unbounded volume, but there can still be scenarios where $\epsilon_5=0$, $\epsilon_6=0$, or $\epsilon_7=0$ and unbounded volume will occur. The second thing was that the surface consistently under-predicts the lifters 1RM. This is problematic for several reasons, but largely because a lifters goal is to increase there 1RM, making accurate 1RM estimations necessary to track progress. Table \ref{tab:BasicSurfacePropertiesAndBehaviorsSummary} lists the properties and short comings of this surface. It is clear this surface is far from perfect, and the chapter \ref{sec:} will attempt to address the previously outlined issues with an updated surface.
+Other than property 1.b, property 5 and 6 were also not properly exhibited. Property 5 dealt with unbounded volume. Constraints were placed on the surface limit the occurrence of unbounded volume, but there can still be scenarios where $\epsilon_5=0$, $\epsilon_6=0$, or $\epsilon_7=0$ where unbounded volume can occur. Property 6 was concerned with 1RM estimations. It was shown that the surface consistently under-predicts the lifters 1RM. This is problematic for several reasons, but largely because a lifters goal is to increase there 1RM, making accurate 1RM estimations necessary to track progress. Table \ref{tab:BasicSurfacePropertiesAndBehaviorsSummary} summarizes the properties and whether or not the surface properly exhibited there behavior. It is clear this surface is far from perfect. Chapter \ref{sec:PotentialSurfaceTheVolumeBaseSurface} will attempt to address some of the previously outlined issues with an updated surface.
 
-\begin{table}[h]
+\begin{table}[htb]
     \centering
     \begin{tabular}{|c|c|c|}
     		\hline
-    		Property/Behavior & Properly Exhibited & Not Properly Exhibited \\
+    		Property & Properly Exhibited & Not Properly Exhibited \\
     		\hline
-    		Property 1.a & \cmark & \\
-    		Property 1.b & & \xmark \\\    		
-    		Property 2 & \cmark & \\
-    		Property 3 & \cmark & \\
-    		Property 4 & \cmark & \\
-    		Bounded Volume & & \xmark \\
-    		1RM Estimation & & \xmark \\
+    		1.a & \cmark & \\
+    		1.b & & \xmark \\  		
+    		2 & \cmark & \\
+    		3 & \cmark & \\
+    		4 & \cmark & \\
+    		5 & & \xmark \\
+    		6 & & \xmark \\
     		\hline
     \end{tabular}
-    \caption{Properties and behaviors and whether or not they are exhibited by this surface.}
+    \caption{Properties and whether or not they are exhibited by this surface.}
     \label{tab:BasicSurfacePropertiesAndBehaviorsSummary}
 \end{table}
 
 
-\chapter{Surface 2: The Basic Surface}
-\label{sec:PotentialSurfaceTheBasicSurface}
+\chapter{Surface 2: The Volume Base Surface}
+\label{sec:PotentialSurfaceTheVolumeBaseSurface}
+
+The second surface builds off of the previous chapter, but changes the meaning of the $\hat{-}$ symbol to mean division. The goal of doing this is to ensure the surface exhibits property 1.b, a property that the basic surface discussed in the previous chapter was missing.
 
 
 %\section{Application: Solving for the Unknown}

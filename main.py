@@ -80,6 +80,7 @@ class Data(object):
     ms=pd.read_csv("../data/generatedData/Client1.ms.csv")
     vs=pd.read_csv("../data/generatedData/Client1.volSkew.csv")
     pred=pd.read_csv("../data/generatedData/Client1.pred.csv")
+    oneRMPred=pd.read_csv("../data/generatedData/Client1.1RMPred.slidingWindow.basic.csv")
     approxVolSkew={
         f[f.rfind('/')+1:f.rfind('.')]: pd.read_csv(f)
         for f in glob.glob("../data/generatedData/basicSurfVolSkewApprox/*.csv")
@@ -126,6 +127,7 @@ class Ch3(object):
         Ch3.eps1OverTime()
         Ch3.volumeSkewOverTime()
         Ch3.approxVolumeSkewGraphs()
+        Ch3.oneRepMaxPredictionsBasicSurface()
 
     @staticmethod
     @timerDecorator
@@ -192,7 +194,7 @@ class Ch3(object):
             labels={
                 "Intensity": "Intensity {0}".format(Units.formatUnits(["Intensity"])),
                 "Effort": "Effort {0}".format(Units.formatUnits(["Effort"])),
-            }, 
+            },
             title="Intensity Vs Effort for Main Compound and Main Compound Accessories",
         )
         fig.update_layout(
@@ -821,9 +823,69 @@ class Ch3(object):
             .format(Ch3.fileLoc)
         )
 
+    @staticmethod
+    @timerDecorator
+    def oneRepMaxPredictionsBasicSurface():
+        tmp=Data.oneRMPred[["DatePerformed","Intensity","PredictedIntensity"]].dropna()
+        tmp=tmp.loc[np.where(tmp["PredictedIntensity"]>0)]
+        avgErr=np.mean(np.abs(tmp["Intensity"]-tmp["PredictedIntensity"]))
+        fig=make_subplots(cols=1,rows=2)
+        fig.add_trace(go.Scatter(
+            x=tmp["DatePerformed"],
+            y=tmp["Intensity"],
+            mode="markers",
+            name="Actual Intensity",
+            legendgroup="actual",
+        ),row=1,col=1)
+        fig.add_trace(go.Scatter(
+            x=tmp["DatePerformed"],
+            y=tmp["PredictedIntensity"],
+            mode="markers",
+            name="Pred. Intensity",
+            legendgroup="pred",
+        ),col=1,row=1)
+        fig.add_trace(go.Scatter(
+            x=tmp["DatePerformed"],
+            y=[0.01]*len(tmp["DatePerformed"]),
+            mode="lines",
+            name="Max Tolerable Error (1%)",
+            legendgroup="maxErr",
+        ),col=1,row=2)
+        fig.add_trace(go.Scatter(
+            x=tmp["DatePerformed"],
+            y=tmp["Intensity"]-tmp["PredictedIntensity"],
+            mode="markers",
+            name="Error",
+            legendgroup="err",
+        ),col=1,row=2)
+        fig.add_trace(go.Scatter(
+            x=tmp["DatePerformed"],
+            y=[avgErr]*len(tmp["DatePerformed"]),
+            mode="lines",
+            name="Mean Abs. Error ({0:0.2f}%)".format(avgErr*100),
+            legendgroup="avgErr",
+        ),col=1,row=2)
+        fig.update_layout(
+            title={
+                "text": "Predicted Vs Actual 1RM Estimates Across Time",
+                "x": 0.5,
+                "xanchor": "center",
+            },
+            # labels={
+            #     "Date": "Date {0}".format(Units.formatUnits(["Date"])),
+            #     "Intensity": "Intensity {0}".format(Units.formatUnits(["Intensity"])),
+            # },
+            width=IMAGE_SIZES["halfPage"]["x"],
+            height=IMAGE_SIZES["halfPage"]["y"],
+        )
+        fig.update_xaxes(tickangle=45)
+        fig.write_image("{0}/PredVsActual1RM.basic.png".format(Ch3.fileLoc))
+
+
 
 if __name__=="__main__":
     #Ch3.eps1OverTime()
     #Ch3.volumeSkewOverTime()
-    Ch3.allPlots("05/06/2023")
+    #Ch3.allPlots("05/06/2023")
+    Ch3.oneRepMaxPredictionsBasicSurface()
     #Ch3.approxVolumeSkewGraphs()
