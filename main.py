@@ -77,9 +77,9 @@ class Data(object):
     tl=pd.read_csv("../data/testData/AugmentedTrainingLogTestData.csv")
     et=pd.read_csv("../data/testData/ExerciseTypeTestData.csv")
     e=pd.read_csv("../data/testData/ExerciseTestData.csv")
-    ms=pd.read_csv("../data/generatedData/Client1.ms.csv")
-    vs=pd.read_csv("../data/generatedData/Client1.volSkew.csv")
-    pred=pd.read_csv("../data/generatedData/Client1.pred.csv")
+    ms=pd.read_csv("../data/generatedData/Client1.ms.slidingWindow.basic.csv")
+    vs=pd.read_csv("../data/generatedData/Client1.volSkew.slidingWindow.basic.csv")
+    pred=pd.read_csv("../data/generatedData/Client1.pred.slidingWindow.basic.csv")
     oneRMPred=pd.read_csv("../data/generatedData/Client1.1RMPred.slidingWindow.basic.csv")
     approxVolSkew={
         f[f.rfind('/')+1:f.rfind('.')]: pd.read_csv(f)
@@ -691,8 +691,8 @@ class Ch3(object):
         )[["Eps1","Date"]].dropna()
         min: float=tmp["Eps1"].min()
         max: float=tmp["Eps1"].max()
-        print((tmp["Eps1"]<0).sum())
-        print((tmp["Eps1"]<=0).sum())
+        # print((tmp["Eps1"]<0).sum())
+        # print((tmp["Eps1"]<=0).sum())
         numBelowZero: int=(tmp["Eps1"]<=0).sum()
         fig=px.scatter(tmp,x="Date",y="Eps1",
             labels={
@@ -742,7 +742,7 @@ class Ch3(object):
             #     "Approx Volume Skew: >=1: {2}  <1: {3}</sup>"
             #     .format(numGte1,numLt1,approxNumGte1,approxNumLt1)
         )
-        print(np.average(np.abs(tmp["VolumeSkew"]-tmp["ApproxVolumeSkew"]).dropna()))
+        # print(np.average(np.abs(tmp["VolumeSkew"]-tmp["ApproxVolumeSkew"]).dropna()))
         # fig=px.scatter(x=tmp["Date"],y=np.abs(tmp["VolumeSkew"]-tmp["ApproxVolumeSkew"]))
         # fig.add_trace(go.Scatter(x=tmp["Date"],y=tmp["VolumeSkew"]-tmp["ApproxVolumeSkew"]))
         fig.update_layout(
@@ -833,14 +833,14 @@ class Ch3(object):
         fig.add_trace(go.Scatter(
             x=tmp["DatePerformed"],
             y=tmp["Intensity"],
-            mode="markers",
+            mode="markers+lines",
             name="Actual Intensity",
             legendgroup="actual",
         ),row=1,col=1)
         fig.add_trace(go.Scatter(
             x=tmp["DatePerformed"],
             y=tmp["PredictedIntensity"],
-            mode="markers",
+            mode="markers+lines",
             name="Pred. Intensity",
             legendgroup="pred",
         ),col=1,row=1)
@@ -854,7 +854,7 @@ class Ch3(object):
         fig.add_trace(go.Scatter(
             x=tmp["DatePerformed"],
             y=tmp["Intensity"]-tmp["PredictedIntensity"],
-            mode="markers",
+            mode="markers+lines",
             name="Error",
             legendgroup="err",
         ),col=1,row=2)

@@ -963,7 +963,8 @@ To simplify the model, $\epsilon_5$, $\epsilon_6$ and $\epsilon_7$ can be limite
 \section{Analysis of Property 6: 1RM Estimations}
 \label{sec:PotentialSurface1RMEstimations}
 
-Property 6 is concerned with 1RM estimations, with it defining an acceptable boundary of accuracy. Table \ref{tab:BasicSurface1RMEstimations} and figure \ref{fig:ApproximateVsActual1RMIntensity} show the models predicted 1RM vs the actual weight that was lifted. \footnote{The lifter did not have access to any of the models estimations when the 1RM attempts were performed, removing any bias from the data that would have been present if the lifter was told the models estimates.} It should be clear from this table that the model consistently under-predicts the lifters actual 1RM with an error much greater than $1\%$. The model almost never predicts above $100\%$ intensity, which is required for a new 1RM. The only exception was for heeled squat on $9/10/2022$ but even then the model significantly under-predicted the lifters actual performance.
+Property 6 is concerned with 1RM estimations, with it defining an acceptable boundary of accuracy. Table \ref{tab:BasicSurface1RMEstimations} and figure \ref{fig:ApproximateVsActual1RMIntensity} show the models predicted 1RM vs the actual weight that was lifted. \footnote{The lifter did not have access to any of the models estimations when the 1RM attempts were performed, removing any bias from the data that would have been present if the lifter was told the models estimates.} It should be clear from this table that the model consistently under-predicts the lifters actual 1RM with an error much greater than $1\%$. The model almost never predicts above $100\%$ intensity, which is required for a new 1RM.
+%The only exception was for heeled squat on $9/10/2022$ but even then the model significantly under-predicted the lifters actual performance.
 
 \begin{figure}[htb]
     \centering
@@ -971,7 +972,7 @@ Property 6 is concerned with 1RM estimations, with it defining an acceptable bou
     \caption{Graphs comparing the approximate and actual 1RM intensity values. Note how the model nearly always under predicts the lifters current 1RM. The initial value where the prediction was $0$ is not shown in these figures to allow the graphs to be scaled appropriately to show the smaller differences in the predicted vs actual values.}
     \label{fig:ApproximateVsActual1RMIntensity}
 \end{figure}
-\begin{table}[htb]
+\begin{table}[p]
     \centering
 	\csvautotabular{../data/generatedData/Client1.1RMPred.slidingWindow.basic.csv}
 	\caption{A table showing predicted vs actual 1RM intensities. Note that the model consistently under predicts the lifters current 1RM. The first intensity prediction is $0\%$ because that data point is near the start of the data, meaning that at that time the model did not have enough data to make a reliable prediction. This limitation of needed a certain amount of data before predictions can be made will be discussed in part 2.}
@@ -982,7 +983,7 @@ There are a couple reasons the model could be exhibiting this behavior. The most
 
 \section{Summary}
 
-Before moving forward it is worth quickly noting the success and failures of this surface so that it can be compared to the surfaces presented in the next few chapters. Out of all six properties, this surface exhibited four correctly. The fist property that was not met was property 1.b because the surface did not reach a plateau representing volume base. Despite this hindrance, the surface did seem to exhibit reasonable behavior above $50\%$ intensity, which could make it a viable surface to use as long as this limitation is kept in mind.
+Before moving forward it is worth quickly noting the success and failures of this surface so that it can be compared to the surfaces presented in the next few chapters. Out of all six properties, this surface exhibited four correctly. The fist property that was not properly exhibited was property 1.b because the surface did not reach a plateau representing the lifters volume tolerance. Despite this hindrance, the surface did seem to exhibit reasonable behavior above $50\%$ intensity, which could make it a viable surface to use as long as this limitation is kept in mind.
 
 Other than property 1.b, property 5 and 6 were also not properly exhibited. Property 5 dealt with unbounded volume. Constraints were placed on the surface limit the occurrence of unbounded volume, but there can still be scenarios where $\epsilon_5=0$, $\epsilon_6=0$, or $\epsilon_7=0$ where unbounded volume can occur. Property 6 was concerned with 1RM estimations. It was shown that the surface consistently under-predicts the lifters 1RM. This is problematic for several reasons, but largely because a lifters goal is to increase there 1RM, making accurate 1RM estimations necessary to track progress. Table \ref{tab:BasicSurfacePropertiesAndBehaviorsSummary} summarizes the properties and whether or not the surface properly exhibited there behavior. It is clear this surface is far from perfect. Chapter \ref{sec:PotentialSurfaceTheVolumeBaseSurface} will attempt to address some of the previously outlined issues with an updated surface.
 
@@ -1009,7 +1010,7 @@ Other than property 1.b, property 5 and 6 were also not properly exhibited. Prop
 \chapter{Surface 2: The Volume Base Surface}
 \label{sec:PotentialSurfaceTheVolumeBaseSurface}
 
-The second surface builds off of the previous chapter, but changes the meaning of the $\hat{-}$ symbol to mean division. The goal of doing this is to ensure the surface exhibits property 1.b, a property that the basic surface discussed in the previous chapter was missing.
+The second surface builds off of the previous chapter, but changes the meaning of the $\hat{-}$ symbol from the effort-fatigue model to mean division. The goal of doing this is to ensure the surface exhibits property 1.b, a property that the basic surface discussed in the previous chapter was missing.
 
 
 %\section{Application: Solving for the Unknown}
