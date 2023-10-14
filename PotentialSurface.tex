@@ -204,7 +204,7 @@ Before going to the next chapters, it is worth mentioning that latent fatigue wi
 \chapter{Surface 1: The Basic Surface}
 \label{sec:PotentialSurfaceTheBasicSurface}
 
-The first surface to explore takes the effort-fatigue model in and makes as few changes as possible, treating the $\hat{-}$ symbol to mean literal subtraction. The first change it makes is to center the surface at $(s=1,r=2,I=\epsilon)$ so that the peak in intensity occurs with one set of one rep, matching the lifters 1RM. Doing this will require an error term to be added, represented by $\epsilon$. The next, and most substantial change, is to total fatigue. The discussion in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} needs to be considered. One of the main takeaways from that section is that volume is limited by effort at high intensities. If the total fatigue template presented by the effort-fatigue model is taken as a literal equation, volume will not have the correct behavior as intensity approaches $100$\%. Namely, there will not be diminishing returns in volume as intensity increases because all the relationships with sets and reps are either linear or a linear combination of both of them. To correct for this, the terms containing sets and reps will be squared, creating diminishing returns to volume with respect to intensity that can be adjusted through the constant in front of each term. \footnote{Yes, there are more flexible ways to do this, but using those ways would make it so linear regression could not be performed due to the multiplicative combinations of constants.} With these changes, the total fatigue equation for the basic surface is shown below. 
+The first surface to explore takes the effort-fatigue model in and makes as few changes as possible, treating the $\hat{-}$ symbol to mean literal subtraction and the $\hat{=}$ to mean literal equality. The first change it makes is to center the surface at $(s=1,r=2,I=\epsilon)$ so that the peak in intensity occurs with one set of one rep, matching the lifters 1RM. The second change is adding an error term, represented by $\epsilon$. This is a necessary term to add to perform linear regression. The next, and most substantial change, is to total fatigue. The discussion in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} needs to be considered. One of the main takeaways from that section is that volume is limited by effort at high intensities. If the total fatigue template presented by the effort-fatigue model is taken as a literal equation, volume will not have the correct behavior as intensity approaches $100$\%. Namely, there will not be diminishing returns in volume as intensity increases because all the relationships with sets and reps are either linear or a linear combination of both of them. To correct for this, the terms containing sets and reps will be squared, creating diminishing returns to volume with respect to intensity that can be adjusted through the constant in front of each term. \footnote{Yes, there are more flexible ways to do this, but using those ways would make it so linear regression could not be performed due to the multiplicative combinations of constants.} With these changes, the total fatigue equation for the basic surface is shown below. 
 
 \begin{equation*}
 	F_{tot} = \epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+\epsilon_5 (s-1)^2(r-1)^2+\epsilon_6 (s-1)^2+\epsilon_7 (r-1)^2
@@ -975,7 +975,7 @@ Property 6 is concerned with 1RM estimations, with it defining an acceptable bou
 \begin{table}[p]
     \centering
 	\csvautotabular{../data/generatedData/Client1.1RMPred.slidingWindow.basic.csv}
-	\caption{A table showing predicted vs actual 1RM intensities. Note that the model consistently under predicts the lifters current 1RM. The first intensity prediction is $0\%$ because that data point is near the start of the data, meaning that at that time the model did not have enough data to make a reliable prediction. This limitation of needed a certain amount of data before predictions can be made will be discussed in part 2.}
+	\caption{A table showing predicted vs actual 1RM intensities. Note that the model consistently under predicts the lifters current 1RM.}
 	\label{tab:BasicSurface1RMEstimations}
 \end{table}
 
@@ -1010,8 +1010,58 @@ Other than property 1.b, property 5 and 6 were also not properly exhibited. Prop
 \chapter{Surface 2: The Volume Base Surface}
 \label{sec:PotentialSurfaceTheVolumeBaseSurface}
 
-The second surface builds off of the previous chapter, but changes the meaning of the $\hat{-}$ symbol from the effort-fatigue model to mean division. The goal of doing this is to ensure the surface exhibits property 1.b, a property that the basic surface discussed in the previous chapter was missing.
+The second surface builds off of the previous chapter by trying to address one of the weaknesses of the basic surface. Namely, the basic surface does not exhibit property 1.b. In order for this surface to properly exhibit property 1.b a less literal interpretation of the effort-fatigue model is required. Firstly, the $\hat{-}$ symbol is going to be treated as division instead of subtraction. This will be done in order to create asymptotic behavior on the $sr$ plane which will represent the lifters volume base. Doing this however creates another issue when total fatigue is zero. To fix this another constant will be added, $\epsilon_8$, which will be constrained to being $\ge 0$ to prevent any scenarios where division by zero would occur. Equation \ref{eq:VolumeBaseSurfaceEquation} shows the final form of the volume base equation.
+ 
+\begin{minipage}{\textwidth}
+	\begin{equation}
+		I = \frac{E_{tot}}{\epsilon_8+F_{tot}}= \frac{
+			\epsilon_1E
+		}{
+			\epsilon_8+
+			\epsilon_2 F_l+
+			\epsilon_3 F_w+
+			\epsilon_4 F_e+
+			\epsilon_5 (s-1)^2(r-1)^2+
+			\epsilon_6 (s-1)^2+
+			\epsilon_7 (r-1)^2
+		}
+		\label{eq:VolumeBaseSurfaceEquation}
+	\end{equation}
+	\centerline{where}
+	\begin{equation*}
+	    \begin{split}
+	        E & \in \{ 1,1.5,2,2.5, \dots ,10 \} \\
+	        \epsilon, \epsilon_1, \epsilon_2, \epsilon_3, \epsilon_4, \epsilon_5,\epsilon_6,\epsilon_7 & > 0 \\
+	    \end{split}
+	\end{equation*}
+\end{minipage}
 
+It is worth noting that this surface does not contain an error term, $\epsilon$, like the basic surface. If it did the constants in the equation would no longer be separable and linear regression could not be performed. Even as the equation stands, some algebraic manipulation will need to be performed before linear regression can be performed. In order to make equation \ref{eq:VolumeBaseSurfaceEquation} usable with linear regression two key facts need to be observed:
+
+\begin{itemize}
+	\item Constants can be combined to make a new, different constant
+	\item Linear regression can be run on the inverse of $I$. In fact, any data point can be transformed and as long as the transformation is one to one and continuous then linear regression can still be run. The inputs and outputs of the data will need to appropriately transformed to obtain the desired results, but it can be done.\footnote{One way to think about this is that linear regression does not care about what is done to the data before or after it is complete, just that it's inputs are consistent.}
+\end{itemize}
+
+With those points in mind, equation \ref{eq:VolumeBaseSurfaceEquation} can be manipulated to be equation \ref{eq:VolumeBaseSurfaceEquationInverse}, an equation that linear regression can be run on.
+
+\begin{minipage}{\textwidth}
+	\begin{equation}
+		\frac{1}{I}=
+			\epsilon_{8,N}\frac{1}{E}+
+			\epsilon_{2,N}\frac{F_l}{E}+
+			\epsilon_{3,N}\frac{F_w}{E}+
+			\epsilon_{4,N}\frac{F_e}{E}+
+			\epsilon_{5,N}\frac{(s-1)^2(r-1)^2}{E}+
+			\epsilon_{6,N}\frac{(s-1)^2}{E}+
+			\epsilon_{7,N}\frac{(r-1)^2}{E}
+		\label{eq:VolumeBaseSurfaceEquationInverse}
+	\end{equation}
+	\centerline{where}
+	\begin{equation*}
+		\epsilon_{i\in\{1,2,...,8\},N}=\frac{\epsilon_i}{\epsilon_1}
+	\end{equation*}
+\end{minipage}
 
 %\section{Application: Solving for the Unknown}
 %\label{sec:PotentialSurfaceSolvingForTheUnknown}
