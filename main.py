@@ -77,7 +77,8 @@ class Data(object):
     tl=pd.read_csv("../data/testData/AugmentedTrainingLogTestData.csv")
     et=pd.read_csv("../data/testData/ExerciseTypeTestData.csv")
     e=pd.read_csv("../data/testData/ExerciseTestData.csv")
-    ms=pd.read_csv("../data/generatedData/Client1.ms.slidingWindow.basic.csv")
+    basicMs=pd.read_csv("../data/generatedData/Client1.ms.slidingWindow.basic.csv")
+    volBaseMs=pd.read_csv("../data/generatedData/Client1.ms.slidingWindow.volumeBase.csv")
     vs=pd.read_csv("../data/generatedData/Client1.volSkew.slidingWindow.basic.csv")
     pred=pd.read_csv("../data/generatedData/Client1.pred.slidingWindow.basic.csv")
     oneRMPred=pd.read_csv("../data/generatedData/Client1.1RMPred.slidingWindow.basic.csv")
@@ -123,7 +124,9 @@ class Ch3(object):
         Ch3.allPotentialSurfaces(date="05/06/2023")
         Ch3.allVolumeSurfaces(date="05/06/2023")
         Ch3.multiBasicSurface(effort=[5,10],date=date,liftName="Squat")
+        Ch3.multiVolumeBaseSurface(effort=[5,10],date=date,liftName="Squat")
         Ch3.multiBasicSurfaceVolume(effort=[5,10],date=date,liftName="Squat")
+        Ch3.multiVolumeBaseSurfaceVolume(effort=[5,10],date=date,liftName="Squat")
         Ch3.eps1OverTime()
         Ch3.volumeSkewOverTime()
         Ch3.approxVolumeSkewGraphs()
@@ -257,7 +260,7 @@ class Ch3(object):
     def basicSurface(effort: int, date: str, liftName: str) -> None:
         interWorkoutFatigue: int=0
         interExerciseFatigue: int=0
-        msVals=Data.ms.query(
+        msVals=Data.basicMs.query(
             "ClientID==1 and StateGeneratorID==1 and PotentialSurfaceID==1 and ExerciseID=={0} and Date==\"{1}\""
             .format(Data.liftNameToId[liftName],date)
         )
@@ -289,7 +292,7 @@ class Ch3(object):
             },
             title={
                 "text": "Basic Potential Surface for {0} at RPE {1}<br>"
-                        "<sup>I(0,0)={2}  MSE: {3:0.2E}<br>"
+                        "<sup>I(1,1)={2}  MSE: {3:0.2E}<br>"
                         "Date: {4}  Window: {5}  Time Frame: {6}</sup>"
                         .format(
                             liftName,
@@ -314,13 +317,12 @@ class Ch3(object):
             .format(Ch3.fileLoc,liftName,effort)
         )
 
-    #TODO -make a version of this for volume base surface
     @staticmethod
     @timerDecorator
     def multiBasicSurface(effort: List[int], date: str, liftName: str) -> None:
         interWorkoutFatigue: int=0
         interExerciseFatigue: int=0
-        msVals=Data.ms.query(
+        msVals=Data.basicMs.query(
             "ClientID==1 and StateGeneratorID==1 and PotentialSurfaceID==1 and ExerciseID=={0} and Date==\"{1}\""
             .format(Data.liftNameToId[liftName],date)
         )
@@ -329,7 +331,7 @@ class Ch3(object):
             ], 
             subplot_titles=tuple([
                 "Basic Potential Surface for {0} at RPE {1}<br>"
-                "<sup>I(0,0)={2}  MSE: {3:0.2E}<br>"
+                "<sup>I(1,1)={2}  MSE: {3:0.2E}<br>"
                 "Date: {4}  Window: {5}  Time Frame: {6}</sup>"
                 .format(
                     liftName,
@@ -368,7 +370,7 @@ class Ch3(object):
                 },
                 colorbar={
                     "len": 1/len(effort),
-                    "y": i/len(effort)+1/(2*len(effort)),
+                    "y": 1-i/len(effort)-1/(2*len(effort)),
                 },
             ), row=i+1, col=1)
             fig.update_scenes({
@@ -395,30 +397,30 @@ class Ch3(object):
     def volumeBaseSurface(effort: int, date: str, liftName: str) -> None:
         interWorkoutFatigue: int=0
         interExerciseFatigue: int=0
-        msVals=Data.ms.query(
+        msVals=Data.volBaseMs.query(
             "ClientID==1 and StateGeneratorID==1 and PotentialSurfaceID==2 and ExerciseID=={0} and Date==\"{1}\""
             .format(Data.liftNameToId[liftName],date)
         )
         X=np.arange(1,15,0.1)
         Y=np.arange(1,15,0.1)
         X,Y=np.meshgrid(X,Y)
-        # Z=np.sqrt((msVals["Eps1"].iloc[0]*effort)/(1+
-        #     msVals["Eps2"].iloc[0]*interWorkoutFatigue+
-        #     msVals["Eps3"].iloc[0]*interExerciseFatigue+
-        #     msVals["Eps4"].iloc[0]*((X-1)**2)*((Y-1)**2)+
-        #     msVals["Eps5"].iloc[0]*((X-1)**2)+
-        #     msVals["Eps6"].iloc[0]*((Y-1)**2)+
-        #     msVals["Eps"].iloc[0]*msVals["Eps1"].iloc[0]*effort
-        # ))
-        Z=np.sqrt(1/(
+        Z=np.sqrt(effort/(
             msVals["Eps"].iloc[0]+
-            msVals["Eps1"].iloc[0]*1/effort+
-            msVals["Eps2"].iloc[0]*interWorkoutFatigue/effort+
-            msVals["Eps3"].iloc[0]*interExerciseFatigue/effort+
-            msVals["Eps4"].iloc[0]*((X-1)**2)*((Y-1)**2)/effort+
-            msVals["Eps5"].iloc[0]*((X-1)**2)/effort+
-            msVals["Eps6"].iloc[0]*((Y-1)**2)/effort
+            msVals["Eps1"].iloc[0]*interWorkoutFatigue+
+            msVals["Eps2"].iloc[0]*interExerciseFatigue+
+            msVals["Eps3"].iloc[0]*((X-1)**2)*((Y-1)**2)+
+            msVals["Eps4"].iloc[0]*((X-1)**2)+
+            msVals["Eps5"].iloc[0]*((Y-1)**2)
         ))
+        # Z=np.sqrt(1/(
+        #     msVals["Eps"].iloc[0]+
+        #     msVals["Eps1"].iloc[0]*1/effort+
+        #     msVals["Eps2"].iloc[0]*interWorkoutFatigue/effort+
+        #     msVals["Eps3"].iloc[0]*interExerciseFatigue/effort+
+        #     msVals["Eps4"].iloc[0]*((X-1)**2)*((Y-1)**2)/effort+
+        #     msVals["Eps5"].iloc[0]*((X-1)**2)/effort+
+        #     msVals["Eps6"].iloc[0]*((Y-1)**2)/effort
+        # ))
         Z[Z<-0.1]=np.nan
         maxIntensity=Z[0][0]
         fig=go.Figure(data=[go.Surface(x=X, y=Y, z=Z,
@@ -436,7 +438,7 @@ class Ch3(object):
             },
             title={
                 "text": "Volume Base Potential Surface for {0} at RPE {1}<br>"
-                        "<sup>I(0,0)={2}  MSE: {3:0.2E}<br>"
+                        "<sup>I(1,1)={2}  MSE: {3:0.2E}<br>"
                         "Date: {4}  Window: {5}  Time Frame: {6}</sup>"
                         .format(
                             liftName,
@@ -463,6 +465,77 @@ class Ch3(object):
 
     @staticmethod
     @timerDecorator
+    def multiVolumeBaseSurface(effort: List[int], date: str, liftName: str) -> None:
+        interWorkoutFatigue: int=0
+        interExerciseFatigue: int=0
+        msVals=Data.volBaseMs.query(
+            "ClientID==1 and StateGeneratorID==1 and PotentialSurfaceID==2 and ExerciseID=={0} and Date==\"{1}\""
+            .format(Data.liftNameToId[liftName],date)
+        )
+        fig=make_subplots(cols=1,rows=len(effort),specs=[
+                [{"type": "surface"}] for i in range(0,len(effort))
+            ],
+            subplot_titles=tuple([
+                "Volume Base Potential Surface for {0} at RPE {1}<br>"
+                "<sup>I(1,1)={2}  MSE: {3:0.2E}<br>"
+                "Date: {4}  Window: {5}  Time Frame: {6}</sup>"
+                .format(
+                    liftName,
+                    e,
+                    np.sqrt(10/(msVals["Eps"].iloc[0])),
+                    msVals["Mse"].iloc[0],
+                    date,
+                    msVals["Win"].iloc[0],
+                    msVals["TimeFrame"].iloc[0],
+                ) for e in effort
+            ]),
+            vertical_spacing=0.1,
+        )
+        for i,e in enumerate(effort):
+            X=np.arange(1,15,0.1)
+            Y=np.arange(1,15,0.1)
+            X,Y=np.meshgrid(X,Y)
+            Z=np.sqrt(e/(
+                msVals["Eps"].iloc[0]+
+                msVals["Eps1"].iloc[0]*interWorkoutFatigue+
+                msVals["Eps2"].iloc[0]*interExerciseFatigue+
+                msVals["Eps3"].iloc[0]*((X-1)**2)*((Y-1)**2)+
+                msVals["Eps4"].iloc[0]*((X-1)**2)+
+                msVals["Eps5"].iloc[0]*((Y-1)**2)
+            ))
+            Z[Z<-0.1]=np.nan
+            maxIntensity=Z[0][0]
+            fig.add_trace(go.Surface(x=X, y=Y, z=Z,
+                contours={
+                    "x": {"show": True, "start": 0, "end": 15},
+                    "y": {"show": True, "start": 0, "end": 15},
+                },
+                colorbar={
+                    "len": 1/len(effort),
+                    "y": 1-i/len(effort)-1/(2*len(effort)),
+                },
+            ), row=i+1, col=1)
+            fig.update_scenes({
+                    "xaxis_title": "Sets {0}".format(Units.formatUnits(["Sets"])),
+                    "yaxis_title": "Reps {0}".format(Units.formatUnits(["Reps"])),
+                    "zaxis_title": "Intensity {0}".format(Units.formatUnits(["Intensity"])),
+                    "zaxis": { "nticks": 12, "range": [0,1.3], },
+                }, row=i+1, col=1,
+            )
+        fig.update_layout(
+            width=IMAGE_SIZES["fullPage"]["x"],
+            height=IMAGE_SIZES["fullPage"]["y"],
+            margin={
+                "b": 20,
+            }, showlegend=False,
+        )
+        fig.write_image(
+            "{0}/PotentialSurface/Dual{1}.Effort{2}.volumeBase.png"
+            .format(Ch3.fileLoc,liftName,str(effort).replace(" ",""))
+        )
+
+    @staticmethod
+    @timerDecorator
     def allVolumeSurfaces(date: str) -> None:
         for e in range(4,11):
             for l in Data.liftNameToId:
@@ -474,7 +547,7 @@ class Ch3(object):
     def basicSurfaceVolume(effort: int, date: str, liftName: str) -> None:
         interWorkoutFatigue: int=0
         interExerciseFatigue: int=0
-        msVals=Data.ms.query(
+        msVals=Data.basicMs.query(
             "ClientID==1 and StateGeneratorID==1 and PotentialSurfaceID==1 and ExerciseID=={0} and Date==\"{1}\""
             .format(Data.liftNameToId[liftName],date)
         )
@@ -510,7 +583,7 @@ class Ch3(object):
                 "eye": { "x": 1, "y": -1, "z": 2 },
             }, title={
                 "text": "Volume From Basic Potential Surface for {0} at RPE {1}<br>"
-                        "<sup>I(0,0)={2}  MSE: {3:0.2E}<br>"
+                        "<sup>I(1,1)={2}  MSE: {3:0.2E}<br>"
                         "Date: {4}  Window: {5}  Time Frame: {6}</sup>"
                         .format(
                             liftName,
@@ -535,22 +608,21 @@ class Ch3(object):
             .format(Ch3.fileLoc,liftName,effort)
         )
 
-    # TODO - make a version of this for volume base surface
     @staticmethod
     @timerDecorator
     def multiBasicSurfaceVolume(effort: List[int], date: str, liftName: str) -> None:
         interWorkoutFatigue: int=0
         interExerciseFatigue: int=0
-        msVals=Data.ms.query(
+        msVals=Data.basicMs.query(
             "ClientID==1 and StateGeneratorID==1 and PotentialSurfaceID==1 and ExerciseID=={0} and Date==\"{1}\""
             .format(Data.liftNameToId[liftName],date)
         )
         fig=make_subplots(cols=1,rows=len(effort),specs=[
                 [{"type": "surface"}] for i in range(0,len(effort))
-            ], 
+            ],
             subplot_titles=tuple([
-                "Basic Potential Surface for {0} at RPE {1}<br>"
-                "<sup>I(0,0)={2}  MSE: {3:0.2E}<br>"
+                "Volume Surface From Basic Potential Surface for {0} at RPE {1}<br>"
+                "<sup>I(1,1)={2}  MSE: {3:0.2E}<br>"
                 "Date: {4}  Window: {5}  Time Frame: {6}</sup>"
                 .format(
                     liftName,
@@ -590,7 +662,7 @@ class Ch3(object):
                 },
                 colorbar={
                     "len": 1/len(effort),
-                    "y": i/len(effort)+1/(2*len(effort)),
+                    "y": 1-i/len(effort)-1/(2*len(effort)),
                 },
             ), row=i+1, col=1)
             fig.update_scenes({
@@ -621,21 +693,20 @@ class Ch3(object):
     def volumeBaseSurfaceVolume(effort: int, date: str, liftName: str) -> None:
         interWorkoutFatigue: int=0
         interExerciseFatigue: int=0
-        msVals=Data.ms.query(
-            "ClientID==1 and StateGeneratorID==1 and PotentialSurfaceID==1 and ExerciseID=={0} and Date==\"{1}\""
+        msVals=Data.volBaseMs.query(
+            "ClientID==1 and StateGeneratorID==1 and PotentialSurfaceID==2 and ExerciseID=={0} and Date==\"{1}\""
             .format(Data.liftNameToId[liftName],date)
         )
         X=np.arange(1,35,0.1)
         Y=np.arange(1,35,0.1)
         X,Y=np.meshgrid(X,Y)
-        Z=np.sqrt(1/(
+        Z=np.sqrt(effort/(
             msVals["Eps"].iloc[0]+
-            msVals["Eps1"].iloc[0]*1/effort+
-            msVals["Eps2"].iloc[0]*interWorkoutFatigue/effort+
-            msVals["Eps3"].iloc[0]*interExerciseFatigue/effort+
-            msVals["Eps4"].iloc[0]*((X-1)**2)*((Y-1)**2)/effort+
-            msVals["Eps5"].iloc[0]*((X-1)**2)/effort+
-            msVals["Eps6"].iloc[0]*((Y-1)**2)/effort
+            msVals["Eps1"].iloc[0]*interWorkoutFatigue+
+            msVals["Eps2"].iloc[0]*interExerciseFatigue+
+            msVals["Eps3"].iloc[0]*((X-1)**2)*((Y-1)**2)+
+            msVals["Eps4"].iloc[0]*((X-1)**2)+
+            msVals["Eps5"].iloc[0]*((Y-1)**2)
         ))
         V=X*Y*Z
         V[V<-10]=np.nan
@@ -658,7 +729,7 @@ class Ch3(object):
                 "eye": { "x": 1, "y": -1, "z": 1.5 },
             }, title={
                 "text": "Volume From Basic Potential Surface for {0} at RPE {1}<br>"
-                        "<sup>I(0,0)={2}  MSE: {3:0.2E}<br>"
+                        "<sup>I(1,1)={2}  MSE: {3:0.2E}<br>"
                         "Date: {4}  Window: {5}  Time Frame: {6}</sup>"
                         .format(
                             liftName,
@@ -685,8 +756,84 @@ class Ch3(object):
 
     @staticmethod
     @timerDecorator
+    def multiVolumeBaseSurfaceVolume(effort: List[int], date: str, liftName: str) -> None:
+        interWorkoutFatigue: int=0
+        interExerciseFatigue: int=0
+        msVals=Data.volBaseMs.query(
+            "ClientID==1 and StateGeneratorID==1 and PotentialSurfaceID==2 and ExerciseID=={0} and Date==\"{1}\""
+            .format(Data.liftNameToId[liftName],date)
+        )
+        fig=make_subplots(cols=1,rows=len(effort),specs=[
+                [{"type": "surface"}] for i in range(0,len(effort))
+            ],
+            subplot_titles=tuple([
+                "Volume Surface From Basic Potential Surface for {0} at RPE {1}<br>"
+                "<sup>I(1,1)={2}  MSE: {3:0.2E}<br>"
+                "Date: {4}  Window: {5}  Time Frame: {6}</sup>"
+                .format(
+                    liftName,
+                    e,
+                    np.sqrt(10/(msVals["Eps"].iloc[0])),
+                    msVals["Mse"].iloc[0],
+                    date,
+                    msVals["Win"].iloc[0],
+                    msVals["TimeFrame"].iloc[0],
+                ) for e in effort
+            ]),
+            vertical_spacing=0.1,
+        )
+        for i,e in enumerate(effort):
+            X=np.arange(1,25,0.1)
+            Y=np.arange(1,25,0.1)
+            X,Y=np.meshgrid(X,Y)
+            Z=np.sqrt(e/(
+                msVals["Eps"].iloc[0]+
+                msVals["Eps1"].iloc[0]*interWorkoutFatigue+
+                msVals["Eps2"].iloc[0]*interExerciseFatigue+
+                msVals["Eps3"].iloc[0]*((X-1)**2)*((Y-1)**2)+
+                msVals["Eps4"].iloc[0]*((X-1)**2)+
+                msVals["Eps5"].iloc[0]*((Y-1)**2)
+            ))
+            V=X*Y*Z
+            V[V<-10]=np.nan
+            maxIntensity=Z[0][0]
+            fig.add_trace(go.Surface(x=X, y=Y, z=V,
+                contours={
+                    "x": {"show": True, "start": 0, "end": 25},
+                    "y": {"show": True, "start": 0, "end": 25},
+                },
+                colorbar={
+                    "len": 1/len(effort),
+                    "y": 1-i/len(effort)-1/(2*len(effort)),
+                },
+            ), row=i+1, col=1)
+            fig.update_scenes({
+                    "xaxis_title": "Sets {0}".format(Units.formatUnits(["Sets"])),
+                    "yaxis_title": "Reps {0}".format(Units.formatUnits(["Reps"])),
+                    "zaxis_title": "Volume {0}".format(Units.formatUnits(["PercentVolume"])),
+                    "zaxis": { "nticks": 20, "range": [0,60], },
+                }, camera={
+                    "up": { "x": 0, "y": 0, "z": 1 },
+                    "center": { "x": 0, "y": 0, "z": 0 },
+                    "eye": { "x": 1, "y": -1, "z": 1.5 },
+                }, row=i+1, col=1,
+            )
+        fig.update_layout(
+            width=IMAGE_SIZES["fullPage"]["x"],
+            height=IMAGE_SIZES["fullPage"]["y"],
+            margin={
+                "b": 20,
+            }, showlegend=False,
+        )
+        fig.write_image(
+            "{0}/Volume/Dual{1}.Effort{2}.volumeBase.png"
+            .format(Ch3.fileLoc,liftName,str(effort).replace(" ",""))
+        )
+
+    @staticmethod
+    @timerDecorator
     def eps1OverTime() -> None:
-        tmp=Data.ms.query(
+        tmp=Data.basicMs.query(
             "ClientID==1 and StateGeneratorID==1 and PotentialSurfaceID==1"
         )[["Eps1","Date"]].dropna()
         min: float=tmp["Eps1"].min()
@@ -887,5 +1034,9 @@ if __name__=="__main__":
     #Ch3.eps1OverTime()
     #Ch3.volumeSkewOverTime()
     #Ch3.allPlots("05/06/2023")
-    Ch3.oneRepMaxPredictionsBasicSurface()
+    #Ch3.oneRepMaxPredictionsBasicSurface()
     #Ch3.approxVolumeSkewGraphs()
+    Ch3.multiBasicSurface(effort=[5,10],date="05/06/2023",liftName="Squat")
+    Ch3.multiVolumeBaseSurface(effort=[5,10],date="05/06/2023",liftName="Squat")
+    Ch3.multiBasicSurfaceVolume(effort=[5,10],date="05/06/2023",liftName="Squat")
+    Ch3.multiVolumeBaseSurfaceVolume(effort=[5,10],date="05/06/2023",liftName="Squat")

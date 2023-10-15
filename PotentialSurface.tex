@@ -26,7 +26,9 @@ The exercise being performed is largely dependent on what goals the lifter is pu
 \section{Intuitive Relationships Between Variables}
 \label{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables}
 
-The ultimate goal of this part of this book is to create a surface that represents what is possible for a lifter to do. To accomplish this, the nature of the surface must first be explored. This can be done by looking at the data as well as applying already established facts about lifting. Briefly, it is worth mentioning why this process is being done manually instead of through other processes common in machine learning. When processes similar to machine learning are conducted the nature of the surface is unknown, which can lead to problems when trying to verify the surface has the desired behavior. This is a known issue with machine learning, with it often being compared to a black box. Understanding the behavior of the surface is important to be able to constrain it so that it will not instruct a lifter to perform impossible tasks that will likely lead to injury. Being able to prove that the surface will not stray into the impossible is very important, and will require understanding of all the variables that define its behavior.
+The ultimate goal of this part of this part is to create a surface that represents what is possible for a lifter to do. To accomplish this, the nature of the surface must first be explored. This can be done by looking at the data as well as applying already established facts about lifting.
+
+Before moving forward it is worth mentioning why this process is being done manually instead of through other processes common in machine learning. There are two reasons why traditional machine learning methods are not used. The first reason relates to the opaque nature of machine learning. When processes similar to machine learning are conducted the nature of the surface is unknown, which can lead to problems when trying to verify the surface has the desired behavior. This is a known issue with machine learning, with it often being compared to a black box. Understanding the behavior of the surface is important to be able to constrain it so that it will not instruct a lifter to perform impossible tasks that will likely lead to injury. Being able to prove that the surface will not stray into the impossible is very important, and will require understanding of all the variables that define its behavior. The second reason is due to the sparse nature of the data. This surface will be fitted to a single exercise performed by a single lifter. This is done so the model can adapt to every lifter individually but an unfortunate consequence of this is very sparse data. Even if a lifter performs a lift three times a week with each day having a top set followed by back down sets, this will only create six data points a week. This translates to $312$ data points over an entire year, which is not much especially when the number of dimensions increases.\footnote{The curse of dimensionality strikes again...} Running traditional machine learning on a data set this small would result in little more than noise. One way to fix this would be to generalize the surface to use data from many lifters. However, this would force the surface to no longer be tailored to an individual lifter, which would defeat the entire purpose of this book. Instead, the surface will be defined in a way that restricts it's behavior to what is reasonable from the start. This will allow a small data set to be used while still tailoring the surface to an individual lifter. Without further ado, the process of defining the surface can begin.
 
 Many of the variables that need to be looked at are extremely interdependent on each other. Sets and reps depend on each other, with an increase in one generally requiring a decrease in the other. Intensity depends on sets and reps, with higher intensities requiring possibly less sets and possibly reps. Going back to the relation to sets and reps however, if sets increases and weight decreases then reps could increase, decrease, or remain the same. Effort depends on intensity as well as sets and reps... The point should be clear. Trying to define behaviors based on all of these interdependent variables quickly gets out of hand. Instead of doing this, the behaviors of each variable will be defined in relation to volume where each variable can be viewed independently from the others. Doing this also allows more abstract properties to be considered, such as volume tolerance. With that said, the rest of this section outlines the desired behaviors of the surface.
 
@@ -112,7 +114,7 @@ With effort, intensity, and fatigues relation to volume being explored, sets and
 \subsection{Property 5: Bounded Volume}
 \label{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariablesBoundedVolume}
 
-Unbounded volume occurs when volume continually increases, allowing for the model to ask for an infinite amount of work to be done. This presents a serious issue because this is not possible for a lifter to complete, and is especially problematic considering the purpose of this entire chapter is to establish what is possible and what is not possible. As such, volume will need to be bounded. This could mean that volume reaches a global maximum or, preferably to allow for property 1.b to be true, it reaches a plateau. Either way, once volume is bounded a maximum achievable volume can be established.
+Unbounded volume occurs when volume continually increases, allowing for the model to ask for an infinite amount of work to be done. This presents a serious issue because this is not possible for a lifter to complete, and is especially problematic considering the purpose of this entire chapter is to establish what is possible and what is not possible. As such, volume will need to be bounded. This could mean that volume reaches a global maximum or, preferably to allow for property 1.b to be true, volume should reach a plateau. Either way, once volume is bounded a maximum achievable volume can be established.
 
 \subsection{Property 6: 1RM Estimations}
 \label{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables1RMEstimations}
@@ -248,7 +250,7 @@ To run linear regression the error equation is needed, which is shown below.
     \right)^2
 \end{equation*}
 
-To minimize the error, the partial derivatives of each unknown constant need to be found and each one is set equal to zero. An example with $\epsilon$ is shown below.
+To minimize the error, the partial derivatives of each unknown constant need to be found and each one set equal to zero. An example with $\epsilon$ is shown below.
 
 \begin{equation*}
     \begin{split}
@@ -299,11 +301,7 @@ After a similar process is carried out for each unknown constant, equation \ref{
 
 \begin{equation}
     \label{eq:LinearRegMatrixEquation}
-	\mathbf{Ax=b}
-\end{equation}
-\centerline{where}
-\begin{equation*}
-    \mathbf{A}=\left[
+	\left[
     \begin{matrix}
         \sum_{i=0}^n 1 &
         \dots &
@@ -322,16 +320,12 @@ After a similar process is carried out for each unknown constant, equation \ref{
         -\sum_{\substack{i=0\\ t_i\in \{ T \}}}^n (r_i-1)^4
     \end{matrix}
     \right]
-\end{equation*}
-\begin{equation*}
-    \mathbf{x}=\left[
+	\left[
     \begin{matrix}
         \epsilon \\ \epsilon_1 \\ \vdots \\ \epsilon_7
     \end{matrix}
     \right]
-\end{equation*}
-\begin{equation*}
-    \mathbf{b}=\left[
+	\left[
     \begin{matrix}
         \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n I_i \\
         \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n I_i E_i \\
@@ -339,9 +333,9 @@ After a similar process is carried out for each unknown constant, equation \ref{
         \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n I_i(r_i-1)^2 
     \end{matrix}
     \right]
-\end{equation*}
+\end{equation}
 
-With equations \ref{eq:PotentialSurfaceEquation} and \ref{eq:LinearRegMatrixEquation}, this surface is fully defined. After fitting the surface to the data discussed in chapter \ref{sec:DataSection}, graphs similar to the ones shown in figure \ref{fig:SquatPotentialSurfaceAcrossEffort} can be created. A full set of potential surface graphs for squat, bench, and deadlift across effort levels $5-10$ are available in appendix \ref{sec:AppendixA}. Many of the relationships discussed in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} are concerned with volume. To give some intuition for volume before moving on, equation \ref{eq:IntensitySubedInVolume} is the result of solving the potential surface for $I$ and substituting it in equation \ref{eq:IntensityBasedVolumeEquation}. The graphs shown in figure \ref{fig:SquatPotentialSurfaceVolumeAcrossEffort} show the volume surface generated from this potential surface.
+With equations \ref{eq:BasicSurfaceEquation} and \ref{eq:LinearRegMatrixEquation}, this surface is fully defined. After fitting the surface to the data discussed in chapter \ref{sec:DataSection}, graphs similar to the ones shown in figure \ref{fig:SquatPotentialSurfaceAcrossEffort} can be created. Many of the relationships discussed in section \ref{sec:PotentialSurfaceIntuitiveRelationshipsBetweenVariables} are concerned with volume. To give some intuition for volume before moving on, equation \ref{eq:IntensitySubedInVolume} is the result of solving the potential surface for $I$ and substituting it in equation \ref{eq:IntensityBasedVolumeEquation}. The graphs shown in figure \ref{fig:SquatPotentialSurfaceVolumeAcrossEffort} show the volume surface generated from this potential surface.
 
 \begin{equation}
     \label{eq:IntensitySubedInVolume}
@@ -363,7 +357,7 @@ With equations \ref{eq:PotentialSurfaceEquation} and \ref{eq:LinearRegMatrixEqua
 \begin{figure}[htbp]
     \centering
     \includegraphics[scale=0.55]{images/ch3/PotentialSurface/DualSquat.Effort[5,10].basic.png}
-    \caption{The potential surface fitted to squat data at various effort levels. The window and time frame values will be discussed in chapter \ref{sec:TimeFrame}. For now, the $I(0,0)$ and MSE values are the most important.}
+    \caption{The potential surface fitted to squat data at various effort levels. The window and time frame values will be discussed in chapter \ref{sec:TimeFrame}. For now, the $I(1,1)$ and MSE values are the most important.}
     \label{fig:SquatPotentialSurfaceAcrossEffort}
 \end{figure}
 
@@ -573,7 +567,7 @@ This time, if $\partial_{F_l}v$ is always $<0$ then it can be said the function 
     -\epsilon_2 l_{1RM} sr< 0 \textbf{ iff } \epsilon_2> 0
 \end{equation*}
 
-This proves that volume decreases with fatigue if and only if $\epsilon_2>0$. Just like the previous section, a similar argument can be made to prove that volume increases with decreased fatigue. This constraint will need to be applied to $e_2$,$e_3$, and $e_4$ and is listed in equation \ref{eq:PotentialSurfaceEquation}. The next section should offer a break from the monotony of this section.
+This proves that volume decreases with fatigue if and only if $\epsilon_2>0$. Just like the previous section, a similar argument can be made to prove that volume increases with decreased fatigue. This constraint will need to be applied to $e_2$, $e_3$, and $e_4$ and is listed in equation \ref{eq:PotentialSurfaceEquation}. The next section should offer a break from the monotony of this section.
 
 \section{Analysis of Property 4: Sets and Reps}
 \label{sec:PotentialSurfaceAnalysisOfProperty4}
@@ -759,7 +753,7 @@ Before moving on, there has been so much attention on $\epsilon_6$ and $\epsilon
     \item The volume from $\epsilon_5$ is less than any volume that would have been present if $\epsilon_6>0$ because the relation between $\epsilon_5$ and $\epsilon_6$ is additive.
 \end{itemize}
 
-Having this representation for baseline work capacity in the opposing volume skew is important. If it was not present the model would assume when a lifter has a certain volume skew, any volume from the opposing skew would simply not be possible. In reality, this is not the case, some baseline level of volume will always be possible, even in the opposite skew. Do not get this confused with volume tolerance, which represents a maximal volume that a lifter can tolerate rather than a baseline of possible volume.
+Having this representation for baseline work capacity in the opposing volume skew is important. If it was not present the model would assume when a lifter has a certain volume skew, any volume from the opposing skew would simply not be possible. In reality, this is not the case, some baseline level of volume will always be possible, even in the opposite skew. Do not confuse this with volume tolerance, which represents a maximal volume that a lifter can tolerate rather than a baseline of volume possible in the opposing volume skew.
 
 \section{Analysis of Property 5: (Un)Bounded Volume}
 \label{sec:PotentialSurfaceUnboundedVolume}
@@ -794,11 +788,14 @@ Care has to be taken when $\epsilon_5=0$ or $\epsilon_6=0$, as the behavior of t
 
 \begin{table}[h]
     \centering
-    \begin{tabular}{c|p{6cm}|c}
-        Values for $\epsilon_5$ and $\epsilon_6$ & Inequalities & Range Where Volume is Bounded \\
+    \begin{tabular}{|p{1cm}|p{6cm}|c|}
+    		\hline
+        Values & Inequalities & Range Where Volume is Bounded \\
         \hline
 
-        $\epsilon_5>0$ and $\epsilon_6<0$
+        $\epsilon_5>0$
+        \newline
+        $\epsilon_6<0$
         &
         $r> \left(-\frac{\epsilon_6}{\epsilon_5}\right)^\frac{1}{2}+1$
         \newline
@@ -808,7 +805,9 @@ Care has to be taken when $\epsilon_5=0$ or $\epsilon_6=0$, as the behavior of t
         \\
         \hline
         
-        $\epsilon_5>0$ and $\epsilon_6=0$
+        $\epsilon_5>0$
+        \newline
+        $\epsilon_6=0$
         &
         $r> \left(-\frac{0^-}{\epsilon_5}\right)^\frac{1}{2}+1$
         \newline
@@ -818,7 +817,9 @@ Care has to be taken when $\epsilon_5=0$ or $\epsilon_6=0$, as the behavior of t
         \\
         \hline
         
-        $\epsilon_5>0$ and $\epsilon_6>0$
+        $\epsilon_5>0$
+        \newline
+        $\epsilon_6>0$
         &
         $r> (0+\beta i)+1$
         \newline
@@ -828,7 +829,9 @@ Care has to be taken when $\epsilon_5=0$ or $\epsilon_6=0$, as the behavior of t
         \\
         \hline
         
-        $\epsilon_5=0$ and $\epsilon_6>0$
+        $\epsilon_5=0$
+        \newline
+        $\epsilon_6>0$
         &
         $r> \left(-\frac{\epsilon_6}{0^+}\right)^\frac{1}{2}+1=(0+\infty i)+1$
         \newline
@@ -838,7 +841,9 @@ Care has to be taken when $\epsilon_5=0$ or $\epsilon_6=0$, as the behavior of t
         \\
         \hline
         
-        $\epsilon_5<0$ and $\epsilon_6>0$
+        $\epsilon_5<0$
+        \newline
+        $\epsilon_6>0$
         &
         $r< \left(-\frac{\epsilon_6}{\epsilon_5}\right)^\frac{1}{2}+1$
         \newline
@@ -848,7 +853,9 @@ Care has to be taken when $\epsilon_5=0$ or $\epsilon_6=0$, as the behavior of t
         \\
         \hline
         
-        $\epsilon_5<0$ and $\epsilon_6=0$
+        $\epsilon_5<0$
+        \newline
+        $\epsilon_6=0$
         &
         $r< \left(-\frac{0^+}{\epsilon_5}\right)^\frac{1}{2}+1$
         \newline
@@ -858,7 +865,9 @@ Care has to be taken when $\epsilon_5=0$ or $\epsilon_6=0$, as the behavior of t
         \\
         \hline
         
-        $\epsilon_5<0$ and $\epsilon_6<0$
+        $\epsilon_5<0$
+        \newline
+        $\epsilon_6<0$
         &
         $r< (0+\beta i)+1$
         \newline
@@ -868,7 +877,9 @@ Care has to be taken when $\epsilon_5=0$ or $\epsilon_6=0$, as the behavior of t
         \\
         \hline
         
-        $\epsilon_5=0$ and $\epsilon_6<0$
+        $\epsilon_5=0$
+        \newline
+        $\epsilon_6<0$
         &
         $r< \left(-\frac{\epsilon_6}{0^-}\right)^\frac{1}{2}+1=(0+\infty i)+1$
         \newline
@@ -876,8 +887,9 @@ Care has to be taken when $\epsilon_5=0$ or $\epsilon_6=0$, as the behavior of t
         &
         $1<r<1$ a.k.a. Never
         \\
+        \hline
     \end{tabular}
-    \caption{Various values for $\epsilon_5$ and $\epsilon_6$ as well as there resulting ranges where volume is bounded.}
+    \caption{Various values for $\epsilon_5$ and $\epsilon_6$ as well as the resulting ranges where volume is bounded.}
     \label{tab:BoundedVolumeRanges}
 \end{table}
 
@@ -1010,44 +1022,28 @@ Other than property 1.b, property 5 and 6 were also not properly exhibited. Prop
 \chapter{Surface 2: The Volume Base Surface}
 \label{sec:PotentialSurfaceTheVolumeBaseSurface}
 
-The second surface builds off of the previous chapter by trying to address one of the weaknesses of the basic surface. Namely, the basic surface does not exhibit property 1.b. In order for this surface to properly exhibit property 1.b a less literal interpretation of the effort-fatigue model is required. Firstly, the $\hat{-}$ symbol is going to be treated as division instead of subtraction. This will be done in order to create asymptotic behavior on the $sr$ plane which will represent the lifters volume base. Doing this however creates another issue when total fatigue is zero. To fix this another constant will be added, $\epsilon_8$, which will be constrained to being $\ge 0$ to prevent any scenarios where division by zero would occur. Equation \ref{eq:VolumeBaseSurfaceEquation} shows the final form of the volume base equation.
+The second surface builds off of the previous chapter by trying to address one of the weaknesses of the basic surface. Namely, the basic surface does not exhibit property 1.b. In order for this surface to properly exhibit property 1.b a less literal interpretation of the effort-fatigue model is required. Firstly, the $\hat{-}$ symbol is going to be treated as division instead of subtraction. This will be done in order to create asymptotic behavior on the $I$ axis which will represent the lifters volume base. Doing this however creates another issue when total fatigue is zero. A second change will be required to fix this. Another constant will be added, $\epsilon_8$, which will be constrained to being $\ge 0$ to prevent any scenarios where division by zero would occur. The final change is to square intensity, again to make it so volume will exhibit asymptotic behavior on the $I$ axis.\footnote{Confused as to why this is needed? This will be discussed in section \ref{sec:VolumeBasePotentialSurfaceProperty5}.} Equation \ref{eq:VolumeBaseSurfaceEquation} shows the the volume base equation.
  
+\begin{equation}
+	I^2 = \frac{E_{tot}}{\epsilon_8+F_{tot}}= \frac{
+		\epsilon_1E
+	}{
+		\epsilon_8+
+		\epsilon_2 F_l+
+		\epsilon_3 F_w+
+		\epsilon_4 F_e+
+		\epsilon_5 (s-1)^2(r-1)^2+
+		\epsilon_6 (s-1)^2+
+		\epsilon_7 (r-1)^2
+	}
+	\label{eq:VolumeBaseSurfaceEquation}
+\end{equation}
+
+It is worth noting that this surface does not contain an error term, $\epsilon$, like the basic surface. If it did the constants in the equation would no longer be separable and linear regression could not be performed. Even as the equation stands, some algebraic manipulation will need to be performed before linear regression can be performed. In order to make equation \ref{eq:VolumeBaseSurfaceEquation} usable with linear regression its inverse will need to be found, and linear regression will be run on the inverse of intensity. Taking the inverse of equation \ref{eq:VolumeBaseSurfaceEquation} results in the equation shown below which linear regression can be run on.
+
 \begin{minipage}{\textwidth}
-	\begin{equation}
-		I = \frac{E_{tot}}{\epsilon_8+F_{tot}}= \frac{
-			\epsilon_1E
-		}{
-			\epsilon_8+
-			\epsilon_2 F_l+
-			\epsilon_3 F_w+
-			\epsilon_4 F_e+
-			\epsilon_5 (s-1)^2(r-1)^2+
-			\epsilon_6 (s-1)^2+
-			\epsilon_7 (r-1)^2
-		}
-		\label{eq:VolumeBaseSurfaceEquation}
-	\end{equation}
-	\centerline{where}
 	\begin{equation*}
-	    \begin{split}
-	        E & \in \{ 1,1.5,2,2.5, \dots ,10 \} \\
-	        \epsilon, \epsilon_1, \epsilon_2, \epsilon_3, \epsilon_4, \epsilon_5,\epsilon_6,\epsilon_7 & > 0 \\
-	    \end{split}
-	\end{equation*}
-\end{minipage}
-
-It is worth noting that this surface does not contain an error term, $\epsilon$, like the basic surface. If it did the constants in the equation would no longer be separable and linear regression could not be performed. Even as the equation stands, some algebraic manipulation will need to be performed before linear regression can be performed. In order to make equation \ref{eq:VolumeBaseSurfaceEquation} usable with linear regression two key facts need to be observed:
-
-\begin{itemize}
-	\item Constants can be combined to make a new, different constant
-	\item Linear regression can be run on the inverse of $I$. In fact, any data point can be transformed and as long as the transformation is one to one and continuous then linear regression can still be run. The inputs and outputs of the data will need to appropriately transformed to obtain the desired results, but it can be done.\footnote{One way to think about this is that linear regression does not care about what is done to the data before or after it is complete, just that it's inputs are consistent.}
-\end{itemize}
-
-With those points in mind, equation \ref{eq:VolumeBaseSurfaceEquation} can be manipulated to be equation \ref{eq:VolumeBaseSurfaceEquationInverse}, an equation that linear regression can be run on.
-
-\begin{minipage}{\textwidth}
-	\begin{equation}
-		\frac{1}{I}=
+		\frac{1}{I^2}=
 			\epsilon_{8,N}\frac{1}{E}+
 			\epsilon_{2,N}\frac{F_l}{E}+
 			\epsilon_{3,N}\frac{F_w}{E}+
@@ -1055,214 +1051,185 @@ With those points in mind, equation \ref{eq:VolumeBaseSurfaceEquation} can be ma
 			\epsilon_{5,N}\frac{(s-1)^2(r-1)^2}{E}+
 			\epsilon_{6,N}\frac{(s-1)^2}{E}+
 			\epsilon_{7,N}\frac{(r-1)^2}{E}
+	\end{equation*}
+	\centerline{where}
+		\begin{equation*}
+			\epsilon_{i\in\{2,3,...,8\},N}=
+			\frac{\epsilon_i}{\epsilon_1}
+	\end{equation*}
+\end{minipage}
+
+Throughout the rest of this chapter only the $\epsilon_{i\in\{1,2,...,8\},N}$ constants will be used. There is no need to keep the original constants as they provide no intuitive meaning beyond what can already be found in the new constants. As such, these new constants will simply replace the old constants in notation and be referred to as $\epsilon_{i\in\{1,2,...,8\}}$. The old constants will not be used. With this, the final equation for the volume base surface is shown in equation \ref{eq:VolumeBaseSurfaceEquationInverse}.
+
+\begin{minipage}{\textwidth}
+	\begin{equation}
+		\frac{1}{I^2}=
+			\epsilon_{8}\frac{1}{E}+
+			\epsilon_{2}\frac{F_l}{E}+
+			\epsilon_{3}\frac{F_w}{E}+
+			\epsilon_{4}\frac{F_e}{E}+
+			\epsilon_{5}\frac{(s-1)^2(r-1)^2}{E}+
+			\epsilon_{6}\frac{(s-1)^2}{E}+
+			\epsilon_{7}\frac{(r-1)^2}{E}
 		\label{eq:VolumeBaseSurfaceEquationInverse}
 	\end{equation}
 	\centerline{where}
 	\begin{equation*}
-		\epsilon_{i\in\{1,2,...,8\},N}=\frac{\epsilon_i}{\epsilon_1}
+		\begin{split}
+	        E & \in \{ 1,1.5,2,2.5, \dots ,10 \} \\
+	        \epsilon, \epsilon_1, \epsilon_2, \epsilon_3, \epsilon_4, \epsilon_5,\epsilon_6,\epsilon_7 & > 0 \\
+	    \end{split}
 	\end{equation*}
 \end{minipage}
 
-%\section{Application: Solving for the Unknown}
-%\label{sec:PotentialSurfaceSolvingForTheUnknown}
-%
-%With the model presented so far, one of the variables can be solved for given some combination of sets, reps, effort, or weight. This is useful because it can give a lifter information they otherwise would have guessed. Equations \ref{eq:PotentialSurfaceSetsEquation} through \ref{eq:PotentialSurfaceEffortEquation} are the potential surface solved for various variables.
-%
-%\begin{subequations}
-%    \begin{align}
-%        s(r,I,E)&=
-%        \left( 
-%            \frac{
-%                d-I-c(r-1)^2-\epsilon E
-%            }{
-%                a(r-1)^2+b
-%            }
-%        \right)^\frac{1}{2}+1
-%        \label{eq:PotentialSurfaceSetsEquation}\\
-%        r(s,I,E)&=
-%        \left(
-%            \frac{
-%                d-I-b(s-1)^2-\epsilon E
-%            }{
-%                a(s-1)^2+c
-%            }
-%        \right)^\frac{1}{2}+1
-%        \label{eq:PotentialSurfaceRepsEquation}\\
-%        I(s,r,E)&=
-%        d-a(s-1)^2(r-1)^2-b(s-1)^2-c(r-1)^2-\epsilon E
-%        \label{eq:PotentialSurfaceIntensityEquation}\\
-%        E(s,r,I)&=
-%        \frac{
-%            d-I-a(s-1)^2(r-1)^2-b(s-1)^2-c(r-1)^2
-%        }{
-%            \epsilon
-%        }
-%        \label{eq:PotentialSurfaceEffortEquation}
-%    \end{align}
-%\end{subequations}
-%
-%As an example of using the above equations, a lifter is often concerned with estimating an updated 1RM for an exercise after completing some training. Increases in weight for a lifts 1RM is a sign of progress and successful training. The model presented already estimates a users current 1RM, just in a round-about way. A 1RM will be a maximal effort lift with one set of one rep. Given these parameters, the weight lifted can be found using equation \ref{eq:PotentialSurfaceIntensityEquation}, which can just be multiplied by the weight of the lifters known 1RM to get the weight of the lifters predicted 1RM, as shown in equation \ref{eq:1RMPrediction}.
-%
-%\begin{equation}
-%    \label{eq:1RMPrediction}
-%    n_{1RM}=I(s=1,r=1,E=10)l_{1RM}=l_{1RM}( d-10\epsilon )
-%\end{equation}
-%
-%It is worth taking a step back to understand what equation \ref{eq:1RMPrediction} is saying. The new 1RM is generated from a baseline value, $d$, which increases with effort, $10\epsilon$. \footnote{Remember, $\epsilon$ needs to be $<0$ for the model to behave appropriately. This was discussed in section \ref{sec:PotentialSurfaceVolumeIncreasesWithEffort}.} This intuitively makes sense, as the more effort a lifter exerts the greater there 1RM is should be.
-%
-%To test the accuracy of equation \ref{eq:1RMPrediction}, the model can be made to fit to data before a 1RM attempt and then compare the predicted 1RM to the actual 1RM. The lifter had two competitions where 1RM's were tested: the first was deadlift only and the second was a full meet. The predicted and actual 1RM's for all the exercises performed at each competition are summarized in table \ref{tab:1RMPredictedVsActual}.
-%
-%\begin{table}[h]
-%    \centering
-%    \begin{tabular}{p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}}
-%        Exercise & Date & Time Frame (Days) & Current Time (Days) & Predicted 1RM (lbs) & Actual 1RM (lbs) & Difference (lbs) \\
-%        \hline
-%        
-%        Deadlift & 5/5/2022 & $40$ & $81$ & $506$ & $520$ & $14$ \\
-%        Squat & 7/24/2022 & $120$ & $1$ & $415$ & $435$ & $20$ \\
-%        Bench & 7/24/2022 & $120$ & $1$ & $267$ & $270$ & $3$ \\
-%        Deadlift & 7/24/2022 & $120$ & $1$ & $511$ & $535$ & $24$ \\
-%    \end{tabular}
-%    \caption{Predicted vs actual 1RM's. All weight values are rounded to the nearest pound.}
-%    \label{tab:1RMPredictedVsActual}
-%\end{table}
-%
-%The model consistently under-predicts the lifters 1RM, and the largest difference in the predicted vs actual 1RM is $24$ lbs. The smallest difference is $3$ lbs. The time frames were chosen to limit the data to only data points after $3/27/2022$, which is the date of the first successful workout after the lifter sustained an injury and took two weeks off from the gym entirely. Section \ref{sec:PotetentialSurfaceImprovingAccuracy} will work towards improving the accuracy of the predicted 1RM.
-%
-%%As with section \ref{sec:PotentialSurfaceAbstractlyDescribingTraining}, a lifters 1RM can be tracked across time, providing another way to describe training over time. Figure \ref{fig:Deadlift1RMOverTime} shows the models predicted 1RM over time. Again, while presented here as an application of the model, more will be gained from figure \ref{fig:Deadlift1RMOverTime} in section \ref{sec:Macrocycle}.
-%%
-%%\begin{figure}[h]
-%%    \centering
-%%    \includegraphics[width=140mm]{DeadliftConstants/pred1RM.png}
-%%    \caption{The models predicted 1RM over time for deadlift.}
-%%    \label{fig:Deadlift1RMOverTime}
-%%\end{figure}
-%
-%\section{Improving Accuracy: Improvising for What's Not Included}
-%\label{sec:PotetentialSurfaceImprovingAccuracy}
-%
-%Fatigue was presented in section \ref{sec:CommonTermsSection}, but until this point was not considered. This is mainly because it is not part of the data set that was used to generate the potential surface. Fatigue directly limits what can be lifted. This makes intuitive sense: a lifter that is fatigued will be tired and hence will not able to lift as much weight. This is one of the reasons why it gets harder to lift a given weight the more times it is attempted. Given this, if fatigue were to be added to the model it may look like something like equation \ref{eq:PotentialSurfaceEquationWithFatigue}, where $F$ is used to represent fatigue.
-%
-%\begin{equation}
-%    \label{eq:PotentialSurfaceEquationWithFatigue}
-%    a(s-1)^2(r-1)^2+b(s-1)^2+c(r-1)^2+\epsilon E+\epsilon_2 F=d-I
-%\end{equation}
-%
-%While fatigue cannot be represented directly by the model due to it not being part of the data, its affects should still be sought to be minimized. Within the broad category of fatigue, there two sub-types: \textit{inter-workout} and \textit{inter-exercise} fatigue. As the names suggest, inter-workout fatigue is fatigue that accumulates over the course of an entire workout, and inter-exercise fatigue is fatigue that accumulates over the course of a single exercise. When a lifter switches exercises fatigue drops depending on the amount of similarity between the exercises. If two exercises are similar more fatigue will carry over between them, increasing both the perceived inter-workout fatigue as well as the inter-exercise fatigue on the second exercise. On some occasions this is purposeful, and is used as a way to increase stimulus while keeping intensity low.
-%
-%It should be obvious that effects from inter-workout fatigue cannot be minimized, as this surface is only defined for a single exercise, but the effects from inter-exercise fatigue can be partially controlled for. If the same exercise is performed on the same day with different weights, then each set with a different weight can be given an 'index' to show the order that the sets occurred in.\footnote{This obviously only includes working sets. Warm up sets will not be indexed.} This order will then take the place of a fatigue measurement, and linear regression can be completed using the augmented data set. While not perfect, this works because the index increases as fatigue would increase, creating a way to test if having actual fatigue data would increase the accuracy of the model. This 'index' will be called the \textit{fatigue index} and will will start at $0$ to reflect that the first set done will have no fatigue. If the value for $\epsilon_2$ from linear regression is not near $0$ then it can be said fatigue significantly contributes to the model. Table \ref{tab:LinearRegressionConstantsWithFatigue} shows the results after completing linear regression on deadlift data with the new augmented data set. It is clear, when compared to the other constants, the $\epsilon_2$ constant is large enough to be significant.
-%
-%\begin{table}[h]
-%    \centering
-%    \begin{tabular}{c|c|c|c|c|c|c}
-%         & $a$ & $b$ & $c$ & $d$ & $\epsilon$ & $\epsilon_2$ \\
-%         \hline
-%        With Fatigue Index & $0.0001$ & $0.0029$ & $0.0028$ & $0.4179$ & $-0.0519$ & $0.0173$ \\
-%        Without Fatigue Index & $0.0002$ & $0.0027$ & $0.0029$ & $0.4302$ & $-0.0555$ & - \\
-%    \end{tabular}
-%    \caption{Linear regression constants from deadlift data with and without the augmented fatigue data.}
-%    \label{tab:LinearRegressionConstantsWithFatigue}
-%\end{table}
-%
-%Despite augmenting the data set and adding a new variable, much of the work outlined in sections \ref{sec:PotentialSurfaceVolumeIncreasesWithEffort}-\ref{sec:PotentialSurfaceSolvingForTheUnknown} remains unaffected, as the added fatigue term either drops out after performing differentiation or just tags along similar to the effort term. The changes to equations \ref{eq:PotentialSurfaceSetsEquation}-\ref{eq:PotentialSurfaceEffortEquation} are shown in equations \ref{eq:PotentialSurfaceSetsEquationWithFatigue}-\ref{eq:PotentialSurfaceEffortEquationWithFatigue} for convenience.
-%
-%\begin{subequations}
-%    \begin{align}
-%        s(r,I,E,F)&=
-%        \left( 
-%            \frac{
-%                d-I-c(r-1)^2-\epsilon E-\epsilon_2 F
-%            }{
-%                a(r-1)^2+b
-%            }
-%        \right)^\frac{1}{2}+1
-%        \label{eq:PotentialSurfaceSetsEquationWithFatigue}\\
-%        r(s,I,E,F)&=
-%        \left(
-%            \frac{
-%                d-I-b(s-1)^2-\epsilon E-\epsilon_2 F
-%            }{
-%                a(s-1)^2+c
-%            }
-%        \right)^\frac{1}{2}+1
-%        \label{eq:PotentialSurfaceRepsEquationWithFatigue}\\
-%        I(s,r,E,F)&=
-%        d-a(s-1)^2(r-1)^2-b(s-1)^2-c(r-1)^2-\epsilon E-\epsilon_2 F
-%        \label{eq:PotentialSurfaceIntensityEquationWithFatigue}\\
-%        E(s,r,I,F)&=
-%        \frac{
-%            d-I-a(s-1)^2(r-1)^2-b(s-1)^2-c(r-1)^2-\epsilon_2 F
-%        }{
-%            \epsilon
-%        }
-%        \label{eq:PotentialSurfaceEffortEquationWithFatigue}\\
-%        F(s,r,I,E)&=
-%        \frac{
-%            d-I-a(s-1)^2(r-1)^2-b(s-1)^2-c(r-1)^2 -\epsilon E
-%        }{
-%            \epsilon_2
-%        }
-%        \label{eq:PotentialSurfaceFatigueEquation}
-%    \end{align}
-%\end{subequations}
-%
-%%As equation \ref{eq:PotentialSurfaceFatigueEquation} demonstrates, the fatigue index value can also be solved for, which presents an interesting opportunity to measure how fatigued a lifter is based on there previous lifts. Through equation \ref{eq:PotentialSurfaceEffortEquationWithFatigue}, the model will be able to predict a fatigue index. This fatigue index can then be compared to the actual fatigue index, and the delta can be used to show how fatigued you are compared to what the model expects. Equation \ref{eq:}
-%
-%The changes to equation \ref{eq:1RMPrediction}, as shown in equation \ref{eq:1RMPredictionWithFatigue}, are also important. With the new predicted 1RM equation, there is still a baseline value, $d$, which increases with effort, $10\epsilon$, but the baseline value now decreases with fatigue, $\epsilon_2 F$. Again, this intuitively makes sense. If a lifter is in a fatigued state, they will not be able to lift as much weight, even with high amounts of effort. Put another way: performance is effort minus fatigue.
-% 
-%\begin{equation}
-%    \label{eq:1RMPredictionWithFatigue}
-%    n_{1RM}=I(s=1,r=1,E=10,F)l_{1RM}=l_{1RM}( d-10\epsilon-\epsilon_2 F)
-%\end{equation}
-%
-%The updated 1RM prediction equation can be compared to the old one to see which one is more accurate. Table \ref{tab:Predicted1RMWithAndWithoutFatigue} compares the estimated 1RM's between the augmented data set and the non-augmented data set. The same lifts and time frames are used as table \ref{tab:1RMPredictedVsActual}. When computing the predicted 1RM with fatigue, a fatigue index of $F=0$ was used, as a 1RM attempt is usually the first set performed to avoid any affects from fatigue.
-%
-%\begin{table}[h]
-%    \centering
-%    \begin{tabular}{p{2cm}|p{2cm}|p{3cm}|p{3cm}|p{3cm}}
-%        Exercise &  Date & Pred. 1RM With $F$  (lbs) & Pred. 1RM Without $F$ (lbs) & Actual 1RM (lbs) \\
-%        \hline
-%        Deadlift & 5/5/2022 & $506$ & $506$ & $520$ \\
-%        Squat & 7/24/2022 & $417$ & $415$ & $435$ \\
-%        Bench & 7/24/2022 & $269$ & $267$ & $270$ \\
-%        Deadlift & 7/24/2022 & $514$ & $511$ & $535$ \\
-%    \end{tabular}
-%    \caption{Predicted 1RM with and without the augmented fatigue data.}
-%    \label{tab:Predicted1RMWithAndWithoutFatigue}
-%\end{table}
-%
-%As shown in table \ref{tab:Predicted1RMWithAndWithoutFatigue}, when the model is augmented with the fatigue index it has either the same or greater accuracy when predicting a 1RM, especially on bench, with the model being within $1$ pound of the users actual 1RM.
-%
-%The affects of $\epsilon_2$ on $I$ also need to be considered to ensure the model is appropriately responding to fatigue. As such, the changes in $I$ relating to changes in $F$ are desired, requiring the derivative of equation \ref{eq:PotentialSurfaceEffortEquationWithFatigue} with respect to $F$. 
-%
-%\begin{equation}
-%    \label{eq:VolumeFPartialDerivative}
-%    \frac{\partial I}{\partial F}=\frac{\partial}{\partial F} d-a(s-1)^2(r-1)^2-b(s-1)^2-c(r-1)^2-\epsilon E-\epsilon_2 F=-\epsilon_2
-%\end{equation}
-%
-%As stated at the start of this section, fatigue limits what can be lifted. As such, $I$ needs to decrease as $\epsilon_2$ increases, requiring $\partial_F I<0$. It should be obvious that this can only happen if $\epsilon_2>0$, meaning that intensity decreases with fatigue \textbf{iff} $\epsilon_2>0$. Given the values for $\epsilon_2$ in table \ref{tab:Epsilon2AcrossExercises}, which are all positive, it is clear the model is appropriately identifying patterns in fatigue.
-%
-%\begin{table}[h]
-%    \centering
-%    \begin{tabular}{c|c}
-%        Exercise & $\epsilon_2$ \\
-%        \hline
-%        Squat & $0.0116$ \\
-%        Bench & $0.0301$ \\
-%        Deadlift & $0.0173$ \\
-%    \end{tabular}
-%    \caption{The $\epsilon_2$ values for three different exercises. They are all positive, meaning the model is correctly making intensity decrease with increased fatigue.}
-%    \label{tab:Epsilon2AcrossExercises}
-%\end{table}
-%
-%Augmenting the data with the fatigue index clearly improved the accuracy of the model, it is still not perfect. While the fatigue index does have the same general behavior as fatigue, it is not the exact same behavior. One difference is that fatigue will accumulate across all sets, not just across sets with a different weight. If each set was given an increasing fatigue index, regardless of weight, the model would no longer be able to accurately understand sets because every exercise would be split up into a list of single sets with a certain number of reps and an incrementing fatigue index. Splitting the data points apart like this would also create dependencies between the data points, which cannot happen with linear regression. To make sure the model accurately understands the relation between sets and reps, the fatigue index was made to only increase across sets of different weight. This has the unfortunate side effect of giving the fatigue index behavior that fatigue does not have, but is necessary to keep the rest of the model consistent.
-%
-%All this consideration with the fatigue index raises the question: why not just create a new data set that records fatigue? Arguably, using actual fatigue data would give better results. The problem is that fatigue is hard to measure. A simple system like RPE cannot be used because often times a lifter may by psychologically fatigued, but physically they are fine, or visa versa. As John Broz, an Olympic trainer, says, "How you feel is a lie." While John has an extreme take on the discrepancy between how a lifter feels and how they perform, there is still some level of truth to the statement. There are many cases where a lifters psychological state does not match there physical state, resulting in discrepancies between what they think they can do and what they actually do during a workout. As such, simply asking a lifter to record how fatigued they feel on a given day is not going to produce reliable data. Other methods of measuring fatigue exist\cite{MEASURING_FATIGUE}, but these methods are generally not conducive to a training environment, which is where they would need to be used to capture changes in fatigue across sets. Finding a way to reliably record fatigue data while training will remain an unanswered question.
-%
-%Due to the increased accuracy of the model with the fatigue index added to the data set, the rest of the paper will continue to use this updated model, which will be called the \textit{fatigue aware potential surface}.
-%
-%%This is promising, and all seems well until volume skew is considered. Looking at $b$ and $c$ in table \ref{tab:LinearRegressionConstantsWithFatigue}, it should be obvious that the volume skew shifted. The volume skew without $F$ is $0.9495$, but with $F$ it is $1.0361$. Remembering the definition of volume skew, this means volume went from favoring sets to favoring reps. Looking at the graph from the raw data in figure \ref{fig:SetsVsReps} it should be clear the the model should favor sets, not reps.
-%
-%%\section{Time Frame Considerations}
-%%\label{sec:PotentialSurfaceTimeFrameConsiderations}
-%
+Linear regression can now be run with this equation. The error equation that needs to be minimized is shown below.
+
+\begin{equation*}
+	E_{rr}=\sum_{
+            \substack{i=0\\ t_i\in \{ T \}}
+        }^n \left(
+        \frac{1}{I_i^2}
+        -\epsilon_8 \frac{1}{E_i}
+        -\epsilon_2 \frac{F_{l,i}}{E_i}
+        -\epsilon_3 \frac{F_{w,i}}{E_i}
+        -\epsilon_4 \frac{F_{e,i}}{E_i}
+        -\epsilon_5 \frac{(s_i-1)^2(r_i-1)^2}{E_i}
+        -\epsilon_6 \frac{(s_i-1)^2}{E_i}
+        -\epsilon_7 \frac{(r_i-1)^2}{E_i}
+    \right)^2
+\end{equation*}
+
+To minimize the error, the partial derivatives of each unknown constant need to be found and each one set equal to zero. An example with $\epsilon_8$ is shown below.
+
+\begin{equation*}
+    \begin{split}
+        \frac{\partial E_{rr}}{\partial \epsilon_8}=
+        \frac{\partial}{\partial \epsilon_8}\sum_{
+                \substack{i=0\\ t_i\in \{ T \}}
+            }^n \left(
+            \frac{1}{I_i^2}
+            -\epsilon_8 \frac{1}{E_i}
+            +\epsilon_2 \frac{F_{l,i}}{E_i}
+            +\dots
+            +\epsilon_6 \frac{(s_i-1)^2}{E_i}
+            +\epsilon_7 \frac{(r_i-1)^2}{E_i}
+        \right)^2&=0
+        \\
+        -2\sum_{
+                \substack{i=0\\ t_i\in \{ T \}}
+            }^n \left(
+            \frac{1}{I_i^2}
+            -\epsilon_8 \frac{1}{E_i}
+            -\epsilon_2 \frac{F_{l,i}}{E_i}
+            -\dots
+            -\epsilon_6 \frac{(s_i-1)^2}{E_i}
+           	-\epsilon_7 \frac{(r_i-1)^2}{E_i}
+        \right)\left( \frac{1}{E_i} \right)&=0 
+        \\
+        \epsilon_8 \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n \frac{1}{E_i^2} 
+        +\epsilon_2 \sum_{\substack{i=0\\ t_i\in \{ T \}}} \frac{F_{l,i}}{E_i}
+        +\dots
+        +\epsilon_6 \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n \frac{(s_i-1)^2}{E_i}
+        +\epsilon_7 \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n \frac{(r_i-1)^2}{E_i}
+        &=
+        \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n \frac{1}{I_i^2E_i}
+        \\
+    \end{split}
+\end{equation*}
+
+After a similar process is carried out for each unknown constant, equation \ref{eq:VolumeBaseLinearRegMatrixEquation} can be used, and the unknown constants can be solved for.
+
+\begin{equation}
+    \label{eq:VolumeBaseLinearRegMatrixEquation}
+	\left[
+    \begin{matrix}
+        \sum_{i=0}^n \frac{1}{E_i^2} &
+        \dots &
+        \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n \frac{(r_i-1)^2}{E_i^2} \\
+
+        \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n  \frac{F_{l,i}}{E_i^2} &
+        \dots &
+        \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n \frac{F_{l,i}(r_i-1)^2}{E_i^2}\\
+
+        \vdots &
+        \ddots &
+        \vdots \\
+        
+        \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n \frac{(r_i-1)^2}{E_i^2} &
+        \dots &
+        \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n \frac{(r_i-1)^4}{E_i^2}
+    \end{matrix}
+    \right]
+    \left[
+    \begin{matrix}
+        \epsilon_8 \\ \epsilon_2 \\ \vdots \\ \epsilon_7
+    \end{matrix}
+    \right]
+	\left[
+    \begin{matrix}
+        \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n \frac{1}{I_i^2E_i} \\
+        \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n \frac{F_{l,i}}{I_i^2E_i} \\
+        \vdots \\
+        \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n \frac{(r_i-1)^2}{I_i^2E_i}  
+    \end{matrix}
+    \right]
+\end{equation}
+
+With equations \ref{eq:VolumeBaseSurfaceEquation}- \ref{eq:VolumeBaseLinearRegMatrixEquation} the surface is fully defined and can be fitted to the data presented in chapter \ref{sec:DataSection}. Equation \ref{eq:VolumeBaseIntensitySubedInVolume} shows the result of solving the potential surface for $I$ and substituting it in equation \ref{eq:IntensityBasedVolumeEquation}. Figure \ref{fig:VolumeBaseSquatPotentialSurfaceAcrossEffort} shows the volume base potential surface and figure \ref{fig:VolumeBaseSquatPotentialSurfaceVolumeAcrossEffort} shows the volume surface generated from this surface.
+
+\begin{equation}
+    \label{eq:VolumeBaseIntensitySubedInVolume}
+    \begin{split}
+    		v = & srI l_{1RM} \\
+    			= & l_{1RM} sr \left( 
+    			\frac{
+    				E
+    			}{
+    				\epsilon_8+
+    				\epsilon_2 F_l+
+    				\epsilon_3 F_w+
+    				\epsilon_4 F_e+
+    				\epsilon_5 (s-1)^2(r-1)^2+
+    				\epsilon_6 (s-1)^2+
+    				\epsilon_7 (r-1)^2
+    			}
+    		\right)
+    \end{split}
+\end{equation}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[scale=0.55]{images/ch3/PotentialSurface/DualSquat.Effort[5,10].volumeBase.png}
+    \caption{The potential surface fitted to squat data at various effort levels. The window and time frame values will be discussed in chapter \ref{sec:TimeFrame}. For now, the $I(1,1)$ and MSE values are the most important.}
+    \label{fig:VolumeBaseSquatPotentialSurfaceAcrossEffort}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[scale=0.55]{images/ch3/Volume/DualSquat.Effort[5,10].volumeBase.png}
+    \caption{The volume surface resulting from the potential surface fitted to squat data at various effort levels.}
+    \label{fig:VolumeBaseSquatPotentialSurfaceVolumeAcrossEffort}
+\end{figure}
+
+\section{Analysis of Property 1.a: Volume and Intensity}
+\label{sec:VolumeBasePotentialSurfaceProperty1a}
+
+\section{Analysis of Property 1.b: Volume and Intensity}
+\label{sec:VolumeBasePotentialSurfaceProperty1b}
+
+\section{Analysis of Property 2: Volume and Effort}
+\label{sec:VolumeBasePotentialSurfaceProperty2}
+
+\section{Analysis of Property 3: Volume and Fatigue}
+\label{sec:VolumeBasePotentialSurfaceProperty3}
+
+\section{Analysis of Property 4: Sets and Reps}
+\label{sec:VolumeBasePotentialSurfaceProperty4}
+
+\section{Analysis of Property 5: Bounded Volume}
+\label{sec:VolumeBasePotentialSurfaceProperty5}
+
+\section{Analysis of Property 6: 1RM Estimations}
+\label{sec:VolumeBasePotentialSurfaceProperty6}
+
+\section{Summary}
