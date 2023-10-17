@@ -325,6 +325,7 @@ After a similar process is carried out for each unknown constant, equation \ref{
         \epsilon \\ \epsilon_1 \\ \vdots \\ \epsilon_7
     \end{matrix}
     \right]
+    =
 	\left[
     \begin{matrix}
         \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n I_i \\
@@ -399,7 +400,7 @@ To begin, the maximum of equation \ref{eq:BaseIntensityEquation} needs to be fou
 	\right]
 \end{equation*}
 
-To find critical points where a maximum could occur the gradient will be set to zero, $\nabla I=0$, and all the variables can be solved for. However, there are only two variables remaining, $s$ and $r$. This means that all the variables $E$,$F_l$,$F_w$, and $F_e$ can be any value and the location of the maximum will remain unchanged. Given that only the last two equations of $\nabla I$ effect the result, the problem of finding critical points is essentially rendered to a two dimensional problem. After some algebraic manipulation, it can be shown that the only critical point is $(s=1,r=1)$.
+To find critical points where a maximum could occur the gradient will be set to zero, $\nabla I=0$, and all the variables can be solved for. Looking at the above equation, there are only two variables remaining, $s$ and $r$. This means that all the variables $E$,$F_l$,$F_w$, and $F_e$ can be any value and the location of the maximum will remain unchanged. Given that only the last two equations of $\nabla I$ effect the result, the problem of finding critical points is essentially rendered down to a two dimensional problem. After some algebraic manipulation, it can be shown that the only critical point is $(s=1,r=1)$.
 
 Now, given the critical point at $(s=1,r=1)$ it needs to be proven to be a maximum. The simplification to a two dimensional problem will be used here, and the standard determinant equation can be used to determine concavity.
 
@@ -418,7 +419,7 @@ Now, given the critical point at $(s=1,r=1)$ it needs to be proven to be a maxim
 	\end{split}
 \end{equation*}
 
-Given the constraints on equation \ref{eq:BaseIntensityEquation} it can be said that $D(s=1,r=1)>0$. Given this and the fact that $\partial_{ss}I(s=1,r=1)=-2\epsilon_6$, which is $<0$, it can be stated that the critical point $(s=1,r=1)$ is a maximum. This maximum needs to be shown to equal the lifters 1RM. To obtain this, equation \ref{eq:BaseIntensityEquation} is simply evaluated at $(s=1,r=1)$ and scaled by $l_{1RM}$ to get weight instead of intensity. The result is shown in equation \ref{eq:BasicSurface1RMPred}, which \ref{eq:BasicSurface1RMPred} represents what the model thinks the lifters 1RM is. This is an important concept, especially because of the discussion in section \ref{sec:PotentialSurfaceLinearRegressionAndTimeSeriesProblems}, and will be returned to in section \ref{sec:}.
+Given the constraints on equation \ref{eq:BaseIntensityEquation} it can be said that $D(s=1,r=1)>0$. Given this and the fact that $\partial_{ss}I(s=1,r=1)=-2\epsilon_6$, which is $<0$, it can be stated that the critical point $(s=1,r=1)$ is a maximum. This maximum needs to be shown to equal the lifters 1RM. To obtain this, equation \ref{eq:BaseIntensityEquation} is simply evaluated at $(s=1,r=1)$ and scaled by $l_{1RM}$ to get weight instead of intensity. The result is shown in equation \ref{eq:BasicSurface1RMPred}, which represents what the model thinks the lifters 1RM is. This is an important concept, especially because of the discussion in section \ref{sec:PotentialSurfaceLinearRegressionAndTimeSeriesProblems}, and will be returned to in section \ref{sec:PotentialSurface1RMEstimations}.
 
 \begin{equation}
 	\label{eq:BasicSurface1RMPred}
@@ -431,7 +432,7 @@ Given the constraints on equation \ref{eq:BaseIntensityEquation} it can be said 
     	\right)
 \end{equation}
 
-With that, the first part of the proof is complete. The intensity equation has a single max that represents the lifters current 1RM. The second part of the proof relies on finding a minimum of the volume function. To do this, the gradient of equation \ref{eq:IntensitySubedInVolume} is needed.
+With that, the first part of the proof is complete. The intensity equation has a single max that represents the lifters current 1RM. The second part of the proof relies on finding a minimum of the volume surface. To do this, the gradient of equation \ref{eq:IntensitySubedInVolume} is needed.
 
 \begin{equation*}
 	\begin{split}
@@ -981,7 +982,7 @@ Property 6 is concerned with 1RM estimations, with it defining an acceptable bou
 \begin{figure}[htb]
     \centering
     \includegraphics[scale=0.55]{images/ch3/PredVsActual1RM.basic.png}
-    \caption{Graphs comparing the approximate and actual 1RM intensity values. Note how the model nearly always under predicts the lifters current 1RM. The initial value where the prediction was $0$ is not shown in these figures to allow the graphs to be scaled appropriately to show the smaller differences in the predicted vs actual values.}
+    \caption{Graphs comparing the approximate and actual 1RM intensity values. Note how the model nearly always under predicts the lifters current 1RM. Of note, though not further discussed until much later, is how the model seems to be getting more accurate as time passes.}
     \label{fig:ApproximateVsActual1RMIntensity}
 \end{figure}
 \begin{table}[p]
@@ -1022,7 +1023,7 @@ Other than property 1.b, property 5 and 6 were also not properly exhibited. Prop
 \chapter{Surface 2: The Volume Base Surface}
 \label{sec:PotentialSurfaceTheVolumeBaseSurface}
 
-The second surface builds off of the previous chapter by trying to address one of the weaknesses of the basic surface. Namely, the basic surface does not exhibit property 1.b. In order for this surface to properly exhibit property 1.b a less literal interpretation of the effort-fatigue model is required. Firstly, the $\hat{-}$ symbol is going to be treated as division instead of subtraction. This will be done in order to create asymptotic behavior on the $I$ axis which will represent the lifters volume base. Doing this however creates another issue when total fatigue is zero. A second change will be required to fix this. Another constant will be added, $\epsilon_8$, which will be constrained to being $\ge 0$ to prevent any scenarios where division by zero would occur. The final change is to square intensity, again to make it so volume will exhibit asymptotic behavior on the $I$ axis.\footnote{Confused as to why this is needed? This will be discussed in section \ref{sec:VolumeBasePotentialSurfaceProperty5}.} Equation \ref{eq:VolumeBaseSurfaceEquation} shows the the volume base equation.
+The second surface builds off of the previous chapter by trying to address one of the weaknesses of the basic surface. Namely, the basic surface does not exhibit property 1.b. In order for this new surface to properly exhibit property 1.b a less literal interpretation of the effort-fatigue model is required. To accomplish this the $\hat{-}$ symbol is going to be treated as division instead of subtraction. This will be done in order to create asymptotic behavior on the $I$ axis which will represent the lifters volume base. Doing this however creates another issue of dividing by zero when total fatigue is zero, requiring a second change. Another constant will be added, $\epsilon_8$, which will be constrained to being $\ge 0$ to prevent any scenarios where division by zero would occur. The final change is to square intensity, again to make it so volume will exhibit asymptotic behavior on the $I$ axis.\footnote{Confused as to why this is needed? This will be discussed in section \ref{sec:VolumeBasePotentialSurfaceProperty5}.} Equation \ref{eq:VolumeBaseSurfaceEquation} shows the the volume base equation.
  
 \begin{equation}
 	I^2 = \frac{E_{tot}}{\epsilon_8+F_{tot}}= \frac{
@@ -1059,7 +1060,24 @@ It is worth noting that this surface does not contain an error term, $\epsilon$,
 	\end{equation*}
 \end{minipage}
 
-Throughout the rest of this chapter only the $\epsilon_{i\in\{1,2,...,8\},N}$ constants will be used. There is no need to keep the original constants as they provide no intuitive meaning beyond what can already be found in the new constants. As such, these new constants will simply replace the old constants in notation and be referred to as $\epsilon_{i\in\{1,2,...,8\}}$. The old constants will not be used. With this, the final equation for the volume base surface is shown in equation \ref{eq:VolumeBaseSurfaceEquationInverse}.
+At this point an error term could be added, and it would likely make the results from linear regression better, but doing this would change the meaning of equation \ref{eq:VolumeBaseSurfaceEquation} in such a way that it would no longer follow the effort-fatigue model. The result of adding an error term and solving back to match the form of equation \ref{eq:VolumeBaseSurfaceEquation} is shown below. This equation has relationships between $F_{tot}$ and $E_{tot}$ that are not present in the effort-fatigue model. For this reason, an error term will not be added.
+
+\begin{equation*}
+	I^2=\frac{
+		\epsilon_1E
+	}{
+		\epsilon\epsilon_1E
+		\epsilon_8+
+		\epsilon_2 F_l+
+		\epsilon_3 F_w+
+		\epsilon_4 F_e+
+		\epsilon_5 (s-1)^2(r-1)^2+
+		\epsilon_6 (s-1)^2+
+		\epsilon_7 (r-1)^2
+	}=\frac{E_{tot}}{\epsilon E_{tot}+F_{tot}}
+\end{equation*}
+
+Throughout the rest of this chapter only the $\epsilon_{i\in\{2,3,...,8\},N}$ constants will be used. There is no need to keep the original constants as they provide no intuitive meaning beyond what can already be found in the new constants. As such, these new constants will simply replace the old constants in notation and be referred to as $\epsilon_{i\in\{2,3,...,8\}}$. The old constants will not be used. With this, the final equation for the volume base surface is shown in equation \ref{eq:VolumeBaseSurfaceEquationInverse}.
 
 \begin{minipage}{\textwidth}
 	\begin{equation}
@@ -1165,6 +1183,7 @@ After a similar process is carried out for each unknown constant, equation \ref{
         \epsilon_8 \\ \epsilon_2 \\ \vdots \\ \epsilon_7
     \end{matrix}
     \right]
+    =
 	\left[
     \begin{matrix}
         \sum_{\substack{i=0\\ t_i\in \{ T \}}}^n \frac{1}{I_i^2E_i} \\
