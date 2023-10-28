@@ -543,7 +543,7 @@ Therefore, it can be concluded that volume increases with increased effort if an
 \section{Analysis of Property 3: Volume and Fatigue}
 \label{sec:PotentialSurfaceAnalysisOfProperty3}
 
-For property 2, it needs to be shown that volume decreases with increased fatigue. Similar to the previous section, partial derivatives is required. A partial derivative is needed for every fatigue term. Luckily all the fatigue terms are similar in nature, so for brevity only one will be analyzed here and it should be known that the other fatigue terms will follow the same behaviors. To begin, the partial derivative of equation \ref{eq:IntensitySubedInVolume} with respect to $F_l$ is required.
+For property 2, it needs to be shown that volume decreases with increased fatigue. Similar to the previous section, partial derivatives are required. A partial derivative is needed for every fatigue term. Luckily all the fatigue terms are similar in nature, so for brevity only one will be analyzed here and it should be known that the other fatigue terms will follow the same behaviors. To begin, the partial derivative of equation \ref{eq:IntensitySubedInVolume} with respect to $F_l$ is required.
 
 \begin{equation*}
     \begin{split}
@@ -1245,7 +1245,7 @@ With equations \ref{eq:VolumeBaseSurfaceEquation}- \ref{eq:VolumeBaseLinearRegMa
 \section{Analysis of Property 2: Volume and Effort}
 \label{sec:VolumeBasePotentialSurfaceProperty2}
 
-It needs to be shown that volume increases with effort and decreases with decreased effort. Changes in $v$ in relation to changes to $E$ is required. Solving for the partial derivative of equation \ref{eq:VolumeBaseIntensitySubedInVolume} with respect to $E$ is required.
+It needs to be shown that volume increases with increased effort and decreases with decreased effort. Changes in $v$ in relation to changes to $E$ is required. Solving for the partial derivative of equation \ref{eq:VolumeBaseIntensitySubedInVolume} with respect to $E$ is required.
 
 \begin{equation*}
 	\begin{split}
@@ -1307,10 +1307,71 @@ The second thing of note is how volume increases with increases in effort. To an
     		} E^{-\frac{3}{2}}
 \end{equation*}
 
-Since $\partial_{EE}v$ has all the same constants a $\partial_Ev$ it means that $\partial_{EE}v<0$. This means that volume increases with increased effort but it does so with diminishing returns. In other words, a linear increase in effort will cause smaller and smaller increases in volume at higher effort levels. This is very different from the basic surface which had linear increases in volume from linear increases in effort. The question now becomes which one is correct. Fortunately, this does not have to be answered now as the volume base model is actually flexible enough to also represent linear returns to effort. Depending on the scale of the constants from linear regression relative to the finite scale of effort, linear returns can be approximated. Not only does this add an additional layer of flexibility to the volume base model, but it will allow questions related to how volume scales with effort to be answered later in this book.
+Since $\partial_{EE}v$ has all the same constants a $\partial_Ev$ it means that $\partial_{EE}v<0$. This means that volume increases with increase effort but it does so with diminishing returns. In other words, a linear increase in effort will cause smaller and smaller increases in volume at higher effort levels. This is very different from the basic surface which had linear increases in volume from linear increases in effort. The question now becomes which one is correct. Fortunately, this does not have to be answered now as the volume base model is actually flexible enough to also represent linear returns to effort. Depending on the scale of the constants from linear regression relative to the finite scale of effort, linear returns can be approximated. Not only does this add an additional layer of flexibility to the volume base model, but it will allow questions related to how volume scales with effort to be answered later in this book.
 
 \section{Analysis of Property 3: Volume and Fatigue}
 \label{sec:VolumeBasePotentialSurfaceProperty3}
+
+It needs to be shown that volume decreases with increased fatigue and increases with decreased fatigue. To prove this it will need to be shown that the partial derivatives with respect to every fatigue term are $<0$. Shown below is $\partial_{F_l}v$.
+
+\begin{equation*}
+	\begin{split}
+		\frac{\partial v}{\partial F_l} & =
+		\frac{\partial}{\partial F_l} l_{1RM} sr \left( 
+    			\frac{
+    				E
+    			}{
+    				\epsilon_8+
+    				\epsilon_2 F_l+
+    				\epsilon_3 F_w+
+    				\epsilon_4 F_e+
+    				\epsilon_5 (s-1)^2(r-1)^2+
+    				\epsilon_6 (s-1)^2+
+    				\epsilon_7 (r-1)^2
+    			}
+    		\right)^{\frac{1}{2}}
+    		\\
+    		& = -\frac{1}{2}
+    			\epsilon_2 l_{1RM} sr E^{\frac{1}{2}}
+    			\left(
+	    			\epsilon_8+
+    				\epsilon_2 F_l+
+    				\epsilon_3 F_w+
+    				\epsilon_4 F_e+
+    				\epsilon_5 (s-1)^2(r-1)^2+
+    				\epsilon_6 (s-1)^2+
+    				\epsilon_7 (r-1)^2
+    			\right)^{-\frac{3}{2}}
+    	\end{split}
+\end{equation*}
+
+Given the same set of constants that was presented in the previous section it should be clear that there are two terms that can change the sign of the partial derivative. The $\epsilon_2$ constant and the entire parenthetical grouping. The even root on the parenthetical grouping will technically guarantee that term is positive, but in order to make this proof more robust to future changes an alternative proof will be used. Two scenarios will be considered.
+
+The first scenario is when $\epsilon_2>0$. If this is the case then in order for $\partial_{F_l}v<0$ the summation of the rest of the terms inside the parenthetical grouping must also be $>0$. Given the constraints on the variables from section \ref{sec:UnitsOfMeasurement} the sign of each term entirely depends on the constant in front of each term. Now, it must be remembered that this proof will eventually need to be applied to every term in $F_{tot}$. This means that every term will depend on the sign of every other term in $F_{tot}$. This removes the scenario where some terms could be negative and the rest could be positive as $\partial_{F_l}v$ would not be $<0$ for the negative terms because the parenthetical grouping would still be $>0$ despite the sign of the constant changing. This forces $\epsilon_2$-$\epsilon_7$ to all be $>0$ in order for $\partial_{F_l}v<0$. 
+
+It is also important to consider $\epsilon_8$, as it is not part of $F_{tot}$ but is still part of the parenthetical grouping that could affect the sign of $\partial_{F_l}v$. Initial intuition would limit $\epsilon_8>-F_{tot}$, but this creates a dependence between the constant $\epsilon_8$ and the independent variables. Instead, $\epsilon_8$ just needs to be constrained to being greater than the smallest value of $F_{tot}$, which given the range of the variables as well as the constraints placed on $\epsilon_2$-$\epsilon_7$ the minimum value is zero. It is important to stop in the middle of all this theory and note that this minimum value matches what would be expected in reality.
+
+The second scenario is if $\epsilon_2<0$. If this is the case then in order for $\partial_{F_l}v<0$ the summation of the rest of the terms inside the parenthetical grouping must also be $<0$. \footnote{This also assumes that the root is not even so negative values can be produced.} Similar to the previous scenario, if $\epsilon_2<0$ then it forces $\epsilon_2$-$\epsilon_7$ to all be $<0$. While this case does still allow for the proper behavior between volume and fatigue, it allows volume to be negative. \footnote{Again, assuming a non-even root that allows negative volume.} This negative volume could easily be counteracted by forcing $\epsilon_8>-F_{tot}$ but this creates a dependence between the constant $\epsilon_8$ and the independent variables, making this approach invalid. Unlike the previous scenario, there is not minimum value for $F_{tot}$ in this scenario due to $\epsilon_2$-$\epsilon_7$ all being $<0$. Due to $F_{tot}$ not having a minimum there is no way to constrain volume to being $>0$, making this scenario invalid.
+
+After all of that discussion, it can be concluded that after constraining $\epsilon_2$-$\epsilon_8$ to be $>0$ the volume base surface properly exhibits property 3. Just like the previous section further analysis can be done that looks at how volume decreases from increases in fatigue. Again, this needs to be done for every term in $F_{tot}$. Shown below is $\partial_{F_lF_l}v$.
+
+\begin{equation*}
+	\partial_{F_lF_l}v=
+		\frac{3}{4}
+    		\epsilon_2^2 l_{1RM} sr E^{\frac{1}{2}}
+    		\left(
+	    		\epsilon_8+
+    			\epsilon_2 F_l+
+    			\epsilon_3 F_w+
+    			\epsilon_4 F_e+
+    			\epsilon_5 (s-1)^2(r-1)^2+
+    			\epsilon_6 (s-1)^2+
+    			\epsilon_7 (r-1)^2
+    		\right)^{-\frac{5}{2}}
+\end{equation*}
+
+Just like the previous section, the second partial derivative changed sign relative to the first partial derivative. In this case it means that volume decreases with diminishing returns to increases in fatigue. \footnote{Having a linear increase in fatigue represent a sub-linear decrease in volume can have some very important implications when it comes to planning deloads for lifters. It could be said that this is why lifters make progress, as a lifter would not have to linearly decrease volume every time fatigue is high to where they were previously, allowing for incremental increases in total volume over time.} Also just like the last section, linear returns can be approximated.
+
 
 \section{Analysis of Property 4: Sets and Reps}
 \label{sec:VolumeBasePotentialSurfaceProperty4}
