@@ -568,7 +568,7 @@ This time, if $\partial_{F_l}v$ is always $<0$ then it can be said the function 
     -\epsilon_2 l_{1RM} sr< 0 \textbf{ iff } \epsilon_2> 0
 \end{equation*}
 
-This proves that volume decreases with fatigue if and only if $\epsilon_2>0$. Just like the previous section, a similar argument can be made to prove that volume increases with decreased fatigue. This constraint will need to be applied to $e_2$, $e_3$, and $e_4$ and is listed in equation \ref{eq:PotentialSurfaceEquation}. The next section should offer a break from the monotony of this section.
+This proves that volume decreases with fatigue if and only if $\epsilon_2>0$. Just like the previous section, a similar argument can be made to prove that volume increases with decreased fatigue. This constraint will need to be applied to $\epsilon_2$, $\epsilon_3$, $\epsilon_4$, $\epsilon_5$, and $\epsilon_7$ as they are all part of $F_{tot}$. These constraints are listed in equation \ref{eq:PotentialSurfaceEquation}. The next section should offer a break from the monotony of this section.
 
 \section{Analysis of Property 4: Sets and Reps}
 \label{sec:PotentialSurfaceAnalysisOfProperty4}
@@ -737,13 +737,19 @@ The starting point for creating an approximation for volume skew is noticing tha
 	\end{split}
 \end{equation}
 
-Because equation \ref{eq:BaseVolumeEquation} cannot be algebraically manipulated, the efficacy of this approximation will need to be shown analytically. The graphs in figure \ref{fig:ApproximateVsActualVolumeSkew} show the true volume skew compared to the approximation for varying values of different $\epsilon$ constants. As the graphs show, the approximation holds well enough to be considered a valid approximation. Of note is that when the actual volume skew equals $1$ so does the approximation. This is important because this is a critical point where the direction of the skew changes, so exactly matching this value in the approximation is important. Also of note is that as the approximation strays from $1$ it gets worse, with large $\epsilon_7$ values being particularly troublesome. The reason $\epsilon_7$ values have a greater error relates to the nature of the fraction. Having a skew towards reps constrains volume skew to be between $0\le v_s<1$ whereas a skew towards sets constrains the fraction to be between $1<v_s\le \infty$. Both scenarios need to represent the same range of values, but the skew towards reps has a much smaller range to do so, which also leaves much less space for error.
+Because equation \ref{eq:BaseVolumeEquation} cannot be algebraically manipulated, the efficacy of this approximation will need to be shown analytically. The graphs in figure \ref{fig:ApproximateVsActualVolumeSkew} show the true volume skew compared to the approximation for varying values of different $\epsilon$ constants. As the graphs show, the approximation holds well enough to be considered a valid approximation. Of note is that when the actual volume skew equals $1$ so does the approximation. This is important because this is a critical point where the direction of the skew changes, so exactly matching this value in the approximation is important. Also of note is that as the approximation strays from $1$ it gets worse, with large $\epsilon_7$ values being particularly troublesome. The reason $\epsilon_7$ values have a greater error relates to the nature of the fraction. Having a skew towards reps constrains volume skew to be between $0\le v_s<1$ whereas a skew towards sets constrains the fraction to be between $1<v_s\le \infty$. Both scenarios need to represent the same range of values, but the skew towards reps has a much smaller range to do so, which also leaves much less space for error. This weakness of the volume skew approximation can also be seen in graph \ref{fig:ApproximateVsActualVolumeSkewOverTime} where volume skew values $>1$ have much greater separation from there approximated values.
 
 \begin{figure}[htb]
     \centering
     \includegraphics[scale=0.55]{images/ch3/ApproxVsActualVolumeSkew.basic.png}
     \caption{Graphs comparing the approximate and actual volume skew over varrying $\epsilon$ values. Note how the approximation follows the same direction of rate of change of the true volume skew, making it a reasonable approximation for this particular use case.}
     \label{fig:ApproximateVsActualVolumeSkew}
+\end{figure}
+\begin{figure}[htb]
+    \centering
+    \includegraphics[scale=0.55]{images/ch3/volumeSkewOverTime.png}
+    \caption{Graphs comparing the approximate and actual volume skew over time. Note how the volume skew values $>1$ have much greater error.}
+    \label{fig:ApproximateVsActualVolumeSkewOverTime}
 \end{figure}
 
 Before moving on, there has been so much attention on $\epsilon_6$ and $\epsilon_7$ that $\epsilon_5$ has not been discussed, despite having $s$ and $r$ terms associated with it. The constant $\epsilon_5$ represents the volume that should be possible no matter the magnitude of the volume skew. For example, if $\epsilon_6=0$ and $\epsilon_7>0$ for a given exercise, then the following can be stated about the lifter and the way they perform that particular exercise:
@@ -785,7 +791,7 @@ One way to prove volume is bounded, and hence prove the surface properly exhibit
 
 A global maximum occurs when $\partial_{ss} v<0$. In order for this to be the case either none of the parenthetical groupings needs to be negative or an even number of the above parenthetical groupings need to be negative. Thr first parenthetical grouping is guarintted to be positive due to the constraints placed on $r$ in section \ref{sec:UnitsOfMeasurement}. The last parenthetical grouping will be $>0$ if $s>\frac{2}{3}$, which is again guaranteed to be true because of the constraints placed on $s$ in section \ref{sec:UnitsOfMeasurement}. This guarantees two of the three parenthetical groupings to be positive, which forces the middle parenthetical grouping to be positive for $\partial_{ss} v$ to be $<0$. The sign of $\epsilon_5$ changes the set of inequalities that define when the middle parenthetical group is $>0$, and hence when a maximum can occur. Table \ref{tab:BoundedVolumeRanges} shows the inequalities and ranges when volume is bounded for various values of $\epsilon_5$ and $\epsilon_6$.
 
-Care has to be taken when $\epsilon_5=0$ or $\epsilon_6=0$, as the behavior of the inequalities is not fully captured by substituting $0$ for $\epsilon_5$ or $\epsilon_6$. A traditional limit cannot be used because inequalities are one sided, and a limit expects a continuous function. Instead, the four scenarios where $\epsilon_5=0$ and $\epsilon_6=0$ will be treated as one sided limits which will be approached from the side where the behavior is already known. By doing this, the sign can be inferred and the one sided nature of the problem. \footnote{The notation used in table \ref{tab:BoundedVolumeRanges} is as follows: given a number $x$, $x^-$ is a smaller number approaching $x$, and $x^+$ is a larger number approaching $x$. This allows for one sided analysis to be completed.} The scenarios where the root is imaginary are also troublesome. However, the same one sided analysis can be extended and used again. Table \ref{tab:BoundedVolumeRanges} shows how the one sided limit works as well as how the ranges over which volume is bounded respond.
+Care has to be taken when $\epsilon_5=0$ or $\epsilon_6=0$, as the behavior of the inequalities is not fully captured by substituting $0$ for $\epsilon_5$ or $\epsilon_6$. A traditional limit cannot be used because inequalities are one sided, and a limit expects a continuous function. Instead, the four scenarios where $\epsilon_5=0$ and $\epsilon_6=0$ will be treated as one sided limits which will be approached from the side where the behavior is already known. By doing this, the sign can be inferred and the one sided nature of the problem. \footnote{The notation used in table \ref{tab:BoundedVolumeRanges} is as follows: given a number $x$, $x^-$ is a smaller number approaching $x$, and $x^+$ is a larger number approaching $x$. This allows for one sided analysis to be completed.} The scenarios where the root is imaginary are also troublesome. However, the same one sided analysis can be extended and used again. Table \ref{tab:BoundedVolumeRanges} shows how the one sided limit works as well as how the ranges over which volume is bounded respond.\footnote{For the purposes of this discussion the constraints placed on $\epsilon_2$-$\epsilon_7$ will be ignored. These constraints will be reconsidered at the end of the discussion.}
 
 \begin{table}[h]
     \centering
@@ -971,7 +977,7 @@ The above statements make sense in isolation, but when considered together thing
 
 It is tempting to say the bounds in the above statements can be used in practice to limit the lifter from doing to much volume, but just because volume is bounded does not mean it is reasonable. Just because it can be proven that volume has a peak does not prove that the peak volume is attainable. This is a limitation of the model that stems from using linear regression to fit a surface to the data. Linear regression will implicitly extrapolate what amount of volume can be done given the data it has. Extrapolation is a known weakness of linear regression, making its predicted volume sometimes inaccurate.
 
-To simplify the model, $\epsilon_5$, $\epsilon_6$ and $\epsilon_7$ can be limited to being $\ge 0$ so that volume could only ever be unbounded when $\epsilon_5=0$, $\epsilon_6=0$ or $\epsilon_7=0$. Not only does this remove the complexities of defining ranges over which the potential surface has bounded volume, but it makes intuitive sense to limit the model to only describing what is possible. These constraints are shown in equation \ref{eq:BasicSurfaceEquation}. After all this work, it can safely be stated that equation \ref{eq:BasicSurfaceEquation} does not properly exhibit property 5.
+In theory, $\epsilon_5$, $\epsilon_6$ and $\epsilon_7$ can be limited to being $> 0$ so that volume is never unbounded. These constraints match those those generated in section \ref{sec:PotentialSurfaceAnalysisOfProperty3} and are shown in equation \ref{eq:BasicSurfaceEquation}. In practice this could lead to a lot of scenarios where the model cannot be applied, severely hindering it's usability. To fix this the range of $\epsilon_5$, $\epsilon_6$ and $\epsilon_7$ can be expanded to being $\ge 0$. Doing this makes it so volume could only ever be unbounded when $\epsilon_5=0$, $\epsilon_6=0$ or $\epsilon_7=0$. This removes the complexities of defining ranges over which the potential surface has bounded volume. After all this work, it can safely be stated that equation \ref{eq:BasicSurfaceEquation} does not properly exhibit property 5.
 
 \section{Analysis of Property 6: 1RM Estimations}
 \label{sec:PotentialSurface1RMEstimations}
@@ -1023,7 +1029,7 @@ Other than property 1.b, property 5 and 6 were also not properly exhibited. Prop
 \chapter{Surface 2: The Volume Base Surface}
 \label{sec:PotentialSurfaceTheVolumeBaseSurface}
 
-The second surface builds off of the previous chapter by trying to address one of the weaknesses of the basic surface. Namely, the basic surface does not exhibit property 1.b. In order for this new surface to properly exhibit property 1.b a less literal interpretation of the effort-fatigue model is required. To accomplish this the $\hat{-}$ symbol is going to be treated as division instead of subtraction. This will be done in order to create asymptotic behavior on the $I$ axis which will represent the lifters volume base. Doing this however creates another issue of dividing by zero when total fatigue is zero, requiring a second change. Another constant will be added, $\epsilon_8$, which will be constrained to being $\ge 0$ to prevent any scenarios where division by zero would occur. The final change is to square intensity, again to make it so volume will exhibit asymptotic behavior on the $I$ axis.\footnote{Confused as to why this is needed? This will be discussed in section \ref{sec:VolumeBasePotentialSurfaceProperty5}.} Equation \ref{eq:VolumeBaseSurfaceEquation} shows the the volume base equation.
+The second surface builds off of the previous chapter by trying to address one of the weaknesses of the basic surface. Namely, the basic surface does not exhibit property 1.b. In order for this new surface to properly exhibit property 1.b a less literal interpretation of the effort-fatigue model is required. To accomplish this the $\hat{-}$ symbol is going to be treated as division instead of subtraction. This will be done in order to create asymptotic behavior on the $I$ axis which will represent the lifters volume base. Doing this however creates another issue of dividing by zero when total fatigue is zero, requiring a second change. Another constant will be added, $\epsilon_8$, which will be constrained to being $\ne F_{tot}$ to prevent any scenarios where division by zero would occur. The final change is to square intensity, again to make it so volume will exhibit asymptotic behavior on the $I$ axis.\footnote{Confused as to why this is needed? This will be discussed in section \ref{sec:VolumeBasePotentialSurfaceProperty5}.} Equation \ref{eq:VolumeBaseSurfaceEquation} shows the the volume base equation.
  
 \begin{equation}
 	I^2 = \frac{E_{tot}}{\epsilon_8+F_{tot}}= \frac{
@@ -1212,7 +1218,7 @@ With equations \ref{eq:VolumeBaseSurfaceEquation}- \ref{eq:VolumeBaseLinearRegMa
     				\epsilon_6 (s-1)^2+
     				\epsilon_7 (r-1)^2
     			}
-    		\right)
+    		\right)^{\frac{1}{2}}
     \end{split}
 \end{equation}
 
@@ -1238,6 +1244,70 @@ With equations \ref{eq:VolumeBaseSurfaceEquation}- \ref{eq:VolumeBaseLinearRegMa
 
 \section{Analysis of Property 2: Volume and Effort}
 \label{sec:VolumeBasePotentialSurfaceProperty2}
+
+It needs to be shown that volume increases with effort and decreases with decreased effort. Changes in $v$ in relation to changes to $E$ is required. Solving for the partial derivative of equation \ref{eq:VolumeBaseIntensitySubedInVolume} with respect to $E$ is required.
+
+\begin{equation*}
+	\begin{split}
+		\frac{\partial v}{\partial E} & =
+		\frac{\partial}{\partial E} l_{1RM} sr \left( 
+    			\frac{
+    				E
+    			}{
+    				\epsilon_8+
+    				\epsilon_2 F_l+
+    				\epsilon_3 F_w+
+    				\epsilon_4 F_e+
+    				\epsilon_5 (s-1)^2(r-1)^2+
+    				\epsilon_6 (s-1)^2+
+    				\epsilon_7 (r-1)^2
+    			}
+    		\right)^{\frac{1}{2}}
+    		\\
+    		& = \frac{
+    			l_{1RM} sr
+    		}{
+    			2 \left(\epsilon_8+F_{tot} \right)^{\frac{1}{2}}
+    		} E^{-\frac{1}{2}}
+    	\end{split}
+\end{equation*}
+
+In order for the desired behavior in effort to be observed, $\partial_E v$ needs to be $>0$. The following constraints are given in section \ref{sec:UnitsOfMeasurement}.
+
+\begin{equation*}
+	\begin{split}
+		s & \ge 1 \\
+		r & \in\{\mathbb{R} \ge 1 \} \\
+		w & >0 \\
+		E & \in\{1,1.5,2,...,10\}
+	\end{split}
+\end{equation*}
+
+Given the above constraints and remembering that $l_{1RM}$ is a weight only leaves one term left, the parenthetical grouping on the bottom of the fraction. This term must be positive to satisfy the constraint on $\partial_E v$. Given this, the below statement can be made.
+
+\begin{equation*}
+	\frac{
+    			l_{1RM} sr
+    		}{
+    			2 \left(\epsilon_8+F_{tot} \right)^{\frac{1}{2}}
+    		} E^{-\frac{1}{2}} >0 \textbf{ iff }\epsilon_8+F_{tot}>0
+\end{equation*}
+
+It will be proven that the parenthetical grouping is positive in section \ref{sec:VolumeBasePotentialSurfaceProperty3}. This finalizes the proof that volume increases with increased effort and means the volume base surface properly exhibits property 2.
+
+Before moving on, there are two things of note. The first is that this result did not depend on the sign of any constant, as there was no constant associated with the effort term. This is much different behavior from the basic surface which had to constrain the constant associated with the effort term. The reason for this can be traced all the way back to when the new constants were created to make linear regression possible. When this was done the $\epsilon_1$ constant that was associated with the effort term was absorbed into the new constants, removing the need for any constraint on $\epsilon_1$. However, doing this only moved the problem elsewhere as constraints will now need to be placed on all the constants that absorbed the $\epsilon_1$ constant. As stated previously, this work is done in section \ref{sec:VolumeBasePotentialSurfaceProperty3}.
+
+The second thing of note is how volume increases with increases in effort. To analyze this $\partial_{EE} v$ is needed.
+
+\begin{equation*}
+	\partial_{EE}v=-\frac{
+    			l_{1RM} sr
+    		}{
+    			4 \left(\epsilon_8+F_{tot} \right)^{\frac{1}{2}}
+    		} E^{-\frac{3}{2}}
+\end{equation*}
+
+Since $\partial_{EE}v$ has all the same constants a $\partial_Ev$ it means that $\partial_{EE}v<0$. This means that volume increases with increased effort but it does so with diminishing returns. In other words, a linear increase in effort will cause smaller and smaller increases in volume at higher effort levels. This is very different from the basic surface which had linear increases in volume from linear increases in effort. The question now becomes which one is correct. Fortunately, this does not have to be answered now as the volume base model is actually flexible enough to also represent linear returns to effort. Depending on the scale of the constants from linear regression relative to the finite scale of effort, linear returns can be approximated. Not only does this add an additional layer of flexibility to the volume base model, but it will allow questions related to how volume scales with effort to be answered later in this book.
 
 \section{Analysis of Property 3: Volume and Fatigue}
 \label{sec:VolumeBasePotentialSurfaceProperty3}
