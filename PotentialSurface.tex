@@ -55,8 +55,8 @@ Now, for lower intensities, it is tempting to say that as weight approaches $0$ 
 Given the above discussion the following properties can be gathered:
 
 \begin{itemize}
-	\item Property 1.a:  As intensity approaches $100\%$  volume will decrease until it is near the lifters 1RM.
-	\item Property 1.b: As intensity approaches $0\%$ volume will approach some plateau, or asymptote in mathematical terms. The exact value of the plateau will need to be found from the data.
+	\item Property 1.a: As intensity approaches $100\%$  volume will decrease until it is near the lifters 1RM for the given effort and fatigue levels.
+	\item Property 1.b: As intensity approaches $0\%$ volume will approach some plateau, or asymptote in mathematical terms. The exact value of the value of the plateau will vary given the relative effort and fatigue levels.
 \end{itemize}
 
 To confirm this behavior the data will need to be considered. Looking at figure \ref{fig:IntensityVsVolumeGraph}, it does not demonstrate this pattern very well. The first item of the above list is visible in the data as volume decreases past $80$\% intensity until it reaches the volume equivalent to a 1RM. The second item of the list however does not appear to be present in the data. Instead of reaching a rough plateau it reaches a peak and drops off linearly past the peak. This seemingly goes against the pattern that was discussed when considering the limits of the human body.
@@ -230,7 +230,7 @@ The final form of the basic surface is shown in equation \ref{eq:BasicSurfaceEqu
 	        \epsilon, \epsilon_1, \epsilon_2, \epsilon_3, \epsilon_4, \epsilon_5,\epsilon_6,\epsilon_7 & > 0 \\
 	    \end{split}
 	\end{equation*}
-\end{minipage}
+\end{minipage}\\
 
 To run linear regression the error equation is needed, which is shown below.
 
@@ -494,11 +494,6 @@ Now, this critical point does not match the critical point found from the intens
     			\epsilon_4 F_e 
     	\right) = I(s=1,r=1)
 \end{equation}
-
-\section{Analysis of Property 1.b: Volume and Intensity}
-\label{sec:PotentialSurfaceAnalysisOfProperty1b}
-
-Property 1.b states that as intensity reaches $0\%$ volume should approach a plateau. However, based on the discussion from the previous section as well as from looking at the graphs in figure \ref{fig:SquatPotentialSurfaceVolumeAcrossEffort} it is already clear that property 1.b is not exhibited by this surface. The previous section found that if $E$, $F_l$, $F_w$, and $F_e$ are considered to be constant then a maximum can occur in the volume surface. Having a maximum removes any possibility of volume reaching a plateau. This is a clear problem with this surface, but despite this the surfaces shown in figure \ref{fig:SquatPotentialSurfaceAcrossEffort} seem to have appropriate behavior and have reasonable mean square errors (MSEs). This is likely because the data collected does not have many points below $50\%$ intensity. The region from $0\%$ to $50\%$ is where the plateau would really start to take effect, with volume above $50\%$ intensity being limited by effort. This means that for a powerlifter, this surface may still be able to produce reasonable results as long as intensity stays above $50\%$ for the vast majority of lifts. For any sport that does push volume at lower intensities, such as crossfit, this surface would not produce good results at all.
 
 \section{Analysis of Property 2: Volume and Effort}
 \label{sec:PotentialSurfaceAnalysisOfProperty2}
@@ -1101,10 +1096,10 @@ Throughout the rest of this chapter only the $\epsilon_{i\in\{2,3,...,8\},N}$ co
 	\begin{equation*}
 		\begin{split}
 	        E & \in \{ 1,1.5,2,2.5, \dots ,10 \} \\
-	        \epsilon, \epsilon_1, \epsilon_2, \epsilon_3, \epsilon_4, \epsilon_5,\epsilon_6,\epsilon_7 & > 0 \\
+	        \epsilon_2, \epsilon_3, \epsilon_4, \epsilon_5,\epsilon_6,\epsilon_7, \epsilon_8 & > 0 \\
 	    \end{split}
 	\end{equation*}
-\end{minipage}
+\end{minipage}\\
 
 Linear regression can now be run with this equation. The error equation that needs to be minimized is shown below.
 
@@ -1239,6 +1234,113 @@ With equations \ref{eq:VolumeBaseSurfaceEquation}- \ref{eq:VolumeBaseLinearRegMa
 \section{Analysis of Property 1.a: Volume and Intensity}
 \label{sec:VolumeBasePotentialSurfaceProperty1a}
 
+Property 1.a states that volume should approach the lifters 1RM as intensity increases given constant effort and fatigue levels. The proof for this will be analogous to the one for the basic surface, where a maximum will be found in the intensity equation at the same point volume will be shown to have a minimum. At this point volume will need to equal intensity. To do this, the gradient of equation \ref{eq:VolumeBaseSurfaceEquation} is needed after it is solved for $I$.
+
+\begin{equation*}
+	\begin{split}
+		\nabla I & =
+		\left[
+		\begin{matrix}
+		 	\frac{\partial I}{\partial E} \\
+			\frac{\partial I}{\partial F_l} \\
+			\frac{\partial I}{\partial F_w} \\
+			\frac{\partial I}{\partial F_e} \\ 
+			\frac{\partial I}{\partial s} \\
+			\frac{\partial I}{\partial r} \\
+		\end{matrix}
+		\right] =
+		\left[
+		\begin{matrix}
+			\frac{1}{2}
+			E^{-\frac{1}{2}}
+			\left(
+				\epsilon_8+
+				\epsilon_2 F_l+
+    				\epsilon_3 F_w+
+    				\epsilon_4 F_e+
+    				\epsilon_5 (s-1)^2(r-1)^2+
+    				\epsilon_6 (s-1)^2+
+    				\epsilon_7 (r-1)^2
+    			\right)^{-\frac{1}{2}}
+			\\
+			-\frac{
+				\epsilon_2 E^{\frac{1}{2}}
+			}{
+				2
+			}  \left(
+				\epsilon_8+
+				\epsilon_2 F_l+
+    				\epsilon_3 F_w+
+    				\epsilon_4 F_e+
+    				\epsilon_5 (s-1)^2(r-1)^2+
+    				\epsilon_6 (s-1)^2+
+    				\epsilon_7 (r-1)^2
+    			\right)^{-\frac{3}{2}}
+    			\\
+			-\frac{
+				\epsilon_3 E^{\frac{1}{2}}
+			}{
+				2
+			}  \left(
+				\epsilon_8+
+				\epsilon_2 F_l+
+    				\epsilon_3 F_w+
+    				\epsilon_4 F_e+
+    				\epsilon_5 (s-1)^2(r-1)^2+
+    				\epsilon_6 (s-1)^2+
+    				\epsilon_7 (r-1)^2
+    			\right)^{-\frac{3}{2}}
+    			\\
+			-\frac{
+				\epsilon_4 E^{\frac{1}{2}}
+			}{
+				2
+			}  \left(
+				\epsilon_8+
+				\epsilon_2 F_l+
+    				\epsilon_3 F_w+
+    				\epsilon_4 F_e+
+    				\epsilon_5 (s-1)^2(r-1)^2+
+    				\epsilon_6 (s-1)^2+
+    				\epsilon_7 (r-1)^2
+    			\right)^{-\frac{3}{2}}
+    			\\
+			\partial_s v
+    			\\
+			\partial_r v
+    			\\
+		\end{matrix}
+		\right]
+		\\
+		\partial_s v & =
+		-(\epsilon_5+\epsilon_6)(s-1) E^{\frac{1}{2}}
+			\left(
+				\epsilon_8+
+				\epsilon_2 F_l+
+    				\epsilon_3 F_w+
+    				\epsilon_4 F_e+
+    				\epsilon_5 (s-1)^2(r-1)^2+
+    				\epsilon_6 (s-1)^2+
+    				\epsilon_7 (r-1)^2
+    			\right)^{-\frac{3}{2}}
+    		\\
+    		\partial_r v & =
+    		-(\epsilon_5+\epsilon_7)(r-1) E^{\frac{1}{2}}
+			\left(
+				\epsilon_8+
+				\epsilon_2 F_l+
+    				\epsilon_3 F_w+
+    				\epsilon_4 F_e+
+    				\epsilon_5 (s-1)^2(r-1)^2+
+    				\epsilon_6 (s-1)^2+
+    				\epsilon_7 (r-1)^2
+    			\right)^{-\frac{3}{2}}
+    		\\
+	\end{split}
+\end{equation*}
+
+The gradient now needs to be set equal to $0$ and solved for in order to get critical points. One solution to this system of equations is $E=0$. When $E=0$ it does not matter what any of the other variables are, intensity will always be $0$. This behavior matches what would be expected in reality. If the lifter puts no effort they will not be able to lift anything. This result does little in the way of proving property 1.a however, as effort and fatigue are not held constant. If effort and fatigue are held constant and only $\partial_s v$ and $\partial_r v$ are looked at there is another critical point at $(s=1,r=1)$.
+
 \section{Analysis of Property 1.b: Volume and Intensity}
 \label{sec:VolumeBasePotentialSurfaceProperty1b}
 
@@ -1293,7 +1395,7 @@ Given the above constraints and remembering that $l_{1RM}$ is a weight only leav
     		} E^{-\frac{1}{2}} >0 \textbf{ iff }\epsilon_8+F_{tot}>0
 \end{equation*}
 
-It will be proven that the parenthetical grouping is positive in section \ref{sec:VolumeBasePotentialSurfaceProperty3}. This finalizes the proof that volume increases with increased effort and means the volume base surface properly exhibits property 2.
+The constraints on the constants that make the parenthetical grouping positive will be discussed in \ref{sec:VolumeBasePotentialSurfaceProperty3}. With these constraints it has been shown that volume increases with increased effort and means the volume base surface properly exhibits property 2.
 
 Before moving on, there are two things of note. The first is that this result did not depend on the sign of any constant, as there was no constant associated with the effort term. This is much different behavior from the basic surface which had to constrain the constant associated with the effort term. The reason for this can be traced all the way back to when the new constants were created to make linear regression possible. When this was done the $\epsilon_1$ constant that was associated with the effort term was absorbed into the new constants, removing the need for any constraint on $\epsilon_1$. However, doing this only moved the problem elsewhere as constraints will now need to be placed on all the constants that absorbed the $\epsilon_1$ constant. As stated previously, this work is done in section \ref{sec:VolumeBasePotentialSurfaceProperty3}.
 
@@ -1345,15 +1447,62 @@ It needs to be shown that volume decreases with increased fatigue and increases 
     	\end{split}
 \end{equation*}
 
-Given the same set of constants that was presented in the previous section it should be clear that there are two terms that can change the sign of the partial derivative. The $\epsilon_2$ constant and the entire parenthetical grouping. The even root on the parenthetical grouping will technically guarantee that term is positive, but in order to make this proof more robust to future changes an alternative proof will be used. Two scenarios will be considered.
+Given the same set of constraints placed on $s$, $r$, $w$, and $E$  that was presented in the previous section it should be clear that there are only two terms that can change the sign of the partial derivative: the $\epsilon_2$ constant and the entire parenthetical grouping. The even root on the parenthetical grouping will technically guarantee that term is positive, but in order to make this proof more robust to future changes an alternative proof will be used.
 
-The first scenario is when $\epsilon_2>0$. If this is the case then in order for $\partial_{F_l}v<0$ the summation of the rest of the terms inside the parenthetical grouping must also be $>0$. Given the constraints on the variables from section \ref{sec:UnitsOfMeasurement} the sign of each term entirely depends on the constant in front of each term. Now, it must be remembered that this proof will eventually need to be applied to every term in $F_{tot}$. This means that every term will depend on the sign of every other term in $F_{tot}$. This removes the scenario where some terms could be negative and the rest could be positive as $\partial_{F_l}v$ would not be $<0$ for the negative terms because the parenthetical grouping would still be $>0$ despite the sign of the constant changing. This forces $\epsilon_2$-$\epsilon_7$ to all be $>0$ in order for $\partial_{F_l}v<0$. 
+At this point a more formal approach is needed when selecting the constraints on the constants. Unlike the basic surface, many sets of values can be used as the constraints. As such, the best set of values needs to be chosen. The problem can be restated to finding the loosest set of constraints on the constants that still ensures the proper behavior. In mathematical terms it could be restated as the following.
 
-It is also important to consider $\epsilon_8$, as it is not part of $F_{tot}$ but is still part of the parenthetical grouping that could affect the sign of $\partial_{F_l}v$. Initial intuition would limit $\epsilon_8>-F_{tot}$, but this creates a dependence between the constant $\epsilon_8$ and the independent variables. Instead, $\epsilon_8$ just needs to be constrained to being greater than the smallest value of $F_{tot}$, which given the range of the variables as well as the constraints placed on $\epsilon_2$-$\epsilon_7$ the minimum value is zero. It is important to stop in the middle of all this theory and note that this minimum value matches what would be expected in reality.
+\begin{minipage}{\textwidth}
+	\begin{equation*}
+		\max v_{\epsilon_1,\epsilon_2,...,\epsilon_8}
+		\textbf{ st }
+		\left( 
+			\min \epsilon_8+\mathbf{\hat{\epsilon}\hat{x}} >0
+			\land
+			\epsilon_{2,3,...,8}>0
+		\right)
+		\lor
+		\left( 
+			\max \epsilon_8+\mathbf{\hat{\epsilon}\hat{x}} <0
+			\land
+			\epsilon_{2,3,...,8}<0
+		\right)
+	\end{equation*}
+	\centerline{where}
+	\begin{equation*}
+		\begin{split}
+			\max v_{\epsilon_1,\epsilon_2,...,\epsilon_8} &
+			\text{ is the volume of the space generated by the constraints}
+			\\
+			\mathbf{\hat{\epsilon}} & =\left[
+				\begin{matrix}
+					\epsilon_2 &
+					\epsilon_3 &
+					\epsilon_4 &
+					\dots &
+					\epsilon_7
+				\end{matrix}
+			\right]
+			\\
+			\mathbf{\hat{x}} & =\left[
+				\begin{matrix}
+					F_l &
+					F_w &
+					F_e &
+					\dots &
+					(s-1)^2(r-1)^2
+				\end{matrix}
+			\right]^T
+	    \end{split}
+	\end{equation*}
+\end{minipage}\\
 
-The second scenario is if $\epsilon_2<0$. If this is the case then in order for $\partial_{F_l}v<0$ the summation of the rest of the terms inside the parenthetical grouping must also be $<0$. \footnote{This also assumes that the root is not even so negative values can be produced.} Similar to the previous scenario, if $\epsilon_2<0$ then it forces $\epsilon_2$-$\epsilon_7$ to all be $<0$. While this case does still allow for the proper behavior between volume and fatigue, it allows volume to be negative. \footnote{Again, assuming a non-even root that allows negative volume.} This negative volume could easily be counteracted by forcing $\epsilon_8>-F_{tot}$ but this creates a dependence between the constant $\epsilon_8$ and the independent variables, making this approach invalid. Unlike the previous scenario, there is not minimum value for $F_{tot}$ in this scenario due to $\epsilon_2$-$\epsilon_7$ all being $<0$. Due to $F_{tot}$ not having a minimum there is no way to constrain volume to being $>0$, making this scenario invalid.
+Forcing the minimum of $\epsilon_8+\mathbf{\hat{\epsilon}\hat{x}}$ to be $>0$ forces the parenthetical grouping to be positive for all values, which also requires all the constants to be $>0$ to ensure the partial derivative remains $<0$. Forcing the maximum of $\epsilon_8+\mathbf{\hat{\epsilon}\hat{x}}$ to be $<0$ forces the parenthetical grouping to be negative for all values\footnote{This is assuming the root on the parenthetical grouping allows for negative values.}, which also requires all the constants to be $<0$ to ensure the partial derivative remains $<0$.
 
-After all of that discussion, it can be concluded that after constraining $\epsilon_2$-$\epsilon_8$ to be $>0$ the volume base surface properly exhibits property 3. Just like the previous section further analysis can be done that looks at how volume decreases from increases in fatigue. Again, this needs to be done for every term in $F_{tot}$. Shown below is $\partial_{F_lF_l}v$.
+Before moving on, a brief discussion about why the constants cannot have mixed signs is required. Having mixed signs would violate the constraint on the minimum value of $\epsilon_8+\mathbf{\hat{\epsilon}\hat{x}}$. No matter what values are chosen for the constants, if they are not all positive the negative term(s) can outweigh all the other positive terms given the appropriate values for $\mathbf{\hat{x}}$ and force $\epsilon_8+\mathbf{\hat{\epsilon}\hat{x}}<0$. Of note is that if $\epsilon_8+\mathbf{\hat{\epsilon}\hat{x}}$  is allowed to be negative then there is not only no minimum, but any minimum that could potentially exist would be $<0$. The exact same argument could be made for how the constraint on the maximum value of $\epsilon_8+\mathbf{\hat{\epsilon}\hat{x}}$ would be violated, just with positive and negative values switching places. As such, any solution containing mixed signs is not a valid solution.
+
+Looking at the equation presented above, the solutions are already present. The solutions are where the constants are either all positive or all negative. Any solution other than those two solutions would unnecessarily limit the volume of space generated by the constants. The question now becomes which solution is the right one, as both solutions take up equal volume from the space generated by the constants. The detail that chooses which solution to use comes down to the sign of $v$ and $I$. If $\epsilon_{2,3,...,8}$ are all $<0$ then $v<0$ and $I<0$, which does not make sense from the context of the problem. Negative intensity does not make sense because that would imply negative weight and the same argument applies to volume. This limits the solution to $\epsilon_{2,3,...8}>0$.
+
+With it being proven that $\epsilon_{2,3,...,8}>0$ maximizes the volume of space generated by the constraints while preserving the correct behavior, it can be stated that the volume base surface properly exhibits property 3. Just like the previous section, further analysis can be done that looks at how volume decreases from increases in fatigue. Again, this needs to be done for every term in $F_{tot}$. Shown below is $\partial_{F_lF_l}v$.
 
 \begin{equation*}
 	\partial_{F_lF_l}v=
@@ -1370,8 +1519,7 @@ After all of that discussion, it can be concluded that after constraining $\epsi
     		\right)^{-\frac{5}{2}}
 \end{equation*}
 
-Just like the previous section, the second partial derivative changed sign relative to the first partial derivative. In this case it means that volume decreases with diminishing returns to increases in fatigue. \footnote{Having a linear increase in fatigue represent a sub-linear decrease in volume can have some very important implications when it comes to planning deloads for lifters. It could be said that this is why lifters make progress, as a lifter would not have to linearly decrease volume every time fatigue is high to where they were previously, allowing for incremental increases in total volume over time.} Also just like the last section, linear returns can be approximated.
-
+Just like the previous section, the second partial derivative changed sign relative to the first partial derivative. In this case it means that volume decreases with diminishing returns to increases in fatigue. \footnote{Having a linear increase in fatigue represent a sub-linear decrease in volume can have some very important implications when it comes to planning deloads for lifters. It could be said that this is why lifters make progress, as a lifter would not have to linearly decrease volume to where they were previously every time fatigue is high, allowing for incremental increases in total volume over time.} Also just like the last section, linear returns can be approximated.
 
 \section{Analysis of Property 4: Sets and Reps}
 \label{sec:VolumeBasePotentialSurfaceProperty4}
