@@ -1,41 +1,38 @@
-\part{Introduction}
-\label{sec:Introduction}
-
 \chapter{What This Book is and the Basics}
 
 Lots of workout programs exist for powerlifters. Usually these come in the form of a static spreadsheet that do not change, merely presenting the lifer with a template to robotically follow. Even if a workout program does offer some form of adaptability, it is usually extremely limited in scope, capturing only a small portion of the variables that are relevant, and ignoring the fact that not all people respond to training in the same way. For example, some people respond well to high volume and others don't, some people have a lower tolerance to intensity than 'average', and some people cannot perform a certain lift very well due to prior injuries or lack of skill. This lack of adaptability gets even worse when considering that a lifter does not respond to training the same way across time, requiring continual adjustments to achieve maximum potential.
 
-Typically a lifter would hire a coach to manage and adapt there training for them and there current constraints. The goal of this book is to 'dive into' a coaches mindset and mathematically capture ideas fundamental to the jobs they perform. The hope is that the model outlined in this paper will be sufficient to constitute a training program that a lifter can follow and make progress with.
+Typically a lifter would hire a coach to manage and adapt there training for them and there current constraints. The goal of this book is to 'dive into' a coaches mindset and mathematically capture ideas fundamental to the jobs they perform. The hope is that the model outlined in this book will be sufficient to constitute a training program that a lifter can follow and make progress with.
 
 \section{Outline}
-\label{sec:Outline}
+\label{sec:P1_Outline}
 
 Below is an outline of what each chapter covers.
 
 \begin{enumerate}
     \setcounter{enumi}{1}
     \item \textbf{Introduction} \\ \textit{Where You Are Now} \\
-    		This chapter sets the common ground and defines terms that will be used throughout the rest of this book. If you are familiar with the terminology behind lifting, section \ref{sec:CommonTermsSection} may be skipped, but section \ref{sec:SmallDifferencesSection} can save you from future confusion.
-    		
-    \item \textbf{Data} \\ \textit{The Source of Truth} \\
-        This chapter introduces the data as well as important events that occurred when the data was recorded. The generation and reasoning behind any augmented data is also discussed. While here, units and domains of measurement are discussed to frame future discussions.
-        
-    \item \textbf{Potential Surface} \\ \textit{Establishing What's Possible} \\
-        This chapter is where the modeling begins, and defines what is possible for a lifter to complete. While establishing what is possible, it also introduces novel ways to describe what is happening during training.
-        
-    \item \textbf{Time Frame} \\ \textit{Fine Tuning The Model} \\
-        This chapter is concerned with defining the models state along with how it moves through time to match the changes a lifter is experiencing, allowing the model to adapt to the lifter. While discussing adaptations through time, the models reaction to injuries is also discussed.
+    		This chapter sets the common ground and defines terms that will be used throughout the rest of this book. If you are familiar with the terminology behind lifting, section \ref{sec:P1_CommonTermsSection} may be skipped, but section \ref{sec:P1_Nuances} can save you from future confusion.
+%    		
+%    \item \textbf{Data} \\ \textit{The Source of Truth} \\
+%        This chapter introduces the data as well as important events that occurred when the data was recorded. The generation and reasoning behind any augmented data is also discussed. While here, units and domains of measurement are discussed to frame future discussions.
+%        
+%    \item \textbf{Potential Surface} \\ \textit{Establishing What's Possible} \\
+%        This chapter is where the modeling begins, and defines what is possible for a lifter to complete. While establishing what is possible, it also introduces novel ways to describe what is happening during training.
+%        
+%    \item \textbf{Time Frame} \\ \textit{Fine Tuning The Model} \\
+%        This chapter is concerned with defining the models state along with how it moves through time to match the changes a lifter is experiencing, allowing the model to adapt to the lifter. While discussing adaptations through time, the models reaction to injuries is also discussed.
 \end{enumerate}
 
 \section{Common Terms: Getting on the Same Page}
-\label{sec:CommonTermsSection}
+\label{sec:P1_CommonTermsSection}
 
 Throughout the rest of this book several terms will be used. Because this book is going to be read by people outside of the lifting community, some common concepts and there associated terminology will be introduced here. If you are familiar with lifting and the concepts surrounding training, this section can be skipped.
 
 \subsection{General Terminology}
-\label{sec:GeneralTerminology}
+\label{sec:P1_GeneralTerminology}
 
-A \textit{workout program} consists of a series of \textit{exercises} to complete on a given day. Exercises vary depending on what a lifter's goals are, amongst other factors. Exercises are composed of \textit{sets}. Sets are composed of \textit{reps}, short for repetitions, making a rep the smallest unit of work in the gym. Given this, a workout program is just a list of exercises to complete over time where each exercise has a specific number of sets and reps to be done at a specific weight. Table \ref{tab:WorkoutProgramExample} exemplifies this.
+A \textit{workout program} consists of a series of \textit{exercises} to complete on a given day. Exercises vary depending on what a lifter's goals are, among other factors. Exercises are composed of \textit{sets}. Sets are composed of \textit{reps}, short for repetitions, making a rep the smallest unit of work in the gym. Given this, a workout program is just a list of exercises to complete over time where each exercise has a specific number of sets and reps to be done at a specific weight. Table \ref{tab:P1_WorkoutProgramExample} exemplifies this.
 
 \begin{table}[h]
     \centering
@@ -50,12 +47,12 @@ A \textit{workout program} consists of a series of \textit{exercises} to complet
         \dots & \dots & \dots & \dots & \dots & \dots \\
     \end{tabular}
     \caption{A table showing how a workout is represented. This data is made up as an example.}
-    \label{tab:WorkoutProgramExample}
+    \label{tab:P1_WorkoutProgramExample}
 \end{table}
 
-As shown in table \ref{tab:WorkoutProgramExample}, there is one more descriptive element that will give a more complete picture of what is happening across a workout program: \textit{effort}. Every combination of exercises, sets, reps, and weight will be performed at a particular effort. Effort describes how hard a lifter will need to work to complete the prescribed exercise at the given sets, reps, and weight. Effort is generally only used for \textit{compound movements}, or an exercise that requires more than one joint.
+As shown in table \ref{tab:P1_WorkoutProgramExample}, there is one more descriptive element that will give a more complete picture of what is happening across a workout program: \textit{effort}. Every combination of exercises, sets, reps, and weight will be performed at a particular effort. Effort describes how hard a lifter will need to work to complete the prescribed exercise at the given sets, reps, and weight. Effort is generally only used for \textit{compound movements}, or an exercise that requires more than one joint.
 
-Effort will be measured on a scale known as \textit{rate of perceived exertion}, or \textit{RPE}. After every set, a lifter can rate the amount of effort they feel they exerted according to table \ref{tab:RPETable}. The RPE scale is widely used, well researched, and has been proven to be the best method for a lifter to rate the effort required to complete a lift. \cite{RPE_ACCURACY}
+Effort will be measured on a scale known as \textit{rate of perceived exertion}, or \textit{RPE}. After every set, a lifter can rate the amount of effort they feel they exerted according to table \ref{tab:P1_RPETable}. The RPE scale is widely used, well researched, and has been proven to be the best method for a lifter to rate the effort required to complete a lift. \cite{RPE_ACCURACY}
 
 \begin{table}[h]
     \centering
@@ -74,13 +71,13 @@ Effort will be measured on a scale known as \textit{rate of perceived exertion},
         $1-2$ & Little to no effort.
     \end{tabular}
     \caption{A table explaining the relationship between an RPE rating and what the lifter is capable of doing.}
-    \label{tab:RPETable}
+    \label{tab:P1_RPETable}
 \end{table}
 
 Another concept considered here is the difference between \textit{strength training} and \textit{hypertrophy}. Generally, strength training seeks to maximize a particular set of exercises \textit{one rep max}, or 1RM, where as hypertrophy seeks to maximize muscle growth. To a certain extent, they go hand in hand, but one can be emphasized over the other. For hypertrophy there are generally fewer sets, more reps, lighter weight, and most sets exist between the $8-10$ RPE range. For strength training there are generally more sets, fewer reps, heavier weight, and most sets exist in the $5-9$ RPE range. This book is concerned with powerlifting, which is a strength sport, but hypertrophy can be used as a tool to gain strength so it is important to understand it's differences.
 
 \subsection{Training Blocks}
-\label{sec:TrainingBlocks}
+\label{sec:P1_TrainingBlocks}
 
 A workout program is generally split into three distinct parts across time: the \textit{macrocycle}, the \textit{mesocycle}, and the \textit{microcycle}. Each of these time duration's are responsible for different things.
 
@@ -90,50 +87,48 @@ A workout program is generally split into three distinct parts across time: the 
 	\item The macrocycle defines the duration of the workout program, creating the long term plan that marks milestones and competition dates. It is responsible for changing the parameters of mesocycles to create a training effect across an entire workout program with respect to long term goals.
 \end{enumerate}
 
-As a lifter moves through microcycles \textit{fatigue} will be generated. Fatigue is unavoidable, and it must be properly managed. Continually training in a fatigued state will result in far greater chances of sustaining an injury and lackluster progress. \cite{FATIGUE} Fatigue can be managed in many ways through manipulating microcycle variables, or, in extreme cases, by taking extra unplanned time off from the gym. There are two overarching types of fatigue, central and peripheral.\cite{MEASURING_FATIGUE}
+As a lifter moves through microcycles \textit{fatigue} will be generated. Fatigue is unavoidable, and it must be properly managed. Continually training in a fatigued state will result in far greater chances of sustaining an injury and lackluster progress. Fatigue can be managed in many ways through manipulating microcycle variables, or, in extreme cases, by taking extra unplanned time off from the gym. There are two overarching types of fatigue, central and peripheral.\cite{MEASURING_FATIGUE}
 
 Central fatigue is fatigue that comes from the central nervous system, or CNS. This fatigue is not related to the muscles themselves, but rather to the nervous system that controls them. While lifting, large swaths of neurons will fire in a very particular sequence that allow a lifter to move as they desire. As with any system in the body, it's effectiveness diminishes if used to much in a given period of time, resulting in both diminished quality and quantity of signals sent to the muscles. The quality and quantity of these signals is knows as \textit{neural density}. Greater neural density results in greater muscle fiber recruitment which allows for more weight to be lifted. This makes high neural density a concern for strength based sports. Neural density drops not only from overuse, but also through auto regulation. If the body senses it is unstable or otherwise not capable of performing what is being asked of it, neural density will drop and performance will be limited to what the body deems to be safe. \footnote{There are circumstances where this safety mechanism can be by passed. A common example of this is a mother lifting a car off there child.} \cite{MEASURING_FATIGUE}
 
 Peripheral fatigue is weakness that comes from the muscles themselves. In this circumstance, the muscles are simply not able to perform the task asked of them. This can happen either because the muscles don't have enough energy or because they have to much waste product built up. \cite{MEASURING_FATIGUE}
 
 \subsection{Common Metrics}
-\label{sec:CommonMetrics}
+\label{sec:P1_CommonMetrics}
 
-There are three more values that can be calculated from a workout program that combine several elements to describe what is happening at a more abstract level. \textit{Volume} is defined as the product of sets, reps, and weight, shown more formally in equation \ref{eq:BaseVolumeEquation}. Volume represents the total amount of weight lifted, and gives a proxy for the amount of work being done for an exercise.
+There are three more values that can be calculated from a workout program that combine several elements to describe what is happening at a more abstract level. \textit{Volume} is defined as the product of sets, reps, and weight, shown more formally in equation \ref{eq:P1_BaseVolumeEquation}. Volume represents the total amount of weight lifted, and gives a proxy for the amount of work being done for an exercise.
 
 \begin{equation}
-    \label{eq:BaseVolumeEquation}
+    \label{eq:P1_BaseVolumeEquation}
     v=srw
 \end{equation}
 
-The second value is \textit{intensity}. Intensity is represented as the ratio of the weight lifted to the lifters 1RM, for the same exercise. The closer a lifter is to there 1RM on an exercise the greater the intensity of the lift. Equation \ref{eq:BaseIntensityEquation} defines intensity.
+The second value is \textit{intensity}. Intensity is represented as the ratio of the weight lifted to the lifters 1RM, for the same exercise. The closer a lifter is to there 1RM on an exercise the greater the intensity of the lift. Equation \ref{eq:P1_BaseIntensityEquation} defines intensity.
 
 \begin{equation}
-    \label{eq:BaseIntensityEquation}
+    \label{eq:P1_BaseIntensityEquation}
     I=\frac{w}{l_{1RM}}
 \end{equation}
 
-With the definition of intensity, equation \ref{eq:BaseVolumeEquation} can be easily be modified to accept intensity values instead of weight.
+With the definition of intensity, equation \ref{eq:P1_BaseVolumeEquation} can be easily be modified to accept intensity values instead of weight.
 
 \begin{equation}
-    \label{eq:IntensityBasedVolumeEquation}
+    \label{eq:P1_IntensityBasedVolumeEquation}
     v=srIl_{1RM}
 \end{equation}
 
 The third value is \textit{frequency}. Frequency is simply how often a lift is performed across a microcycle on a per workout basis. Multiple sets of an exercise can be performed during a single workout and the frequency would only increment by one. However, as soon as those sets are split up into multiple workouts the frequency will increase. 
-% Certain exercises respond better to higher frequency than others, and some lifters can tolerate higher frequencies than others.
 
 
+\section{Nuances}
+\label{sec:P1_Nuances}
 
-\section{Small Differences: What's Different From 'Standard'}
-\label{sec:SmallDifferencesSection}
-
-The vast majority of concepts surrounding lifting that are used in this book will not differ from there standard definitions introduced in section \ref{sec:CommonTermsSection}. However, due to the nuanced detail that modeling requires, some small tweaks were made when recording data. Each of these small differences will be discussed along with why changes were made.
+Trying to model anything requires attention to detail, and attention to detail can sometimes lead to more confusion. This section serves to clear up potential sources of confusion and introduce some ideas that will be pivotal later in the book.
 
 \subsection{Set Wise RPE Grouping}
-\label{sec:SetWiseRPEGrouping}
+\label{sec:P1_SetWiseRPEGrouping}
 
-One small change will be made to the standard RPE system. Typically, RPE is measured for each set a lifter completes, regardless of any other parameters that dictate what is done for an exercise. In the context of this book, RPE will be recorded only once for each unique combination of sets, reps, and weight performed during an exercise. The recorded RPE will match the highest RPE required to perform all of the sets. Typically this will just be the RPE of the last set, but is not guaranteed to be the last set. An example may help demonstrate. The first part of a hypothetical deadlift workout with the standard RPE scale is shown in table \ref{tab:StandardRPEExample}.
+One source of confusion can come from the effort scale. Typically, RPE is recorded only once for each unique combination of sets, reps, and weight performed during an exercise. This may seem arbitrary and flat out wrong as effort could be measured for every individual set, regardless of whether or not that sets combination with reps and weight is unique or not. A simple example shown below demonstrates this difference in approach to measuring effort. Table \ref{tab:P1_NonStandardRPEExample} shows effort being measured for every set regardless of the context that reps and weight provides, and table \ref{tab:P1_StandardRPEExample} shows what the same data would look like when it is recorded in a more traditional fashion.
 
 \begin{table}[h]
 	\centering
@@ -148,11 +143,9 @@ One small change will be made to the standard RPE system. Typically, RPE is meas
         Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $4$ & $405$ lbs & $8.5$ \\
         Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $10$ & $315$ lbs & $7$ \\
 	\end{tabular}
-	\caption{A table demonstrating the 'standard' way RPE is measured, on a per-set level. Note how the RPE varies across sets with the same set, rep, and weight values, likely because the lifter got tired as the workout continued.}
-	\label{tab:StandardRPEExample}
+	\caption{A table demonstrating a non-standard way RPE could be measured, on a per-set level. Note how the RPE varies across sets with the same set, rep, and weight values, likely because the lifter got tired as the workout progressed.}
+	\label{tab:P1_NonStandardRPEExample}
 \end{table}
-
-Now, table \ref{tab:NonStandardRPEExample} demonstrates the adjusted RPE system that this book uses.
 
 \begin{table}[h]
 	\centering
@@ -163,18 +156,21 @@ Now, table \ref{tab:NonStandardRPEExample} demonstrates the adjusted RPE system 
         Mon, July 4\textsuperscript{th} & Deadlifts & $5$ & $4$ & $405$ lbs & $8.5$ \\
         Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $10$ & $315$ lbs & $7$ \\
 	\end{tabular}
-	\caption{A table demonstrating the way RPE is measured for this book. Note how only the highest RPE value is recorded for distinct set, rep, and weight combinations.}
-	\label{tab:NonStandardRPEExample}
+	\caption{A table demonstrating the typical way RPE is measured. Note how only the highest RPE value is recorded for distinct set, rep, and weight combinations.}
+	\label{tab:P1_StandardRPEExample}
 \end{table}
 
-This may seem like an odd choice but there are several reasons for doing this. The most obvious, and least important reason, is it matches what the lifter would see in there training program. A lifter is typically told to do something like '$5$ sets of $4$ at $85$\%'. Given this terminology, it would make more sense to the lifter to only record one RPE value and not $5$. More importantly however, is grouping common sets, reps, and weights gives the model a more accurate view to learn from. Given the standard way of recording RPE, there is no need to record sets at all, as there will only ever be one set, each one with a varying RPE value. Without getting too deep into the math, this will also create problems later when attempting to learn from the data, as the same rep and weight values would have different RPE values, removing correlations in the data and rendering predictions useless. By only recording the highest RPE and allowing the number of sets to increase past $1$, the model gets a far clearer representation of what the lifter is actually doing.
+An initial observation from table \ref{tab:P1_NonStandardRPEExample} would be that the sets column is rendered useless as there will only every be a value of $1$ in that column because effort is recorded across every set. This is not super problematic as sets could still be calculated from the data if need be. 
 
-It is worth mentioning why the max RPE of a particular set, rep, and weight combination is chosen. Other measures such as the average RPE could also be used. The simple answer is that it does not make sense to average effort. Averaging effort could lead to scenarios where the max RPE is $10$ but the average is less than $10$, leading the model to assume that more volume could be done despite some sets already requiring maximum effort. RPE $10$ cannot be surpassed but it would be required to be passed if more volume were prescribed. Selecting the max RPE instead of the average avoids this problem.
+Another observation is that the maximum value of effort is recorded across sets. This is done deliberately, but it is worth mentioning why the max RPE of a particular set, rep, and weight combination is chosen when other metrics such as average RPE could also be used. Taking average RPE as an example, there could be a scenario where the max RPE is $10$ but the average is less than $10$, leading a model looking at the data to assume that more work could be done despite some sets already requiring maximum effort. RPE $10$ cannot be surpassed but it would be required to be passed if more work were prescribed. Selecting the max RPE avoids this problem.
+
+Now, the original question that prompted this whole discussion was why effort is only recorded for unique combinations of set, rep, and weight values. The simple answer is that it does not provide any additional value. As discussed in the previous paragraph, the maximum value for effort provides all the necessary data. Another reason, though less important, is that most lifters don't record effort across every set, which would make things much more difficult later when trying to get the data necessary to perform any modeling.
+
 
 \subsection{Fractional Sets}
-\label{sec:FractionalSets}
+\label{sec:P1_FractionalSets}
 
-Sets appear to only require integer values, but a specific case leads to a different representation. Lets say a lifter is prescribed to squat $5$ sets of $3$ reps with the same weight across all $5$ sets. The exact weight is not relevant to the example. Then lets say the lifter completed all $3$ reps on the first $4$ sets, but only managed to complete $2$ reps on the last set. One way to record this is shown in table \ref{tab:FailedSetExampleIncorrectData}.
+Sets appear to only require integer values, but a specific case leads to a different representation. Lets say a lifter is prescribed to squat $5$ sets of $3$ reps with the same weight across all $5$ sets. The exact weight is not relevant to the example. Then lets say the lifter completed all $3$ reps on the first $4$ sets, but only managed to complete $2$ reps on the last set. One way to record this is shown in table \ref{tab:P1_FailedSetExampleIncorrectData}.
 
 \begin{table}[h]
     \centering
@@ -185,10 +181,10 @@ Sets appear to only require integer values, but a specific case leads to a diffe
         Squat & $1$ & $2$ & \dots \\ 
     \end{tabular}
     \caption{A table illustrating the incorrect way to record failed reps across sets.}
-    \label{tab:FailedSetExampleIncorrectData}
+    \label{tab:P1_FailedSetExampleIncorrectData}
 \end{table}
 
-Recording the missed rep this way will lead to problems later when attempting to fit a surface to the data, as a single data point will have turned into two correlated data points. \footnote{Linear regression assumes that the data points are independent from each other.} Put another way, the same exercise now has two data points. To remedy this, fractional sets will be used, making sets in the domain of positive numbers greater than or equal to $1$, or $s\ge 1$. The reason sets cannot be less than $1$ is because any fractional sets less than one can simply be represented as a single set of less reps. Table \ref{tab:FailedSetExampleCorrectData} shows the adjusted way to record failed reps.
+Recording the missed rep this way will lead to problems later when attempting to fit a surface to the data, as a single data point will have turned into two correlated data points. \footnote{Linear regression assumes that the data points are independent from each other.} To remedy this, fractional sets will be used, making sets in the domain of positive numbers greater than or equal to $1$, or $s\ge 1$. The reason sets cannot be less than $1$ is because any fractional sets less than one can simply be represented as a single set of less reps. Table \ref{tab:P1_FailedSetExampleCorrectData} shows the adjusted way to record failed reps.
 
 \begin{table}[h]
     \centering
@@ -198,7 +194,7 @@ Recording the missed rep this way will lead to problems later when attempting to
         Squat & $4\frac{2}{3}$ & 3 & \dots \\
     \end{tabular}
     \caption{A table illustrating the correct way to record failed reps across sets.}
-    \label{tab:FailedSetExampleCorrectData}
+    \label{tab:P1_FailedSetExampleCorrectData}
 \end{table}
 
 Note that volume, as shown below, is not changed by making sets fractional. Intensity is not changed in virtue of the weight not changing and frequency is also not changed due to the sets all being performed on the same workout.
@@ -210,10 +206,14 @@ Note that volume, as shown below, is not changed by making sets fractional. Inte
     \end{split}
 \end{equation*}
 
-\subsection{Exercise Classification}
-\label{sec:ExerciseClassification}
+Now, this change lies outside the domain of what lifters would typically record. However, data cleaning can be performed to combine any two consecutive exercises that have the same wight where the second value has maximum effort and fewer reps than the previous value. This simple data cleaning process makes this change feasible, and is why it is included in the data.
 
-There are many ways to classify exercises and each way has it's own merits. For this book, exercises will fit into four different categories, shown below. Given that this book is focused on powerlifting, it should come as no surprise that the categories are focused around the squat, bench, and deadlift.
+\subsection{Exercise Classification}
+\label{sec:P1_ExerciseClassification}
+
+There are many ways to classify exercises and each way has it's own merits. For this book there will be two distinct ways to classify exercises.
+
+The first set of classifications will focus on similarity to the squat, bench, and deadlift and is broken down into four different categories, shown below.
 
 \begin{enumerate}
 	\item Main compound: The squat, bench, and deadlift.
@@ -222,26 +222,50 @@ There are many ways to classify exercises and each way has it's own merits. For 
 	\item Accessory: Single joint lifts and core work.
 \end{enumerate}
 
-These exercise classifications will be referenced throughout the book so it will be useful to have an understanding of each group.
+The second set of classifications focuses on muscle groups and movement patterns and is summarized in table \ref{tab:P1_MovementPatternCategories}.
 
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		Movement Pattern & Primary Muscle Groups & Secondary Muscle Groups \\
+		\hline
+		Squat & Quads, Glutes & Erectors \\
+		Hip Hinge & Glutes, Hamstrings, Erectors & Scapular Retractors \\
+		Vertical Pull & Lat, Biceps & Rear Delts \\
+		Vertical Push & Anterior Delts, Triceps & Middle Delts \\
+		Horizontal Pull & Lats, Scapular Retractors & Rear Delts, Biceps, Middle Delts \\
+		Horizontal Push & Chest, Anterior Delts & Triceps, Middle Delts \\
+		Horizontal Hip Thrust & Glutes & Hamstrings \\
+		Pull Over & Lats & Triceps, Chest \\
+		Fly & Chest & Anterior Delts \\
+		Isolation Exercises & Target Muscle & - \\
+		\hline
+	\end{tabular}
+	\caption{A table listing the various categories that exercises can be placed in based upon muscle groups and movement patterns.}
+	\label{tab:P1_MovementPatternCategories}
+\end{table}
+
+It is important to note that these two classifications are not exclusive to each other. For example, a romanian deadlift would belong to both the compound accessory and hip hinge groups.
 
 \subsection{Modified Fatigue Categories}
-\label{sec:ModifiedFatigueCategories}
+\label{sec:P1_ModifiedFatigueCategories}
 
-In order to more accurately reflect what happens during a workout, it is necessary to break fatigue up into four sub-categories that correspond to different time frames.
+In order to more accurately reflect what happens during a workout, it is necessary to break fatigue up into four sub-categories that correspond to different time frames. Exactly how these categories came to be is a very pivotal idea and is one that will be discussed in \ref{sec:PotentialSurfaceEffortFatigueModel}. For now it will suffice to simply understand what each fatigue category represents.
 
 \begin{enumerate}
 	\item Latent fatigue: Fatigue that is present before a workout even begins. This type of fatigue can be present from lack of sleep, stress from outside factors, or many other sources.
 	\item Inter-workout fatigue: Fatigue that is generated through the course of a workout.
 	\item Inter-exercise fatigue: Fatigue that is generated through the course of a single exercise. This is different from inter-workout fatigue because when a lifter switches exercises fatigue drops depending on the amount of similarity between the exercises. If two exercises are similar more fatigue will carry over between them, increasing both the perceived inter-workout fatigue as well as the inter-exercise fatigue on the second exercise. On some occasions this is purposeful, and is used as a way to increase stimulus while keeping intensity low. As an example, if a lifter begins there workout with squats, there lower body will be more fatigued than there upper body. If the same lifter then changes exercises to bench, they will be less fatigued for an upper body exercise than they would be for another lower body exercise. Although, they will still be more fatigued than if they started there workout with bench, which represents inter-workout fatigue.
 	\item Inter-set fatigue: Another word for inter-set fatigue is \textit{endurance}, as it represents the fatigue that is generated through the course of a single set.
+	\item Inter-rep fatigue: Fatigue that is generated through the course of a single rep.
 \end{enumerate}
 
 
 \section{Symbol Soup}
-\label{sec:SymbolList}
+\label{sec:P1_SymbolList}
 
-Many symbols will be used throughout the rest of this book. To aid in maintaining sanity, table \ref{tab:SymbolTable} summarizes every value and it's associated symbol that will be used in equations moving forward. Some of the symbols have been introduced already, but this will serve as a complete list for future reference.
+Many symbols will be used throughout the rest of this book. To aid in maintaining sanity, table \ref{tab:P1_SymbolTable} summarizes every value and it's associated symbol that will be used in equations moving forward. Some of the symbols have been introduced already, but this will serve as a complete list for future reference.
 
 \begin{table}[h]
 	\centering
@@ -256,8 +280,8 @@ Many symbols will be used throughout the rest of this book. To aid in maintainin
         Reps & $r$ & Inter-workout Fatigue & $F_w$ \\
         Effort & $E$ & Inter-exercise Fatigue & $F_e$ \\
         Total Effort & $E_{tot}$ & Inter-set Fatigue & $F_s$ \\
-        Intensity & $I$ & Total Fatigue & $F_{tot}$ \\
-        Weight & $w$  & & \\
+        Intensity & $I$ & Inter-rep Fatigue & $F_r$ \\
+        Weight & $w$ & Total Fatigue & $F_{tot}$ \\
         Frequency & $f$ & & \\
         Time & $t$ & & \\
         Performance & $P$ & & \\
@@ -265,6 +289,6 @@ Many symbols will be used throughout the rest of this book. To aid in maintainin
         A lifts 1RM & $l_{1RM}$ & & \\
         \hline
     \end{tabular}
-    \caption{A table showing each value and it's associated symbol. Note the use of both an uppercase and lowercase $f$.}
-    \label{tab:SymbolTable}
+    \caption{A table showing each value and it's associated symbol.}
+    \label{tab:P1_SymbolTable}
 \end{table}
