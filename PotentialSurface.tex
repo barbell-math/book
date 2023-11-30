@@ -27,36 +27,19 @@ The starting point of the model is amusingly simple, and can be summed up in the
 	P \hat{=} E_{tot}\hat{-}F_{tot}
 \end{equation}
 
-The $\hat{=}$ symbol in this case means "something like". It is chosen to mean this over something like the $\approx$ symbol because these equations are approximations in the loosest sense. The equations in this section merely form a rough template for later chapters to fully realize. The $\hat{-}$ symbol means "diminished by". The true mathematical interpretation of the $\hat{-}$ symbol is left for future chapters to define.
+The $\hat{=}$ symbol in this case means "something like". It is chosen to mean this over something like the $\approx$ symbol because this equation is an approximations in the loosest sense. Equations with this symbol merely form a rough template for later chapters to fully realize. The $\hat{-}$ symbol means "diminished by". The true mathematical interpretation of the $\hat{-}$ symbol is left for future chapters to define.
 
 This simple starting point for the model is almost devious. As the remaining sections discuss what each term in the equation is equal to it will quickly become less simple.
 
 \section{What is Performance?}
 \label{sec:P2C1_WhatIsPerformance}
 
-It is tempting to say that, for a powerlifter, performance is simply the weight that is lifted, making $P=w$. This makes complete sense when initially considered and is technically true, but further thought will reveal a better option.
+
+It is tempting to say that, for a powerlifter, performance is simply the weight that is lifted, making $P=w$. This makes complete sense when initially considered and is technically true, but further thought reveals a better option.
 
 This model will eventually need to be fit to data. As such, the limits of techniques such as linear regression and gradient descent need to be considered. Looking at the data, it should be clear that it is a time series: the data points are collected over time, and data points nearer in time have greater importance than data points farther away in time\footnote{More foreshadowing...}. Linear regression assumes that all the data points are uncorrelated and gradient descent operates optimally when data points are uncorrelated. Time series data is unfortunately highly correlated. To help resolve this problem two things can be done.
 
-The first step that can be taken is to limit the time frame that linear regression or gradient descent is run over. The data can vary through time, but not necessarily in direct linear relation to time. As an example of this, consider seasonal training, which some powerlifters choose to employ. In the off season intensities will drop, volume will increase, and the emphasis on training may shift to hypertrophy over strength. In the on season intensities will increase, volume will necessarily decrease, and the emphasis on training will shift to strength over hypertrophy. This will result in shifts in the number of sets and reps being done over time. To capture these changes over time several techniques can be used. One such technique is to limit the data that is used such that a moving average is created. Using a moving average will allow for changes to be captured over time. With this in mind, some notation is required to continue. The general notation used to show which data points will be used is shown in equation \ref{eq:P2C1_TimeFrame}. The exact length of the time frame, $t_f$, along with any other specifics, will be discussed in chapter \ref{sec:TimeFrame}. Throughout the rest of this book equation \ref{eq:TimeFrame} will be written short hand as $t_i\in \{ T \}$ In an effort to save space.
-
-\begin{equation}
-    \label{eq:P2C1_TimeFrame}
-    %t_t\le t_i\le t_t+t_f
-    t_i \in\{ t_t, t_t+1,\dots,t_t+t_f \}
-    \equiv t_i \in \{ T \}
-\end{equation}
-\centerline{where}
-\begin{equation*}
-    \begin{split}
-        t_i &\equiv \text{The time component of an arbitrary data point }i \\
-        t_t &\equiv \text{An arbitrary target time} \\
-        t_f &\equiv \text{The time frame linear regression will be run over} \\
-        T & \equiv \text{A shorthand notation representing the set of all allowed times}
-    \end{split}
-\end{equation*}
-
-The second step that can be taken is to remove weights correlation with time. Weight correlating with time makes intuitive sense, as the goal of a powerlifter is to continually increase weight over time. As an example, say a lifter starts out with a 1RM of $300$ lbs on squat, but through training is able to increase that weight over time to $800$ lbs. It should be obvious from the example that weight, in general, has a positive correlation with time. To fix this, weight will be replaced by intensity. This will remove the correlation with time because intensity is calculated using an exercises 1RM, which itself changes with time, canceling out any effects from an increase in weight through time. To show this the previous example will be used again. Despite weight increasing over time, intensity would generally be limited to the range $0\le I\le 1$ because the lifter would set new 1RM's over time, thereby forcing the intensities to be generally less than $1$.
+The first step that can be taken is to limit the time frame that linear regression or gradient descent is run over. This is something that will be discussed in depth in chapter \ref{ch:}. The second, and more relevant, step that can be taken is to remove weights correlation with time. Weight correlating with time makes intuitive sense, as the goal of a powerlifter is to continually increase weight over time. As an example, say a lifter starts out with a 1RM of $300$ lbs on squat, but through training is able to increase that weight over time to $800$ lbs. It should be obvious from the example that weight, in general, has a positive correlation with time. To fix this, weight will be replaced by intensity. This will remove the correlation with time because intensity is calculated using an exercises 1RM, which itself changes with time, canceling out any effects from an increase in weight through time. To show this the previous example will be used again. Despite weight increasing over time, intensity would generally be limited to the range $0\le I\le 1$ because the lifter would set new 1RM's over time, thereby forcing the intensities to be generally less than $1$.
 
 Redefining performance to use intensity instead of weight means that having an accurate tracking of a lifters 1RM over time becomes an important dependence for the model. For a powerlifter, this is generally not a problem as a lifts 1RM is usually tested once a macrocycle. Problems arise however when things like injuries, or other unplanned problems occur. During these situations a lifters 1RM is not known and can change rapidly or extremely slowly over time. A solution to problems like this will be explored in sections \ref{sec:TimeFrameDynamicTimeFrameAnalysis} and \ref{sec:TimeFrameInjuriesAndChanges}.
 
@@ -81,7 +64,7 @@ After performance, total effort is the next easiest term to understand as it dir
 \section{What is Fatigue?}
 \label{sec:P2C1_WhatIsFatigue}
 
-Total fatigue is more complicated. Not only are there several different types of fatigue that contribute to it's total but also because fatigue has timescales associated with it. As a starting point, lets consider how fatigue would behave for a given lifter. Figure \ref{fig:P2C1_GlobalFatigueGraph} demonstrates how fatigue would respond across time.
+Total fatigue is more complicated. Not only are there several different types of fatigue that contribute to it's total but there are also different timescales associated with it. As a starting point, lets consider how fatigue would behave for a given lifter. Figure \ref{fig:P2C1_GlobalFatigueGraph} demonstrates how fatigue would respond across time.
 
 \begin{figure}[htb]
     \centering
@@ -99,7 +82,7 @@ The graph presented in figure \ref{fig:P2C1_GlobalFatigueGraph} has many things 
     \label{fig:P2C1_FatigueHierarchyGraph}
 \end{figure}
 
-As with anything that deals with time there is a "before" and a "after". For every level of this hierarchical structure there is a series of inputs and outputs that define what "before" and "after" is in regards to fatigue. This is why figure \ref{fig:P2C1_FatigueHierarchyGraph} has arrows that point in two directions. Generally, fatigue will be looked at before and after an action that produces fatigue is performed. Looking at figure \ref{fig:P2C1_GlobalFatigueGraph} before every spike in fatigue there is a preexisting level of fatigue. This fatigue existed before the action was performed and needs to be taken into account because it affects the action that is about to be performed. After the spike there is a new higher level of fatigue, fatigue that now exists after the action was performed. Looking at fatigue this way not only enforces the summation of its parts to equal the total but it maintains fatigues state as actions are performed across time. Given this view, a more accurate representation of fatigue as it moves through time within the hierarchical structure is shown in figure \ref{fig:P2C1_FatigueHierarchyTimeGraph}.
+As with anything that deals with time there is a "before" and a "after". For every level of this hierarchical structure there are a series of inputs and outputs that define what "before" and "after" is in regards to fatigue. This is why figure \ref{fig:P2C1_FatigueHierarchyGraph} has arrows that point in two directions. Generally, fatigue will be looked at before and after an action that produces fatigue is performed. Looking at figure \ref{fig:P2C1_GlobalFatigueGraph}, before every spike in fatigue there is a preexisting level of fatigue. This fatigue existed before the action was performed and needs to be taken into account because it affects the action that is about to be performed. After the spike there is a new higher level of fatigue, fatigue that now exists after the action was performed. Looking at fatigue this way not only enforces the summation of its parts to equal the total but it maintains fatigues state as actions are performed across time. Given this view, a more accurate representation of fatigue as it moves through time within the hierarchical structure is shown in figure \ref{fig:P2C1_FatigueHierarchyTimeGraph}.
 
 \begin{figure}[htbp]
     \centering
@@ -188,7 +171,7 @@ An equation needs to be generated given all of this discussion. An initial appro
 	\centerline{where}
 	\begin{equation*}
 		\begin{split}
-			r_{rec,i} & \text{ represents the amount of recovery performed on rep i} \\
+			r_{rec,i} & \text{ represents the amount of recovery performed on rep }i \\
 			|r_{rec,i}| & < 0
 		\end{split}
 	\end{equation*}
@@ -224,14 +207,14 @@ This summation of fatigue deltas can now be represented as a single multiplicati
 	F_{r} + \Delta F_r \sum_{i=1}^{r-1} c_i
 \end{equation*}
 
-This summation of $c_i$ values can now be represented as a function of $r$, $C(r)$. Not much is really known about the behavior of this function as it depends entirely on how the fatigue deltas change as every additional rep is performed. The only thing that can be certain is that $c$ can only increase or stay the same as $i$ increases. If $c$ decreased then it would be as if the lifter were recovering \textit{more} with every additional rep performed, which cannot be the case.
+This summation of $c_i$ values can now be represented as a function of $r$, $C(r)$.
 
 \begin{equation*}
 	F_s =
 	F_{r} + \Delta F_r C(r)
 \end{equation*}
 
-Without any further reasoning about the behavior of $C(r)$, an equation that can represent both when fatigue deltas remain constant as well as when fatigue deltas increase is needed. A function of $r$ raised to a power $\ge 1$ will work. Technically any equation that is continually increasing, $f'>0$, could work for this scenario. The choice of using a function raised to a power is based on intuition and experience at the gym. Generally as a set goes on the increases in fatigue do not feel like they decrease. Looking at the equation below, if $\beta=1$ then a constant fatigue delta is assumed and if $\beta>1$ then an increasing fatigue delta is assumed. Depending on the value of $\beta$ that is found from fitting the model to the data it will be able to show how the body responds to fatigue on a inter-set level.
+Not much is really known about the behavior of this function as it depends entirely on how the fatigue deltas change as every additional rep is performed. The only thing that can be certain is that $c$ can only increase or stay the same as $i$ increases. If $c$ decreased then it would be as if the lifter were recovering \textit{more} with every additional rep performed, which cannot be the case. Put in mathematical terms, $C'(r)\ge0$. With this limited amount of information a function needs to be chosen that can allow for three scenarios to happen: the fatigue deltas increase at an increasing rate, stay the same, or increase at a decreasing rate. A power function can be used to approximate all of these scenarios and is shown in the equation below. Looking at the equation below, if $\beta=1$ then a constant fatigue delta is assumed, if $\beta>1$ then the fatigue deltas increase at an increasing rate, and if $\beta<1$ then the fatigue deltas increase at a decreasing rate. Depending on the value of $\beta$ that is found from fitting the model to the data it will be able to show how the body responds to fatigue on a inter-set level.
 
 \begin{equation*}
 	F_s =
@@ -251,32 +234,33 @@ After a little help from intuition, equation \ref{eq:P2C1_InterSetFatigue} is th
 	\begin{equation}
 		\label{eq:P2C1_InterSetFatigue}
 		F_s = \epsilon_5 (r-1) ^ \beta F_r + F_r 
-		= \epsilon_5 (r-1)^\beta \left( \frac{E}{10} \right)^\alpha
-			+ \left( \frac{E}{10} \right)^\alpha
+		= \epsilon_5 \epsilon_6 (r-1)^\beta \left( 
+			\frac{E}{10} 
+		\right)^\alpha
+		+ \epsilon_6 \left( \frac{E}{10} \right)^\alpha
 	\end{equation}
 	\centerline{where}
 	\begin{equation*}
 		\begin{split}
-		    & \alpha, \beta \ge 1 \\
+		    & \alpha \ge 1 \\
 			& 0 \le \epsilon_5 \le 1
 		\end{split}
 	\end{equation*}
 \end{minipage}\\
 
 \subsection{Inter-Exercise Fatigue}
-\label{sec:P2C1_InterSetFatigue}
+\label{sec:P2C1_InterExerciseFatigue}
 
 \begin{figure}[htb]
     \centering
     \includegraphics[scale=0.55]{images/p2/ch1/InterExerciseFatigue.png}
-    \caption{A figure demonstrating how inter-exercise fatigue will accumulate over the course of a several sets.}
+    \caption{A figure demonstrating how inter-exercise fatigue will accumulate over the course of several sets.}
     \label{fig:P2C1_InterExerciseFatigue}
 \end{figure}
 
 Inter-exercise fatigue is very similar to inter-set fatigue except  it operates one level higher in the timescale hierarchy. This is demonstrated in figure \ref{fig:P2C1_InterExerciseFatigue} where the superimposed red line is inter-exercise fatigue. The red line in figure \ref{fig:P2C1_InterExerciseFatigue} combines many inter-set fatigue lines which are shown in green. Of note is that inter-exercise fatigue shares the same behavior with the spike at the end of the red line. This is for the same reason as inter-set fatigue, just now it is one level up the timescale hierarchy.
 
 Given the extreme parallels between inter-set fatigue and inter-exercise fatigue, the resulting equation for inter-exercise fatigue can simply be stated.
-
 
 \begin{minipage}{\textwidth}
 	\begin{equation}
@@ -289,28 +273,29 @@ Given the extreme parallels between inter-set fatigue and inter-exercise fatigue
 				\right)^\alpha
 				+ \left( \frac{E}{10} \right)^\alpha
 			\right)+
-			\epsilon_5 (r-1)^\beta \left(
+			\epsilon_5 \epsilon_6 (r-1)^\beta \left(
 				\frac{E}{10} 
 			\right)^\alpha
-			+ \left( \frac{E}{10} \right)^\alpha \\
+			+ \epsilon_6 \left( \frac{E}{10} \right)^\alpha \\
 			& = 
-			\epsilon_4 \epsilon_5
+			\epsilon_4 \epsilon_5 \epsilon_6
 			(s-1)^\gamma 
 			(r-1)^\beta
 			\left(
 				\frac{E}{10} 
 			\right)^\alpha
 			+
-			\epsilon_4 (r-1)^\gamma
+			\epsilon_4 \epsilon_6 (r-1)^\gamma
 			\left(
 				\frac{E}{10} 
 			\right)^\alpha
 			+
-			\epsilon_5 (r-1)^\beta
+			\epsilon_5 \epsilon_6 (r-1)^\beta
 			\left(
 				\frac{E}{10} 
 			\right)^\alpha
 			+
+			\epsilon_6
 			\left(
 				\frac{E}{10} 
 			\right)^\alpha
@@ -319,12 +304,100 @@ Given the extreme parallels between inter-set fatigue and inter-exercise fatigue
 	\centerline{where}
 	\begin{equation*}
 		\begin{split}
-		    & \alpha, \beta \ge 1 \\
-			& 0 \le \epsilon_5 \le 1
+		    & \alpha \ge 1 \\
+			& 0 \le \epsilon_5, \epsilon_6 \le 1
 		\end{split}
 	\end{equation*}
 \end{minipage}\\
 
+
+\subsection{Inter-Workout Fatigue}
+\label{sec:P2C1_InterWorkoutFatigue}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[scale=0.55]{images/p2/ch1/InterWorkoutFatigue.png}
+    \caption{A figure demonstrating how inter-workout fatigue will accumulate over the course of several exercises.}
+    \label{fig:P2C1_InterWorkoutFatigue}
+\end{figure}
+
+Given the terse nature of the section about inter-exercise fatigue it may seem like this section will be the same. There is a pattern present and for the most part this pattern will continue but on this scale there are more variables to think about. The previous sections on inter-workout fatigue and inter-set fatigue had the luxury of being able to use the same values for reps, sets, and effort. The timescales at those levels of the fatigue hierarchy were small enough to allow each of them to only need to rely on a single data point. This certainly made it easier to discover relations, but it is not a luxury that inter-workout fatigue can depend on. Inter-workout fatigue will need to look at many data points that span the length of an entire workout. Having a mechanism like this that considers many data points is the first feedback mechanism that is present in the model. This is important because this is how the model will take into account previous perturbations in fatigue.
+
+The non-linear nature of inter-workout fatigue when compared to inter-exercise and inter-set fatigue is demonstrated in figure \ref{fig:P2C1_InterWorkoutFatigue}. In this figure the blue line represents inter-workout fatigue. When comparing how the red line, inter-exercise fatigue, behaves in relation to the green line, inter-set fatigue, the behavior between the blue line and red line is very different. The red lines do not form a clear pattern that the blue line can extrapolate. The reason for this lack of a pattern that can be extrapolated is because inter-workout fatigue needs to take into consideration fatigue carried over between exercises that use similar muscle groups as well as differing effort levels between exercises. As an example, consider that when a lifter switches exercises fatigue drops depending on the amount of similarity between the exercises. If two exercises are similar more fatigue will carry over between them, increasing the perceived inter-workout fatigue and by extension fatigue on any level in the fatigue hierarchy lower than inter-workout fatigue. On some occasions this is purposeful, and is used as a way to increase stimulus while keeping intensity low. To further clarify, if a lifter begins there workout with squats, there lower body will be more fatigued than there upper body. If the same lifter then changes exercises to bench, they will be less fatigued for an upper body exercise than they would be for another lower body exercise. Although, they will still be more fatigued than if they started their workout with bench. 
+
+All feedback present in inter-workout fatigue makes it difficult to express. As a starting point, the simplest way to represent inter-workout fatigue is through a summation of the changes to fatigue on the level of inter-exercise fatigue.
+
+\begin{minipage}{\textwidth}
+	\begin{equation*}
+		F_w=\sum_{i=1}^{n_e} F_e+\sum_{i=1}^{n_e-1} e_{rec,i}
+	\end{equation*}
+	\centerline{where}
+	\begin{equation*}
+		\begin{split}
+			n_e & \text{ represents the total number of exercises performed in a workout} \\
+			e_{rec,i} & \text{ represents the amount of recovery performed after exercise }i \\
+			|e_{rec,i}| & < 0 \\
+		\end{split}
+	\end{equation*}
+\end{minipage}\\
+
+The same simplifications that were applied in the section about inter-set fatigue can be applied here up to a point, resulting in the equation below.
+
+\begin{equation*}
+	F_w =
+	F_{e} + \epsilon_3 F_e \sum_{i=0}^{n_e-1} c_i
+\end{equation*}
+
+At this point the relative differences in recovery caused by the feedback present in inter-workout fatigue need to be considered. The previous sections on inter-exercise and inter-set fatigue reached this point and they were able to find a consistent pattern with the recovery performed that enabled the removal of the summation. This section cannot rely on this behavior, so to proceed the nature of each $c_i$ term needs to be considered. The fatigue delta from a given exercise will increase with the number of reps performed and the level of effort those reps required. It will also increase with greater similarity between exercises that were previously performed, represented by $S_j$.
+
+\begin{minipage}{\textwidth}
+	\begin{equation*}
+		c_i=s_i r_i E_i \sum_{j=0}^{j=i-1} S_j(n_e-j)^\eta
+	\end{equation*}
+	\centerline{where}
+	\begin{equation*}
+		\begin{split}
+			S_j & \text{ represents a similarity score between exercise }i \text{ and exercise }j \\
+		\end{split}
+	\end{equation*}
+\end{minipage}\\
+
+This equation for $c_i$ can be placed in the equation for $F_w$.
+
+\begin{minipage}{\textwidth}
+	\begin{equation*}
+		F_w =
+			F_{e} + 
+			\epsilon_3 F_e 
+			\sum_{i=0}^{n_e-1} \left( 
+				s_i r_i E_i
+				\sum_{j=0}^{j=i-1} S_j (n_e-j)^\eta
+			\right)
+	\end{equation*}
+	\centerline{where}
+	\begin{equation*}
+		\begin{split}
+			n_e & \text{ represents the total number of exercises performed in a workout} \\
+			S_j & \text{ represents a similarity score between exercise }i \text{ and exercise }j \\
+		\end{split}
+	\end{equation*}
+\end{minipage}\\
+
+Before moving on, some consideration is needed for how the model will be fit to the data. Having a double summation is not very efficient as it means that several data points will be needed to perform the calculations for a single data point. This is the kind of problem that will crop up at scale, so unless fixed early on it can be a real pain later. To fix this an index will be added to the data set that saves the $c_i$ value. This removes the need to lookup many data points to perform calculations on a single data point at the cost having a larger data set. The arithmetic sequence shown in equation \ref{eq:P2C1_InterWorkoutFatigueEquation} shows how this index value will be calculated. Note how the first inter-workout fatigue index is $0$. This reflects the lifter not having generated any inter-workout fatigue when first starting a workout. Every value after that then reflects the inter-workout fatigue that was present before each exercise was done. Only measuring the fatigue that was present before the exercise was performed is consistent with how the summation it is replacing would behave.
+
+\begin{equation}
+	\label{eq:P2C1_InterWorkoutFatigueEquation}
+	\begin{split}
+		\text{idx}(F_w)_i & =
+		\begin{cases}
+			S_{i-1} s_{i-1} r_{i-1} E_{i-1}+
+			\text{idx}(F_{w,i})_{i-1} \;\; & \text{if }t_i=t_{i-1} \\
+			0 \;\; & \text{otherwise}
+		\end{cases}
+		\\
+		\text{idx}(F_{w})_0 & = 0
+	\end{split}
+\end{equation}
 
 
 

@@ -294,6 +294,26 @@
 \include{PotentialSurface}
 \include{Data}
 
+
+
+%The data can vary through time, but not necessarily in direct linear relation to time. As an example of this, consider seasonal training, which some powerlifters choose to employ. In the off season intensities will drop, volume will increase, and the emphasis on training may shift to hypertrophy over strength. In the on season intensities will increase, volume will necessarily decrease, and the emphasis on training will shift to strength over hypertrophy. This will result in shifts in the number of sets and reps being done over time. To capture these changes over time several techniques can be used. One such technique is to limit the data that is used such that a moving average is created. Using a moving average will allow for changes to be captured over time. With this in mind, some notation is required to continue. The general notation used to show which data points will be used is shown in equation \ref{eq:P2C1_TimeFrame}. The exact length of the time frame, $t_f$, along with any other specifics, will be discussed in chapter \ref{sec:TimeFrame}. Throughout the rest of this book equation \ref{eq:TimeFrame} will be written short hand as $t_i\in \{ T \}$ In an effort to save space.
+%
+%\begin{equation}
+%    \label{eq:P2C1_TimeFrame}
+%    %t_t\le t_i\le t_t+t_f
+%    t_i \in\{ t_t, t_t+1,\dots,t_t+t_f \}
+%    \equiv t_i \in \{ T \}
+%\end{equation}
+%\centerline{where}
+%\begin{equation*}
+%    \begin{split}
+%        t_i &\equiv \text{The time component of an arbitrary data point }i \\
+%        t_t &\equiv \text{An arbitrary target time} \\
+%        t_f &\equiv \text{The time frame linear regression will be run over} \\
+%        T & \equiv \text{A shorthand notation representing the set of all allowed times}
+%    \end{split}
+%\end{equation*}
+
 %\include{TimeFrame}
 %\include{Macrocycle}
 %\include{Mesocycle}
