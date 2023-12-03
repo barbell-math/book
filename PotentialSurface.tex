@@ -200,7 +200,7 @@ While this approach is correct it is not very efficient. To fix this the fact th
 	\end{split}
 \end{equation*}
 
-This summation of fatigue deltas can now be represented as a single multiplication. To do this the $\Delta F_{r,i}$ terms will need to be constant, however, previously discussed in this section was the fact that these fatigue deltas may not be constant. This will need to be accounted for. To make it possible to perform transform this summation into a product every $\Delta F_{r,i}$ term will be scaled by some value, $c$, which will make the $\Delta F_{r,i}$ terms constant. 
+This summation of fatigue deltas can now be represented as a single multiplication. To do this the $\Delta F_{r,i}$ terms will need to be constant, however, previously discussed in this section was the fact that these fatigue deltas may not be constant. This will need to be accounted for. To make it possible to transform this summation into a product every $\Delta F_{r,i}$ term will be scaled by some value, $c$, which will make the $\Delta F_{r,i}$ terms constant. 
 
 \begin{equation*}
 	F_s =
@@ -214,7 +214,7 @@ This summation of $c_i$ values can now be represented as a function of $r$, $C(r
 	F_{r} + \Delta F_r C(r)
 \end{equation*}
 
-Not much is really known about the behavior of this function as it depends entirely on how the fatigue deltas change as every additional rep is performed. The only thing that can be certain is that $c$ can only increase or stay the same as $i$ increases. If $c$ decreased then it would be as if the lifter were recovering \textit{more} with every additional rep performed, which cannot be the case. Put in mathematical terms, $C'(r)\ge0$. With this limited amount of information a function needs to be chosen that can allow for three scenarios to happen: the fatigue deltas increase at an increasing rate, stay the same, or increase at a decreasing rate. A power function can be used to approximate all of these scenarios and is shown in the equation below. Looking at the equation below, if $\beta=1$ then a constant fatigue delta is assumed, if $\beta>1$ then the fatigue deltas increase at an increasing rate, and if $\beta<1$ then the fatigue deltas increase at a decreasing rate. Depending on the value of $\beta$ that is found from fitting the model to the data it will be able to show how the body responds to fatigue on a inter-set level.
+Not much is really known about the behavior of this function as it depends entirely on how the fatigue deltas change as every additional rep is performed. The only thing that can be certain is that $c$ can only increase or stay the same as $i$ increases. If $c$ decreased then it would be as if the lifter were recovering \textit{more} with every additional rep performed, which cannot be the case. Put in mathematical terms, $C'(r)\ge0$. With this limited amount of information a function needs to be chosen that can allow for three scenarios to happen: the fatigue deltas increase at an increasing rate, stay the same, or increase at a decreasing rate. A power function can be used to approximate all of these scenarios and is shown in the equation below. Looking at the equation below, if $\beta=1$ then a constant fatigue delta is assumed, if $\beta>1$ then the fatigue deltas increase at an increasing rate, and if $0<\beta<1$ then the fatigue deltas increase at a decreasing rate. $\beta$ must be constrained to being $>0$ otherwise $C'(r)$ would be $<0$. Depending on the value of $\beta$ that is found from fitting the model to the data it will be able to show how the body responds to fatigue on a inter-set level.
 
 \begin{equation*}
 	F_s =
@@ -243,6 +243,7 @@ After a little help from intuition, equation \ref{eq:P2C1_InterSetFatigue} is th
 	\begin{equation*}
 		\begin{split}
 		    & \alpha \ge 1 \\
+		    & \beta > 0 \\
 			& 0 \le \epsilon_5 \le 1
 		\end{split}
 	\end{equation*}
@@ -264,14 +265,14 @@ Given the extreme parallels between inter-set fatigue and inter-exercise fatigue
 
 \begin{minipage}{\textwidth}
 	\begin{equation}
-		\label{eq:P2C1_InterSetFatigue}
+		\label{eq:P2C1_InterExerciseFatigue}
 		\begin{split}
 			F_e & = \epsilon_4 (s-1) ^ \gamma F_s + F_s \\
 			& = \epsilon_4 (s-1)^\gamma \left(
-				\epsilon_5 (r-1)^\beta \left(
+				\epsilon_5 \epsilon_6 (r-1)^\beta \left(
 					\frac{E}{10} 
 				\right)^\alpha
-				+ \left( \frac{E}{10} \right)^\alpha
+				+ \epsilon_6 \left( \frac{E}{10} \right)^\alpha
 			\right)+
 			\epsilon_5 \epsilon_6 (r-1)^\beta \left(
 				\frac{E}{10} 
@@ -305,7 +306,8 @@ Given the extreme parallels between inter-set fatigue and inter-exercise fatigue
 	\begin{equation*}
 		\begin{split}
 		    & \alpha \ge 1 \\
-			& 0 \le \epsilon_5, \epsilon_6 \le 1
+		    & \beta,\gamma > 0 \\
+			& 0 \le \epsilon_4, \epsilon_5, \epsilon_6 \le 1
 		\end{split}
 	\end{equation*}
 \end{minipage}\\
@@ -323,9 +325,24 @@ Given the extreme parallels between inter-set fatigue and inter-exercise fatigue
 
 Given the terse nature of the section about inter-exercise fatigue it may seem like this section will be the same. There is a pattern present and for the most part this pattern will continue but on this scale there are more variables to think about. The previous sections on inter-workout fatigue and inter-set fatigue had the luxury of being able to use the same values for reps, sets, and effort. The timescales at those levels of the fatigue hierarchy were small enough to allow each of them to only need to rely on a single data point. This certainly made it easier to discover relations, but it is not a luxury that inter-workout fatigue can depend on. Inter-workout fatigue will need to look at many data points that span the length of an entire workout. Having a mechanism like this that considers many data points is the first feedback mechanism that is present in the model. This is important because this is how the model will take into account previous perturbations in fatigue.
 
-The non-linear nature of inter-workout fatigue when compared to inter-exercise and inter-set fatigue is demonstrated in figure \ref{fig:P2C1_InterWorkoutFatigue}. In this figure the blue line represents inter-workout fatigue. When comparing how the red line, inter-exercise fatigue, behaves in relation to the green line, inter-set fatigue, the behavior between the blue line and red line is very different. The red lines do not form a clear pattern that the blue line can extrapolate. The reason for this lack of a pattern that can be extrapolated is because inter-workout fatigue needs to take into consideration fatigue carried over between exercises that use similar muscle groups as well as differing effort levels between exercises. As an example, consider that when a lifter switches exercises fatigue drops depending on the amount of similarity between the exercises. If two exercises are similar more fatigue will carry over between them, increasing the perceived inter-workout fatigue and by extension fatigue on any level in the fatigue hierarchy lower than inter-workout fatigue. On some occasions this is purposeful, and is used as a way to increase stimulus while keeping intensity low. To further clarify, if a lifter begins there workout with squats, there lower body will be more fatigued than there upper body. If the same lifter then changes exercises to bench, they will be less fatigued for an upper body exercise than they would be for another lower body exercise. Although, they will still be more fatigued than if they started their workout with bench. 
+Figure \ref{fig:P2C1_InterWorkoutFatigue} shows a zoomed in section of \ref{fig:P2C1_GlobalFatigueGraph}. Superimposed are green lines that represent inter-set fatigue, red lines to represent inter-exercise fatigue, and a blue line to show inter-workout fatigue. The behavior between the red line and green line is very different from the behavior between the blue line and red line. The non-continuous nature of the blue line is the defining difference that needs to be discussed.
 
-All feedback present in inter-workout fatigue makes it difficult to express. As a starting point, the simplest way to represent inter-workout fatigue is through a summation of the changes to fatigue on the level of inter-exercise fatigue.
+The non-continuous nature of inter-workout fatigue can be traced back to the red lines not forming a clear pattern that the blue line can extrapolate. The reason for this lack of a pattern is because inter-workout fatigue needs to take into consideration fatigue carried over between exercises that use similar muscle groups as well as differing effort levels between exercises. As an example, consider that when a lifter switches exercises fatigue drops depending on the amount of similarity between the exercises. If two exercises are similar more fatigue will carry over between them, increasing the perceived inter-workout fatigue and by extension fatigue on any level in the fatigue hierarchy lower than inter-workout fatigue. On some occasions this is purposeful, and is used as a way to increase stimulus while keeping intensity low. As another example, consider that every exercise has differing effort levels. As previously established in the inter-set and inter-rep fatigue sections fatigue will increase with increased effort. If the same exercise is performed twice with differing effort levels then the fatigue delta on the inter-workout scale will be different for each one because they caused different increases in fatigue. These relative differences in fatigue levels based on what exercises were performed previously as well as what effort they were performed at is what makes inter-workout fatigue non-continuous. 
+
+The discussion about ordering of exercises brings up a more general idea of the time delta between similar exercises. Lets say two exercises that are very similar to each other are performed in the same workout. If these exercises are performed back to back then the second exercise will have a much higher level of fatigue than if they were performed at the beginning and end of the same workout respectively. This difference in fatigue levels happens despite the exercises being identical in terms of sets, reps, intensity, and effort. The only difference is the amount of time that passed between performing the two exercises. If the exercises are performed back to back then there will be very little time to recover and as such not as much recovery will be done. If instead they are performed at the beginning and end of a workout then the lifter would have had the entire length of the workout for those muscle groups to recover. This can be generalized to simply state that fatigue carryover between exercises will increase the closer in time two exercises are.
+
+To further clarify with a more concrete example, if a lifter begins their workout with squats, their lower body will be more fatigued than their upper body. If the same lifter then changes exercises to bench, they will be less fatigued for an upper body exercise than they would be for another lower body exercise, although, they will still be more fatigued than if they started their workout with bench. This example is further demonstrated in figure \ref{fig:P2C1_InterWorkoutExerciseOrder}. In figure \ref{fig:P2C1_InterWorkoutExerciseOrder} exercise 1 would be squats from the example. Exercise 2 is another another lower body exercise and exercise 3 is an upper body exercise. The graph on the left in figure \ref{fig:P2C1_InterWorkoutExerciseOrder} shows exercise 2 being performed right after exercise 1, and the graph on the right places exercise 3 before exercise 2. Note how the inter-workout fatigue performed between exercise 1 and 2 on the left graph is small, which results in higher fatigue levels for the entirety of exercise 2. On the right graph the larger time difference between exercise 1 and 2 allows for more recovery to be performed, reducing fatigue levels. Another observation is that inter-workout fatigue is consistently less in the right graph because the ordering of the exercises maximizes the amount of recovery that can be performed. \footnote{Epic foreshadowing...}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[scale=0.55]{images/p2/ch1/InterWorkoutExerciseOrder.png}
+    \caption{A figure demonstrating how inter-workout fatigue will vary depending on the ordering of exercises within a workout.}
+    \label{fig:P2C1_InterWorkoutExerciseOrder}
+\end{figure}
+
+
+
+All the feedback present in inter-workout fatigue makes it difficult to express. As a starting point, the simplest way to represent inter-workout fatigue is through a summation of the changes to fatigue on the level of inter-exercise fatigue.
 
 \begin{minipage}{\textwidth}
 	\begin{equation*}
@@ -348,16 +365,21 @@ The same simplifications that were applied in the section about inter-set fatigu
 	F_{e} + \epsilon_3 F_e \sum_{i=0}^{n_e-1} c_i
 \end{equation*}
 
-At this point the relative differences in recovery caused by the feedback present in inter-workout fatigue need to be considered. The previous sections on inter-exercise and inter-set fatigue reached this point and they were able to find a consistent pattern with the recovery performed that enabled the removal of the summation. This section cannot rely on this behavior, so to proceed the nature of each $c_i$ term needs to be considered. The fatigue delta from a given exercise will increase with the number of reps performed and the level of effort those reps required. It will also increase with greater similarity between exercises that were previously performed, represented by $S_j$.
+At this point the relative differences in recovery caused by the feedback present in inter-workout fatigue need to be considered. The previous sections on inter-exercise and inter-set fatigue reached this point and they were able to find a consistent pattern with the recovery performed that enabled the removal of the summation. This section cannot rely on this behavior, so to proceed the nature of each $c_i$ term needs to be considered. 
+
+The first component of each $c_i$ term comes from effort. The fatigue delta from a given exercise will increase with the number of reps performed and the level of effort those reps required. As discussed previously fatigue may not scale linearly with effort. For this reason the effort term will be raised to a power, $\mu$. This looks very similar to the equation from inter-rep fatigue, but they are separate values. This summation is not calculating the total fatigue by summing up every exercises inter-rep fatigue. It is calculating the fatigue delta, which will increase with increases in inter-rep fatigue but is not equal to inter-rep fatigue. This distinction is important because it separates the inter-rep fatigue term from the effort term in this equation even though they have similar behaviors. The fatigue delta should increase with increases in effort, which constrains $\mu$ to being $>0$. If $\mu>1$ then there will be increasing returns in the fatigue delta from increasing effort levels. If $\mu=1$ then there will be constant increases in the fatigue delta, and if $0<\mu<1$ then there will be decreasing returns to the fatigue delta as effort increases. The value of $\mu$ will be found by fitting the model to the data.
+
+The second component of each $c_i$ term comes from the similarity between exercises with respect to time. The fatigue delta will increase with greater similarity between exercises that were previously performed, represented by $S(i,j)$. This $S(i,j)$ term is then scaled by time such that exercises performed earlier in the workout end up reducing the fatigue delta. The behavior of the fatigue delta relative to time is not exactly known. Similar to the effort term, a constant, $\eta$, will be added to allow the model to understand different behaviors. The ranges of $\eta$ that have differing behaviors are the same as $\mu$.
 
 \begin{minipage}{\textwidth}
 	\begin{equation*}
-		c_i=s_i r_i E_i \sum_{j=0}^{j=i-1} S_j(n_e-j)^\eta
+		c_i=s_i r_i E_i^\mu \sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
 	\end{equation*}
 	\centerline{where}
 	\begin{equation*}
 		\begin{split}
-			S_j & \text{ represents a similarity score between exercise }i \text{ and exercise }j \\
+			& S(i,j) \text{ represents a similarity score between exercise }i \text{ and exercise }j \\
+			& \mu, \eta>0
 		\end{split}
 	\end{equation*}
 \end{minipage}\\
@@ -370,42 +392,377 @@ This equation for $c_i$ can be placed in the equation for $F_w$.
 			F_{e} + 
 			\epsilon_3 F_e 
 			\sum_{i=0}^{n_e-1} \left( 
-				s_i r_i E_i
-				\sum_{j=0}^{j=i-1} S_j (n_e-j)^\eta
+				s_i r_i E_i^\mu 
+				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
 			\right)
 	\end{equation*}
 	\centerline{where}
 	\begin{equation*}
 		\begin{split}
-			n_e & \text{ represents the total number of exercises performed in a workout} \\
-			S_j & \text{ represents a similarity score between exercise }i \text{ and exercise }j \\
+			& n_e \text{ represents the total number of exercises performed in a workout} \\
+			& S(i,j) \text{ represents a similarity score between exercise }i \text{ and exercise }j \\
+			& \mu, \eta>0
 		\end{split}
 	\end{equation*}
 \end{minipage}\\
 
-Before moving on, some consideration is needed for how the model will be fit to the data. Having a double summation is not very efficient as it means that several data points will be needed to perform the calculations for a single data point. This is the kind of problem that will crop up at scale, so unless fixed early on it can be a real pain later. To fix this an index will be added to the data set that saves the $c_i$ value. This removes the need to lookup many data points to perform calculations on a single data point at the cost having a larger data set. The arithmetic sequence shown in equation \ref{eq:P2C1_InterWorkoutFatigueEquation} shows how this index value will be calculated. Note how the first inter-workout fatigue index is $0$. This reflects the lifter not having generated any inter-workout fatigue when first starting a workout. Every value after that then reflects the inter-workout fatigue that was present before each exercise was done. Only measuring the fatigue that was present before the exercise was performed is consistent with how the summation it is replacing would behave.
+With all of that, the final equation for inter-workout fatigue is shown in equation \ref{eq:P2C1_InterWorkoutFatigue}.
 
-\begin{equation}
-	\label{eq:P2C1_InterWorkoutFatigueEquation}
-	\begin{split}
-		\text{idx}(F_w)_i & =
-		\begin{cases}
-			S_{i-1} s_{i-1} r_{i-1} E_{i-1}+
-			\text{idx}(F_{w,i})_{i-1} \;\; & \text{if }t_i=t_{i-1} \\
-			0 \;\; & \text{otherwise}
-		\end{cases}
-		\\
-		\text{idx}(F_{w})_0 & = 0
-	\end{split}
-\end{equation}
+\begin{minipage}{\textwidth}
+	\begin{equation}
+		\label{eq:P2C1_InterWorkoutFatigue}
+		\begin{split}
+			F_e & = 
+			\epsilon_3 F_e 
+			\sum_{i=0}^{n_e-1} \left( 
+				s_i r_i E_i^\mu 
+				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+			\right)
+			+ F_e
+			\\
+			& =
+			\epsilon_3 \epsilon_4 \epsilon_5 \epsilon_6
+			\sum_{i=0}^{n_e-1} \left( 
+				s_i r_i E_i^\mu 
+				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+			\right)
+			(s-1)^\gamma 
+			(r-1)^\beta
+			\left(
+				\frac{E}{10} 
+			\right)^\alpha
+			\\
+			& \;\;\; +
+			\epsilon_3 \epsilon_4 \epsilon_6
+			\sum_{i=0}^{n_e-1} \left( 
+				s_i r_i E_i^\mu 
+				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+			\right)
+			(r-1)^\gamma
+			\left(
+				\frac{E}{10} 
+			\right)^\alpha
+			\\
+			& \;\;\; +
+			\epsilon_3 \epsilon_5 \epsilon_6
+			\sum_{i=0}^{n_e-1} \left( 
+				s_i r_i E_i^\mu 
+				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+			\right)
+			(r-1)^\beta
+			\left(
+				\frac{E}{10} 
+			\right)^\alpha
+			\\
+			& \;\;\; +
+			\epsilon_3 \epsilon_6
+			\sum_{i=0}^{n_e-1} \left( 
+				s_i r_i E_i^\mu 
+				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+			\right)
+			\left(
+				\frac{E}{10} 
+			\right)^\alpha
+			\\
+			& \;\;\; +
+			\epsilon_4 \epsilon_5 \epsilon_6
+			(s-1)^\gamma 
+			(r-1)^\beta
+			\left(
+				\frac{E}{10} 
+			\right)^\alpha
+			+
+			\epsilon_4 \epsilon_6 
+			(r-1)^\gamma
+			\left(
+				\frac{E}{10} 
+			\right)^\alpha
+			+
+			\epsilon_5 \epsilon_6 
+			(r-1)^\beta
+			\left(
+				\frac{E}{10} 
+			\right)^\alpha
+			+
+			\epsilon_6
+			\left(
+				\frac{E}{10} 
+			\right)^\alpha
+			\\
+		\end{split}
+	\end{equation}
+	\centerline{where}
+	\begin{equation*}
+		\begin{split}
+		    & \alpha \ge 1 \\
+		    & \beta,\gamma, \mu, \eta > 0 \\
+			& 0 \le \epsilon_3, \epsilon_4, \epsilon_5, \epsilon_6 \le 1 \\
+			& n_e \text{ represents the total number of exercises performed in a workout} \\
+			& S(i,j) \text{ represents a similarity score between exercise }i \text{ and exercise }j \\
+		\end{split}
+	\end{equation*}
+\end{minipage}\\
+
+\subsection{Latent Fatigue}
+\label{sec:P2C1_LatentFatigue}
+
+The last fatigue category is latent fatigue. This category has the largest timescale and is responsible for capturing fatigue between workouts. The large timescale of latent fatigue makes it very difficult to fully capture. Many factors that exist outside of the gym can increase a lifters stress which will affect latent fatigue. Things like a lack of sleep, poor diet, stress at work or from a relationship, and many other things can create stress that will increase latent fatigue and limit performance at the gym. These factors are largely invisible to the model as there is simply no data that can capture these nuances. Instead, these nuances will simply be seen by the model as consistent deltas from what it predicts. These deltas will need to be accounted for in order for the model to perform accurately, and is where the model will need to adapt to the user. \footnote{Even more epic foreshadowing...} In order for the model to properly adapt the latent fatigue that is generated from workouts will need to be accounted for, which will allow the model to accurately say that something outside of the gym has changed when deltas from predictions inevitably crop up.
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[scale=0.55]{images/p2/ch1/LatentFatigue.png}
+    \caption{A figure demonstrating how latent fatigue will accumulate over the course of several workouts.}
+    \label{fig:P2C1_LatentFatigue}
+\end{figure}
+
+Capturing the latent fatigue from workouts is a very similar process to inter-workout fatigue, the timescale is just a lot larger.
+
+\begin{minipage}{\textwidth}
+	\begin{equation*}
+		F_l =
+			F_{w} + 
+			\epsilon_2 F_w
+			\sum_{i=0}^{n_w-1} \left( 
+				s_i r_i E_i^\rho
+				\sum_{j=0}^{j=i-1} S(i,j)\left(
+					\frac{1}{t_i-t_j+1}
+				\right)^\sigma
+			\right)
+	\end{equation*}
+	\centerline{where}
+	\begin{equation*}
+		\begin{split}
+			& n_w \text{ represents the total number of exercises performed} \\
+			& S(i,j) \text{ represents a similarity score between exercise }i \text{ and exercise }j \\
+			& \rho, \sigma >0
+		\end{split}
+	\end{equation*}
+\end{minipage}\\
 
 
+\begin{minipage}{\textwidth}
+	\begin{equation}
+		\label{eq:P2C1_InterWorkoutFatigue}
+		\begin{split}
+			F_e & = 
+			\epsilon_2 F_w
+			\sum_{i=0}^{n_w-1} \left( 
+				s_i r_i E_i^\rho
+				\sum_{j=0}^{j=i-1} S(i,j)\left(
+					\frac{1}{t_i-t_j+1}
+				\right)^\sigma
+			\right)
+			+F_w
+			\\
+			& =
+			\epsilon_2 \epsilon_3 \epsilon_4 \epsilon_5 \epsilon_6
+			\sum_{i=0}^{n_w-1} \left( 
+				s_i r_i E_i^\rho
+				\sum_{j=0}^{j=i-1} S(i,j)\left(
+					\frac{1}{t_i-t_j+1}
+				\right)^\sigma
+			\right)
+			\sum_{i=0}^{n_e-1} \left( 
+				s_i r_i E_i^\mu 
+				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+			\right)
+			(s-1)^\gamma 
+			(r-1)^\beta
+			\left(
+				\frac{E}{10} 
+			\right)^\alpha
+			\\
+			& \;\;\; +
+			\epsilon_2 \epsilon_3 \epsilon_4 \epsilon_6
+			\sum_{i=0}^{n_w-1} \left( 
+				s_i r_i E_i^\rho
+				\sum_{j=0}^{j=i-1} S(i,j)\left(
+					\frac{1}{t_i-t_j+1}
+				\right)^\sigma
+			\right)
+			\sum_{i=0}^{n_e-1} \left( 
+				s_i r_i E_i^\mu 
+				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+			\right)
+			(r-1)^\gamma
+			\left(
+				\frac{E}{10} 
+			\right)^\alpha
+			\\
+			& \;\;\; +
+			\epsilon_2 \epsilon_3 \epsilon_5 \epsilon_6
+			\sum_{i=0}^{n_w-1} \left( 
+				s_i r_i E_i^\rho
+				\sum_{j=0}^{j=i-1} S(i,j)\left(
+					\frac{1}{t_i-t_j+1}
+				\right)^\sigma
+			\right)
+			\sum_{i=0}^{n_e-1} \left( 
+				s_i r_i E_i^\mu 
+				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+			\right)
+			(r-1)^\beta
+			\left(
+				\frac{E}{10} 
+			\right)^\alpha
+			\\
+			& \;\;\; +
+			\epsilon_2 \epsilon_3 \epsilon_6
+			\sum_{i=0}^{n_w-1} \left( 
+				s_i r_i E_i^\rho
+				\sum_{j=0}^{j=i-1} S(i,j)\left(
+					\frac{1}{t_i-t_j+1}
+				\right)^\sigma
+			\right)
+			\sum_{i=0}^{n_e-1} \left( 
+				s_i r_i E_i^\mu 
+				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+			\right)
+			\left(
+				\frac{E}{10} 
+			\right)^\alpha
+			\\
+			& \;\;\; +
+			\epsilon_2 \epsilon_4 \epsilon_5 \epsilon_6
+			\sum_{i=0}^{n_w-1} \left( 
+				s_i r_i E_i^\rho
+				\sum_{j=0}^{j=i-1} S(i,j)\left(
+					\frac{1}{t_i-t_j+1}
+				\right)^\sigma
+			\right)
+			(s-1)^\gamma 
+			(r-1)^\beta
+			\left(
+				\frac{E}{10} 
+			\right)^\alpha
+			\\
+			& \;\;\; +
+			\epsilon_2 \epsilon_4 \epsilon_6 
+			\sum_{i=0}^{n_w-1} \left( 
+				s_i r_i E_i^\rho
+				\sum_{j=0}^{j=i-1} S(i,j)\left(
+					\frac{1}{t_i-t_j+1}
+				\right)^\sigma
+			\right)
+			(r-1)^\gamma
+			\left(
+				\frac{E}{10} 
+			\right)^\alpha
+			\\
+			& \;\;\; +
+			\epsilon_2 \epsilon_5 \epsilon_6 
+			\sum_{i=0}^{n_w-1} \left( 
+				s_i r_i E_i^\rho
+				\sum_{j=0}^{j=i-1} S(i,j)\left(
+					\frac{1}{t_i-t_j+1}
+				\right)^\sigma
+			\right)
+			(r-1)^\beta
+			\left(
+				\frac{E}{10} 
+			\right)^\alpha
+			\\
+			& \;\;\; +
+			\epsilon_2 \epsilon_6
+			\sum_{i=0}^{n_w-1} \left( 
+				s_i r_i E_i^\rho
+				\sum_{j=0}^{j=i-1} S(i,j)\left(
+					\frac{1}{t_i-t_j+1}
+				\right)^\sigma
+			\right)
+			\left(
+				\frac{E}{10} 
+			\right)^\alpha
+			\\
+			& \;\;\; +
+			\epsilon_3 \epsilon_4 \epsilon_5 \epsilon_6
+			\sum_{i=0}^{n_e-1} \left( 
+				s_i r_i E_i^\mu 
+				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+			\right)
+			(s-1)^\gamma 
+			(r-1)^\beta
+			\left(
+				\frac{E}{10} 
+			\right)^\alpha
+			\\
+			& \;\;\; +
+			\epsilon_3 \epsilon_4 \epsilon_6
+			\sum_{i=0}^{n_e-1} \left( 
+				s_i r_i E_i^\mu 
+				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+			\right)
+			(r-1)^\gamma
+			\left(
+				\frac{E}{10} 
+			\right)^\alpha
+			\\
+			& \;\;\; +
+			\epsilon_3 \epsilon_5 \epsilon_6
+			\sum_{i=0}^{n_e-1} \left( 
+				s_i r_i E_i^\mu 
+				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+			\right)
+			(r-1)^\beta
+			\left(
+				\frac{E}{10} 
+			\right)^\alpha
+			\\
+			& \;\;\; +
+			\epsilon_3 \epsilon_6
+			\sum_{i=0}^{n_e-1} \left( 
+				s_i r_i E_i^\mu 
+				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+			\right)
+			\left(
+				\frac{E}{10} 
+			\right)^\alpha
+			\\
+			& \;\;\; +
+			\epsilon_4 \epsilon_5 \epsilon_6
+			(s-1)^\gamma 
+			(r-1)^\beta
+			\left(
+				\frac{E}{10} 
+			\right)^\alpha
+			+
+			\epsilon_4 \epsilon_6 
+			(r-1)^\gamma
+			\left(
+				\frac{E}{10} 
+			\right)^\alpha
+			+
+			\epsilon_5 \epsilon_6 
+			(r-1)^\beta
+			\left(
+				\frac{E}{10} 
+			\right)^\alpha
+			+
+			\epsilon_6
+			\left(
+				\frac{E}{10} 
+			\right)^\alpha
+			\\
+		\end{split}
+	\end{equation}
+	\centerline{where}
+	\begin{equation*}
+		\begin{split}
+		    & \alpha \ge 1 \\
+		    & \beta,\gamma, \mu, \eta, \rho, \sigma > 0 \\
+			& 0 \le \epsilon_2, \epsilon_3, \epsilon_4, \epsilon_5, \epsilon_6 \le 1 \\
+			& n_e \text{ represents the total number of exercises performed in a workout} \\
+			& n_w \text{ represents the total number of exercises performed} \\
+			& S(i,j) \text{ represents a similarity score between exercise }i \text{ and exercise }j \\
+		\end{split}
+	\end{equation*}
+\end{minipage}\\
 
-Section \ref{sec:AugmentedDataSet} introduced indexes to represent inter-workout and inter-exercise fatigue. These data points can be directly used in the above equation, however as discussed in section \ref{sec:AugmentedDataSet} the index values only represent the fatigue present before the exercise is performed. The fatigue generated from the current exercise needs to be considered to avoid scenarios where the lifter fails a lift due to being too fatigued to make it through the entire exercise. This is where inter-set fatigue matters. Inter-set fatigue will increase in proportion to to total number of reps done. Two additional terms can be added to measure the fatigue generated from sets and reps individually.
 
-\begin{equation*}
-	F_{tot} \hat{=} \epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+\epsilon_5 sr+\epsilon_6 s+\epsilon_7 r
-\end{equation*}
+\section{What is Similarity?}
+\label{sec:P2C1_WhatIsSimilarity}
+
+
 
 Finally, the approximate form of the effort-fatigue model can be defined, and is shown in equation \ref{eq:PotentialSurfaceEquation}. Again, this may seem like a finished equation, but remember this is just a template. The surfaces in the next several chapters will create final equations to concretely realize the ideas of the effort-fatigue model, apply constraints, and enforce desired behavior. These equations may take very different forms, but the general idea of the effort-fatigue model still stands behind them.
 
@@ -420,6 +777,8 @@ Finally, the approximate form of the effort-fatigue model can be defined, and is
 \end{equation}
 
 Before going to the next chapters, it is worth mentioning that latent fatigue will be discussed in chapter \ref{sec:}. It has it's rightful place in the potential surface, but it's implications are so broad that they need a chapter of there own. Until chapter \ref{sec:} the effects from latent fatigue will not be considered. For now, think of it as though $\epsilon_2$ were set to $0$. 
+
+
 
 
 \section{Summary}
