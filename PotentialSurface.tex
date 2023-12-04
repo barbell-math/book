@@ -228,16 +228,24 @@ The last missing piece is how to represent $\Delta F_r$ as it is not something t
 	F_{r} + \epsilon_5 (r-1)^\beta F_r
 \end{equation*}
 
-After a little help from intuition, equation \ref{eq:P2C1_InterSetFatigue} is the final equation that represents inter-set fatigue. 
+After a little help from intuition, equation \ref{eq:P2C1_InterSetFatigue} is the final equation that represents inter-set fatigue.
 
 \begin{minipage}{\textwidth}
 	\begin{equation}
 		\label{eq:P2C1_InterSetFatigue}
-		F_s = \epsilon_5 (r-1) ^ \beta F_r + F_r 
-		= \epsilon_5 \epsilon_6 (r-1)^\beta \left( 
-			\frac{E}{10} 
-		\right)^\alpha
-		+ \epsilon_6 \left( \frac{E}{10} \right)^\alpha
+		\begin{split}
+			F_s & = \epsilon_5 (r-1) ^ \beta F_r + F_r
+			= \epsilon_5 \epsilon_6 (r-1)^\beta \left( 
+				\frac{E}{10} 
+			\right)^\alpha
+			+ \epsilon_6 \left( \frac{E}{10} \right)^\alpha
+			\\
+			& = 
+			\epsilon_6 \left( \frac{E}{10} \right)^\alpha
+			\left(
+				\epsilon_5 (r-1)^\beta + 1
+			\right)
+		\end{split}
 	\end{equation}
 	\centerline{where}
 	\begin{equation*}
@@ -268,38 +276,10 @@ Given the extreme parallels between inter-set fatigue and inter-exercise fatigue
 		\label{eq:P2C1_InterExerciseFatigue}
 		\begin{split}
 			F_e & = \epsilon_4 (s-1) ^ \gamma F_s + F_s \\
-			& = \epsilon_4 (s-1)^\gamma \left(
-				\epsilon_5 \epsilon_6 (r-1)^\beta \left(
-					\frac{E}{10} 
-				\right)^\alpha
-				+ \epsilon_6 \left( \frac{E}{10} \right)^\alpha
-			\right)+
-			\epsilon_5 \epsilon_6 (r-1)^\beta \left(
-				\frac{E}{10} 
-			\right)^\alpha
-			+ \epsilon_6 \left( \frac{E}{10} \right)^\alpha \\
-			& = 
-			\epsilon_4 \epsilon_5 \epsilon_6
-			(s-1)^\gamma 
-			(r-1)^\beta
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
-			+
-			\epsilon_4 \epsilon_6 (r-1)^\gamma
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
-			+
-			\epsilon_5 \epsilon_6 (r-1)^\beta
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
-			+
-			\epsilon_6
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
+				& = F_s\left( \epsilon_4 (s-1)^\gamma+1  \right) \\
+				& = 	\epsilon_6 \left( \frac{E}{10} \right)^\alpha
+					\left( \epsilon_5 (r-1)^\beta + 1 \right)
+					\left(\epsilon_4 (s-1)^\gamma+1  \right)
 		\end{split}
 	\end{equation}
 	\centerline{where}
@@ -418,76 +398,23 @@ With all of that, the final equation for inter-workout fatigue is shown in equat
 				s_i r_i E_i^\mu 
 				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
 			\right)
-			+ F_e
-			\\
-			& =
-			\epsilon_3 \epsilon_4 \epsilon_5 \epsilon_6
-			\sum_{i=0}^{n_e-1} \left( 
-				s_i r_i E_i^\mu 
-				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+			+ F_e \\
+			& = F_e \left(
+				\sum_{i=0}^{n_e-1} \left( 
+					s_i r_i E_i^\mu 
+					\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+				\right)
 			\right)
-			(s-1)^\gamma 
-			(r-1)^\beta
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
 			\\
-			& \;\;\; +
-			\epsilon_3 \epsilon_4 \epsilon_6
-			\sum_{i=0}^{n_e-1} \left( 
-				s_i r_i E_i^\mu 
-				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
-			\right)
-			(r-1)^\gamma
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
-			\\
-			& \;\;\; +
-			\epsilon_3 \epsilon_5 \epsilon_6
-			\sum_{i=0}^{n_e-1} \left( 
-				s_i r_i E_i^\mu 
-				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
-			\right)
-			(r-1)^\beta
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
-			\\
-			& \;\;\; +
-			\epsilon_3 \epsilon_6
-			\sum_{i=0}^{n_e-1} \left( 
-				s_i r_i E_i^\mu 
-				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
-			\right)
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
-			\\
-			& \;\;\; +
-			\epsilon_4 \epsilon_5 \epsilon_6
-			(s-1)^\gamma 
-			(r-1)^\beta
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
-			+
-			\epsilon_4 \epsilon_6 
-			(r-1)^\gamma
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
-			+
-			\epsilon_5 \epsilon_6 
-			(r-1)^\beta
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
-			+
-			\epsilon_6
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
+			& = \epsilon_6 \left( \frac{E}{10} \right)^\alpha
+				\left( \epsilon_5 (r-1)^\beta + 1 \right)
+				\left(\epsilon_4 (s-1)^\gamma+1  \right)
+				\left(
+					1+\epsilon_3 \sum_{i=0}^{n_e-1} \left( 
+						s_i r_i E_i^\mu 
+						\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+					\right)
+				\right)
 			\\
 		\end{split}
 	\end{equation}
@@ -515,7 +442,7 @@ The last fatigue category is latent fatigue. This category has the largest times
     \label{fig:P2C1_LatentFatigue}
 \end{figure}
 
-Capturing the latent fatigue from workouts is a very similar process to inter-workout fatigue, the timescale is just a lot larger.
+Capturing the latent fatigue from workouts is a very similar process to inter-workout fatigue, the timescale is just a lot larger. As such, a similar equation to what was used in the previous section can be used here. One difference 
 
 \begin{minipage}{\textwidth}
 	\begin{equation*}
@@ -539,209 +466,39 @@ Capturing the latent fatigue from workouts is a very similar process to inter-wo
 	\end{equation*}
 \end{minipage}\\
 
-
 \begin{minipage}{\textwidth}
 	\begin{equation}
 		\label{eq:P2C1_InterWorkoutFatigue}
 		\begin{split}
-			F_e & = 
-			\epsilon_2 F_w
-			\sum_{i=0}^{n_w-1} \left( 
-				s_i r_i E_i^\rho
-				\sum_{j=0}^{j=i-1} S(i,j)\left(
-					\frac{1}{t_i-t_j+1}
-				\right)^\sigma
-			\right)
-			+F_w
-			\\
-			& =
-			\epsilon_2 \epsilon_3 \epsilon_4 \epsilon_5 \epsilon_6
-			\sum_{i=0}^{n_w-1} \left( 
-				s_i r_i E_i^\rho
-				\sum_{j=0}^{j=i-1} S(i,j)\left(
-					\frac{1}{t_i-t_j+1}
-				\right)^\sigma
-			\right)
+			F_w & = 
+			\epsilon_2 F_e 
 			\sum_{i=0}^{n_e-1} \left( 
 				s_i r_i E_i^\mu 
 				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
 			\right)
-			(s-1)^\gamma 
-			(r-1)^\beta
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
+			+ F_e
 			\\
-			& \;\;\; +
-			\epsilon_2 \epsilon_3 \epsilon_4 \epsilon_6
-			\sum_{i=0}^{n_w-1} \left( 
-				s_i r_i E_i^\rho
-				\sum_{j=0}^{j=i-1} S(i,j)\left(
-					\frac{1}{t_i-t_j+1}
-				\right)^\sigma
-			\right)
-			\sum_{i=0}^{n_e-1} \left( 
-				s_i r_i E_i^\mu 
-				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
-			\right)
-			(r-1)^\gamma
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
-			\\
-			& \;\;\; +
-			\epsilon_2 \epsilon_3 \epsilon_5 \epsilon_6
-			\sum_{i=0}^{n_w-1} \left( 
-				s_i r_i E_i^\rho
-				\sum_{j=0}^{j=i-1} S(i,j)\left(
-					\frac{1}{t_i-t_j+1}
-				\right)^\sigma
-			\right)
-			\sum_{i=0}^{n_e-1} \left( 
-				s_i r_i E_i^\mu 
-				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
-			\right)
-			(r-1)^\beta
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
-			\\
-			& \;\;\; +
-			\epsilon_2 \epsilon_3 \epsilon_6
-			\sum_{i=0}^{n_w-1} \left( 
-				s_i r_i E_i^\rho
-				\sum_{j=0}^{j=i-1} S(i,j)\left(
-					\frac{1}{t_i-t_j+1}
-				\right)^\sigma
-			\right)
-			\sum_{i=0}^{n_e-1} \left( 
-				s_i r_i E_i^\mu 
-				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
-			\right)
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
-			\\
-			& \;\;\; +
-			\epsilon_2 \epsilon_4 \epsilon_5 \epsilon_6
-			\sum_{i=0}^{n_w-1} \left( 
-				s_i r_i E_i^\rho
-				\sum_{j=0}^{j=i-1} S(i,j)\left(
-					\frac{1}{t_i-t_j+1}
-				\right)^\sigma
-			\right)
-			(s-1)^\gamma 
-			(r-1)^\beta
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
-			\\
-			& \;\;\; +
-			\epsilon_2 \epsilon_4 \epsilon_6 
-			\sum_{i=0}^{n_w-1} \left( 
-				s_i r_i E_i^\rho
-				\sum_{j=0}^{j=i-1} S(i,j)\left(
-					\frac{1}{t_i-t_j+1}
-				\right)^\sigma
-			\right)
-			(r-1)^\gamma
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
-			\\
-			& \;\;\; +
-			\epsilon_2 \epsilon_5 \epsilon_6 
-			\sum_{i=0}^{n_w-1} \left( 
-				s_i r_i E_i^\rho
-				\sum_{j=0}^{j=i-1} S(i,j)\left(
-					\frac{1}{t_i-t_j+1}
-				\right)^\sigma
-			\right)
-			(r-1)^\beta
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
-			\\
-			& \;\;\; +
-			\epsilon_2 \epsilon_6
-			\sum_{i=0}^{n_w-1} \left( 
-				s_i r_i E_i^\rho
-				\sum_{j=0}^{j=i-1} S(i,j)\left(
-					\frac{1}{t_i-t_j+1}
-				\right)^\sigma
-			\right)
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
-			\\
-			& \;\;\; +
-			\epsilon_3 \epsilon_4 \epsilon_5 \epsilon_6
-			\sum_{i=0}^{n_e-1} \left( 
-				s_i r_i E_i^\mu 
-				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
-			\right)
-			(s-1)^\gamma 
-			(r-1)^\beta
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
-			\\
-			& \;\;\; +
-			\epsilon_3 \epsilon_4 \epsilon_6
-			\sum_{i=0}^{n_e-1} \left( 
-				s_i r_i E_i^\mu 
-				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
-			\right)
-			(r-1)^\gamma
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
-			\\
-			& \;\;\; +
-			\epsilon_3 \epsilon_5 \epsilon_6
-			\sum_{i=0}^{n_e-1} \left( 
-				s_i r_i E_i^\mu 
-				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
-			\right)
-			(r-1)^\beta
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
-			\\
-			& \;\;\; +
-			\epsilon_3 \epsilon_6
-			\sum_{i=0}^{n_e-1} \left( 
-				s_i r_i E_i^\mu 
-				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
-			\right)
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
-			\\
-			& \;\;\; +
-			\epsilon_4 \epsilon_5 \epsilon_6
-			(s-1)^\gamma 
-			(r-1)^\beta
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
-			+
-			\epsilon_4 \epsilon_6 
-			(r-1)^\gamma
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
-			+
-			\epsilon_5 \epsilon_6 
-			(r-1)^\beta
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
-			+
-			\epsilon_6
-			\left(
-				\frac{E}{10} 
-			\right)^\alpha
+			& = \epsilon_6 \left( \frac{E}{10} \right)^\alpha
+				\left( \epsilon_5 (r-1)^\beta + 1 \right)
+				\left(\epsilon_4 (s-1)^\gamma+1  \right)
+				\\
+				& \;\;\;
+				\left(
+					1+\epsilon_3 \sum_{i=0}^{n_e-1} \left( 
+						s_i r_i E_i^\mu 
+						\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+					\right)
+				\right)
+				\\
+				& \;\;\;
+				\left(
+					1+\epsilon_2 \sum_{i=0}^{n_w-1} \left( 
+						s_i r_i E_i^\rho
+						\sum_{j=0}^{j=i-1} S(i,j)\left(
+							\frac{1}{t_i-t_j+1}
+						\right)^\sigma
+					\right)
+				\right)
 			\\
 		\end{split}
 	\end{equation}
@@ -758,25 +515,231 @@ Capturing the latent fatigue from workouts is a very similar process to inter-wo
 	\end{equation*}
 \end{minipage}\\
 
+%\begin{minipage}{\textwidth}
+%	\begin{equation}
+%		\label{eq:P2C1_InterWorkoutFatigue}
+%		\begin{split}
+%			F_e & = 
+%			\epsilon_2 F_w
+%			\sum_{i=0}^{n_w-1} \left( 
+%				s_i r_i E_i^\rho
+%				\sum_{j=0}^{j=i-1} S(i,j)\left(
+%					\frac{1}{t_i-t_j+1}
+%				\right)^\sigma
+%			\right)
+%			+F_w
+%			\\
+%			& =
+%			\epsilon_2 \epsilon_3 \epsilon_4 \epsilon_5 \epsilon_6
+%			\sum_{i=0}^{n_w-1} \left( 
+%				s_i r_i E_i^\rho
+%				\sum_{j=0}^{j=i-1} S(i,j)\left(
+%					\frac{1}{t_i-t_j+1}
+%				\right)^\sigma
+%			\right)
+%			\sum_{i=0}^{n_e-1} \left( 
+%				s_i r_i E_i^\mu 
+%				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+%			\right)
+%			(s-1)^\gamma 
+%			(r-1)^\beta
+%			\left(
+%				\frac{E}{10} 
+%			\right)^\alpha
+%			\\
+%			& \;\;\; +
+%			\epsilon_2 \epsilon_3 \epsilon_4 \epsilon_6
+%			\sum_{i=0}^{n_w-1} \left( 
+%				s_i r_i E_i^\rho
+%				\sum_{j=0}^{j=i-1} S(i,j)\left(
+%					\frac{1}{t_i-t_j+1}
+%				\right)^\sigma
+%			\right)
+%			\sum_{i=0}^{n_e-1} \left( 
+%				s_i r_i E_i^\mu 
+%				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+%			\right)
+%			(r-1)^\gamma
+%			\left(
+%				\frac{E}{10} 
+%			\right)^\alpha
+%			\\
+%			& \;\;\; +
+%			\epsilon_2 \epsilon_3 \epsilon_5 \epsilon_6
+%			\sum_{i=0}^{n_w-1} \left( 
+%				s_i r_i E_i^\rho
+%				\sum_{j=0}^{j=i-1} S(i,j)\left(
+%					\frac{1}{t_i-t_j+1}
+%				\right)^\sigma
+%			\right)
+%			\sum_{i=0}^{n_e-1} \left( 
+%				s_i r_i E_i^\mu 
+%				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+%			\right)
+%			(r-1)^\beta
+%			\left(
+%				\frac{E}{10} 
+%			\right)^\alpha
+%			\\
+%			& \;\;\; +
+%			\epsilon_2 \epsilon_3 \epsilon_6
+%			\sum_{i=0}^{n_w-1} \left( 
+%				s_i r_i E_i^\rho
+%				\sum_{j=0}^{j=i-1} S(i,j)\left(
+%					\frac{1}{t_i-t_j+1}
+%				\right)^\sigma
+%			\right)
+%			\sum_{i=0}^{n_e-1} \left( 
+%				s_i r_i E_i^\mu 
+%				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+%			\right)
+%			\left(
+%				\frac{E}{10} 
+%			\right)^\alpha
+%			\\
+%			& \;\;\; +
+%			\epsilon_2 \epsilon_4 \epsilon_5 \epsilon_6
+%			\sum_{i=0}^{n_w-1} \left( 
+%				s_i r_i E_i^\rho
+%				\sum_{j=0}^{j=i-1} S(i,j)\left(
+%					\frac{1}{t_i-t_j+1}
+%				\right)^\sigma
+%			\right)
+%			(s-1)^\gamma 
+%			(r-1)^\beta
+%			\left(
+%				\frac{E}{10} 
+%			\right)^\alpha
+%			\\
+%			& \;\;\; +
+%			\epsilon_2 \epsilon_4 \epsilon_6 
+%			\sum_{i=0}^{n_w-1} \left( 
+%				s_i r_i E_i^\rho
+%				\sum_{j=0}^{j=i-1} S(i,j)\left(
+%					\frac{1}{t_i-t_j+1}
+%				\right)^\sigma
+%			\right)
+%			(r-1)^\gamma
+%			\left(
+%				\frac{E}{10} 
+%			\right)^\alpha
+%			\\
+%			& \;\;\; +
+%			\epsilon_2 \epsilon_5 \epsilon_6 
+%			\sum_{i=0}^{n_w-1} \left( 
+%				s_i r_i E_i^\rho
+%				\sum_{j=0}^{j=i-1} S(i,j)\left(
+%					\frac{1}{t_i-t_j+1}
+%				\right)^\sigma
+%			\right)
+%			(r-1)^\beta
+%			\left(
+%				\frac{E}{10} 
+%			\right)^\alpha
+%			\\
+%			& \;\;\; +
+%			\epsilon_2 \epsilon_6
+%			\sum_{i=0}^{n_w-1} \left( 
+%				s_i r_i E_i^\rho
+%				\sum_{j=0}^{j=i-1} S(i,j)\left(
+%					\frac{1}{t_i-t_j+1}
+%				\right)^\sigma
+%			\right)
+%			\left(
+%				\frac{E}{10} 
+%			\right)^\alpha
+%			\\
+%			& \;\;\; +
+%			\epsilon_3 \epsilon_4 \epsilon_5 \epsilon_6
+%			\sum_{i=0}^{n_e-1} \left( 
+%				s_i r_i E_i^\mu 
+%				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+%			\right)
+%			(s-1)^\gamma 
+%			(r-1)^\beta
+%			\left(
+%				\frac{E}{10} 
+%			\right)^\alpha
+%			\\
+%			& \;\;\; +
+%			\epsilon_3 \epsilon_4 \epsilon_6
+%			\sum_{i=0}^{n_e-1} \left( 
+%				s_i r_i E_i^\mu 
+%				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+%			\right)
+%			(r-1)^\gamma
+%			\left(
+%				\frac{E}{10} 
+%			\right)^\alpha
+%			\\
+%			& \;\;\; +
+%			\epsilon_3 \epsilon_5 \epsilon_6
+%			\sum_{i=0}^{n_e-1} \left( 
+%				s_i r_i E_i^\mu 
+%				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+%			\right)
+%			(r-1)^\beta
+%			\left(
+%				\frac{E}{10} 
+%			\right)^\alpha
+%			\\
+%			& \;\;\; +
+%			\epsilon_3 \epsilon_6
+%			\sum_{i=0}^{n_e-1} \left( 
+%				s_i r_i E_i^\mu 
+%				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+%			\right)
+%			\left(
+%				\frac{E}{10} 
+%			\right)^\alpha
+%			\\
+%			& \;\;\; +
+%			\epsilon_4 \epsilon_5 \epsilon_6
+%			(s-1)^\gamma 
+%			(r-1)^\beta
+%			\left(
+%				\frac{E}{10} 
+%			\right)^\alpha
+%			+
+%			\epsilon_4 \epsilon_6 
+%			(r-1)^\gamma
+%			\left(
+%				\frac{E}{10} 
+%			\right)^\alpha
+%			+
+%			\epsilon_5 \epsilon_6 
+%			(r-1)^\beta
+%			\left(
+%				\frac{E}{10} 
+%			\right)^\alpha
+%			+
+%			\epsilon_6
+%			\left(
+%				\frac{E}{10} 
+%			\right)^\alpha
+%			\\
+%		\end{split}
+%	\end{equation}
+%	\centerline{where}
+%	\begin{equation*}
+%		\begin{split}
+%		    & \alpha \ge 1 \\
+%		    & \beta,\gamma, \mu, \eta, \rho, \sigma > 0 \\
+%			& 0 \le \epsilon_2, \epsilon_3, \epsilon_4, \epsilon_5, \epsilon_6 \le 1 \\
+%			& n_e \text{ represents the total number of exercises performed in a workout} \\
+%			& n_w \text{ represents the total number of exercises performed} \\
+%			& S(i,j) \text{ represents a similarity score between exercise }i \text{ and exercise }j \\
+%		\end{split}
+%	\end{equation*}
+% \end{minipage}\\
+
 
 \section{What is Similarity?}
 \label{sec:P2C1_WhatIsSimilarity}
 
+There has been discussion about exercise similarity, but there has been no discussion about what constitutes similarity. Before continuing the details of what makes exercises similar needs to be established.
 
 
-Finally, the approximate form of the effort-fatigue model can be defined, and is shown in equation \ref{eq:PotentialSurfaceEquation}. Again, this may seem like a finished equation, but remember this is just a template. The surfaces in the next several chapters will create final equations to concretely realize the ideas of the effort-fatigue model, apply constraints, and enforce desired behavior. These equations may take very different forms, but the general idea of the effort-fatigue model still stands behind them.
-
-\begin{equation}
-	\label{eq:PotentialSurfaceEquation}
-	\begin{split}
-		I & \hat{=} E_{tot}\hat{-}F_{tot} \\
-		I & \hat{=} \epsilon_1 E\hat{-}\left( 
-			\epsilon_2 F_l+\epsilon_3 F_w+\epsilon_4 F_e+\epsilon_5 sr+\epsilon_6 s+\epsilon_7 r
-		\right)
-	\end{split}
-\end{equation}
-
-Before going to the next chapters, it is worth mentioning that latent fatigue will be discussed in chapter \ref{sec:}. It has it's rightful place in the potential surface, but it's implications are so broad that they need a chapter of there own. Until chapter \ref{sec:} the effects from latent fatigue will not be considered. For now, think of it as though $\epsilon_2$ were set to $0$. 
 
 
 
@@ -785,74 +748,111 @@ Before going to the next chapters, it is worth mentioning that latent fatigue wi
 
 This chapter outlined a model that will be fully realized in the remaining chapters of part 1. Doing this will create surfaces that will need to be fitted to the data. These surfaces will be called \textit{potential surfaces}, because they represent a lifters potential performance. It is important to conceptualize that every combination of sets, reps, weight, and effort defined by a potential surface is theoretically possible for a lifter to complete. This is the foundation this entire book will build off of.
 
-
-
-
-
-\section{Augmenting The Data: Improvising for What Can't Be Measured}
-\label{sec:AugmentedDataSet}
-
-Some readers may have noticed the lack of data that records fatigue. This is a direct result of not being able to measure fatigue in a timely manner that is also unobtrusive to training. Many of the tests used to measure fatigue require tools or extensive time that is simply not conducive to a training environment, especially when it comes to short term fatigue measurements such as inter-set fatigue. However, fatigue is a large factor that determines what a lifter can do. While fatigue cannot be directly represented due to it not being part of the data, it effects are still visible. Things like sets that took more effort than they should have can be attributed to fatigue. Any modeling done will need a way to determine what affects fatigue had. To help accomplish this, the data set will be augmented with \textit{indexes} that provide measurements similar to how fatigue would be present if it were measured directly. This may seem strange, so hopefully the first example will help clear things up.
-
-Consider inter-workout fatigue. Every rep of every exercise a lifter does will increase the lifters inter-workout fatigue. To represent this, an inter-workout fatigue index will be added to the data set. To calculate the inter-workout fatigue index, the total number of reps completed across all exercises before the current exercise will be summed together. The arithmetic sequence shown in equation \ref{eq:InterWorkoutFatigueEquation} demonstrates this, and can be used when adding an exercise to a workout. Note how the first inter-workout fatigue index is $0$. This reflects the lifter not having generated any inter-workout fatigue when first starting a workout. Every value after that then reflects the inter-workout fatigue that was present \textit{before} each exercise was done. Only measuring the fatigue that was present before the exercise was performed is important because it represents the fatigue the exercise was performed with, ignoring the fatigue that will be generated while doing the exercise. This is consistent with how any real measurements of fatigue would be recorded.
+Finally, the approximate form of the effort-fatigue model can be defined, and is shown in equation \ref{eq:PotentialSurfaceEquation}. Again, this may seem like a finished equation, but remember this is just a template. The surfaces in the next several chapters will create final equations to concretely realize the ideas of the effort-fatigue model. These equations may take very different forms, but the principles of the effort-fatigue model will still stand behind them.
 
 \begin{equation}
-	\label{eq:InterWorkoutFatigueEquation}
+	\label{eq:PotentialSurfaceEquation}
 	\begin{split}
-		F_{w,i} & = 
-		\begin{cases}
-			s_{i-1}r_{i-1}+F_{w,i-1} \;\; & \text{if }t_i=t_{i-1} \\
-			0 \;\; & \text{otherwise}
-		\end{cases}
-		\\
-		F_{w,0} & = 0
+		I & \hat{=} E_{tot} \hat{-} F_{tot} \\
+		I & \hat{=} \epsilon_1 E \hat{-} 
+			\left(
+				\epsilon_6 \left( \frac{E}{10} \right)^\alpha
+				\left( \epsilon_5 (r-1)^\beta + 1 \right)
+				\left( \epsilon_4 (s-1)^\gamma+1 \right)
+				\right.
+				\\
+				& \;\;\;\;\;\;\;\;\;\;\;\;\;\;
+				\left(
+					1+\epsilon_3 \sum_{i=0}^{n_e-1} \left( 
+						s_i r_i E_i^\mu 
+						\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+					\right)
+				\right)
+				\\
+				& \;\;\;\;\;\;\;\;\;\;\;\;\;\;
+				\left.
+				\left(
+					1+\epsilon_2 \sum_{i=0}^{n_w-1} \left( 
+						s_i r_i E_i^\rho
+						\sum_{j=0}^{j=i-1} S(i,j)\left(
+							\frac{1}{t_i-t_j+1}
+						\right)^\sigma
+					\right)
+				\right)
+			\right)
 	\end{split}
 \end{equation}
 
-By defining the inter-workout fatigue index this way, it will increase when a direct measurement of inter-workout fatigue would. Having the index value increase as fatigue increases and decrease as fatigue decreases is the key to making this strategy work, as any modeling later will be able to scale the results as needed through constants. \footnote{This method does assume fatigue increases with reps linearly. An argument could be made for greater than linear increases in fatigue, but for simplicities sake it will be assumed to increase linearly. Note that if further research proves a non-linear relationship the index values could easily be adjusted to follow the correct non-linear pattern. This could also be adjusted for directly in the model if necessary.} Table \ref{tab:IndexesExample} shows an example of the inter-workout fatigue index along with how it's values were calculated above it. \footnote{Note how the last value is not shown in data set because it is past the end of the workout.}
 
-\begin{equation*}
-	\begin{aligned}
-		F_{w,0} & =0 \\
-		F_{w,1} & =1(1)+0=1 \\
-		F_{w,2} & =5(4)+1=21 \\
-		F_{w,3} & =1(10)+21=31 \\
-		F_{w,4} & =5(5)+31=56 \\
-		F_{w,5} & =3(12)+56=92  \\
-	\end{aligned}
-\end{equation*}
 
-\begin{table}[h]
-	\centering
-	\begin{tabular}{c|c|c|c|c|c|c|c}
-		Date & Exercise & Sets & Reps & Weight & Effort & $F_w$ Index & $F_e$ Index \\
-        \hline
-        Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $1$ & $455$ lbs & $8.5$ & $0$ & $0$ \\
-        Mon, July 4\textsuperscript{th} & Deadlifts & $5$ & $4$ & $405$ lbs & $8.5$ & $1$ & $1$ \\
-        Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $10$ & $315$ lbs & $7$ & $21$ & $21$ \\
-        Mon, July 4\textsuperscript{th} & Barbell Rows & $5$ & $5$ & $225$ lbs & $6.5$ & $31$ & $0$ \\
-        Mon, July 4\textsuperscript{th} & Hyperextensions & $3$ & $12$ & $45$ lbs & $-$ & $56$ & $0$ \\
-        Tue, July 5\textsuperscript{th} & SSB Squats & $5$ & $8$ & $255$ lbs & $6$ & $0$ & $0$ \\
-        \dots & \dots & \dots & \dots & \dots & \dots & \dots & \dots \\
-	\end{tabular}
-	\caption{A table demonstrating the way various fatigue index values are calculated. Note how $F_w$ increases with the total number of reps. $F_e$ increases with the number times a lift was performed, also in accordance to the total number of reps. $F_w$ resets to $0$ on the new workout and $F_e$ resets to $0$ on each different exercise.}
-	\label{tab:IndexesExample}
-\end{table}
 
-Inter-exercise fatigue can have the same index scheme but instead of incrementing over the entire workout, it only increments according to sets of the same exercise, resetting each time a new exercise is started. Equation \ref{eq:InterExerciseFatigueEquation} can be used to calculate the inter-exercise fatigue index. Note that this equation is only valid within the context of a single exercise. Table \ref{tab:IndexesExample} also shows an example of inter-exercise fatigue.
 
-% TODO - change  t_i to exercise_i
-\begin{equation}
-	\label{eq:InterExerciseFatigueEquation}
-	\begin{split}
-		F_{e,i} & =
-		\begin{cases}
-			s_{i-1}r_{i-1}+F_{e,i-1} \;\; & \text{if }E_{x,i}=E_{x,i-1} \\
-			0 \;\; & \text{otherwise}
-		\end{cases}
-		\\
-		F_{e,0} & = 0
-	\end{split}
-\end{equation}
 
-The last two categories of fatigue are inter-set fatigue and latent fatigue. It is tempting to add an index for inter-set fatigue, but the set and reps values already serve this purpose. Latent fatigue's behavior is not so cut and dry as the other types of fatigue. It can fluctuate based on many factors, many of which are entirely independent from the gym. This makes it difficult to make an index value for latent fatigue as the key to making any index work is to make it increase and decrease as the original measurement would. If those increases and decreases cannot be accurately predicted and represented then an index cannot be used reliably. While the factors outside the gym cannot be controlled for due to the lack of data representing them, the factors that are present from the gym can, and should, be considered. Doing this however will require it's own chapter, chapter \ref{sec:}.
+
+%\section{Augmenting The Data: Improvising for What Can't Be Measured}
+%\label{sec:AugmentedDataSet}
+%
+%Some readers may have noticed the lack of data that records fatigue. This is a direct result of not being able to measure fatigue in a timely manner that is also unobtrusive to training. Many of the tests used to measure fatigue require tools or extensive time that is simply not conducive to a training environment, especially when it comes to short term fatigue measurements such as inter-set fatigue. However, fatigue is a large factor that determines what a lifter can do. While fatigue cannot be directly represented due to it not being part of the data, it effects are still visible. Things like sets that took more effort than they should have can be attributed to fatigue. Any modeling done will need a way to determine what affects fatigue had. To help accomplish this, the data set will be augmented with \textit{indexes} that provide measurements similar to how fatigue would be present if it were measured directly. This may seem strange, so hopefully the first example will help clear things up.
+%
+%Consider inter-workout fatigue. Every rep of every exercise a lifter does will increase the lifters inter-workout fatigue. To represent this, an inter-workout fatigue index will be added to the data set. To calculate the inter-workout fatigue index, the total number of reps completed across all exercises before the current exercise will be summed together. The arithmetic sequence shown in equation \ref{eq:InterWorkoutFatigueEquation} demonstrates this, and can be used when adding an exercise to a workout. Note how the first inter-workout fatigue index is $0$. This reflects the lifter not having generated any inter-workout fatigue when first starting a workout. Every value after that then reflects the inter-workout fatigue that was present \textit{before} each exercise was done. Only measuring the fatigue that was present before the exercise was performed is important because it represents the fatigue the exercise was performed with, ignoring the fatigue that will be generated while doing the exercise. This is consistent with how any real measurements of fatigue would be recorded.
+%
+%\begin{equation}
+%	\label{eq:InterWorkoutFatigueEquation}
+%	\begin{split}
+%		F_{w,i} & = 
+%		\begin{cases}
+%			s_{i-1}r_{i-1}+F_{w,i-1} \;\; & \text{if }t_i=t_{i-1} \\
+%			0 \;\; & \text{otherwise}
+%		\end{cases}
+%		\\
+%		F_{w,0} & = 0
+%	\end{split}
+%\end{equation}
+%
+%By defining the inter-workout fatigue index this way, it will increase when a direct measurement of inter-workout fatigue would. Having the index value increase as fatigue increases and decrease as fatigue decreases is the key to making this strategy work, as any modeling later will be able to scale the results as needed through constants. \footnote{This method does assume fatigue increases with reps linearly. An argument could be made for greater than linear increases in fatigue, but for simplicities sake it will be assumed to increase linearly. Note that if further research proves a non-linear relationship the index values could easily be adjusted to follow the correct non-linear pattern. This could also be adjusted for directly in the model if necessary.} Table \ref{tab:IndexesExample} shows an example of the inter-workout fatigue index along with how it's values were calculated above it. \footnote{Note how the last value is not shown in data set because it is past the end of the workout.}
+%
+%\begin{equation*}
+%	\begin{aligned}
+%		F_{w,0} & =0 \\
+%		F_{w,1} & =1(1)+0=1 \\
+%		F_{w,2} & =5(4)+1=21 \\
+%		F_{w,3} & =1(10)+21=31 \\
+%		F_{w,4} & =5(5)+31=56 \\
+%		F_{w,5} & =3(12)+56=92  \\
+%	\end{aligned}
+%\end{equation*}
+%
+%\begin{table}[h]
+%	\centering
+%	\begin{tabular}{c|c|c|c|c|c|c|c}
+%		Date & Exercise & Sets & Reps & Weight & Effort & $F_w$ Index & $F_e$ Index \\
+%        \hline
+%        Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $1$ & $455$ lbs & $8.5$ & $0$ & $0$ \\
+%        Mon, July 4\textsuperscript{th} & Deadlifts & $5$ & $4$ & $405$ lbs & $8.5$ & $1$ & $1$ \\
+%        Mon, July 4\textsuperscript{th} & Deadlifts & $1$ & $10$ & $315$ lbs & $7$ & $21$ & $21$ \\
+%        Mon, July 4\textsuperscript{th} & Barbell Rows & $5$ & $5$ & $225$ lbs & $6.5$ & $31$ & $0$ \\
+%        Mon, July 4\textsuperscript{th} & Hyperextensions & $3$ & $12$ & $45$ lbs & $-$ & $56$ & $0$ \\
+%        Tue, July 5\textsuperscript{th} & SSB Squats & $5$ & $8$ & $255$ lbs & $6$ & $0$ & $0$ \\
+%        \dots & \dots & \dots & \dots & \dots & \dots & \dots & \dots \\
+%	\end{tabular}
+%	\caption{A table demonstrating the way various fatigue index values are calculated. Note how $F_w$ increases with the total number of reps. $F_e$ increases with the number times a lift was performed, also in accordance to the total number of reps. $F_w$ resets to $0$ on the new workout and $F_e$ resets to $0$ on each different exercise.}
+%	\label{tab:IndexesExample}
+%\end{table}
+%
+%Inter-exercise fatigue can have the same index scheme but instead of incrementing over the entire workout, it only increments according to sets of the same exercise, resetting each time a new exercise is started. Equation \ref{eq:InterExerciseFatigueEquation} can be used to calculate the inter-exercise fatigue index. Note that this equation is only valid within the context of a single exercise. Table \ref{tab:IndexesExample} also shows an example of inter-exercise fatigue.
+%
+%% TODO - change  t_i to exercise_i
+%\begin{equation}
+%	\label{eq:InterExerciseFatigueEquation}
+%	\begin{split}
+%		F_{e,i} & =
+%		\begin{cases}
+%			s_{i-1}r_{i-1}+F_{e,i-1} \;\; & \text{if }E_{x,i}=E_{x,i-1} \\
+%			0 \;\; & \text{otherwise}
+%		\end{cases}
+%		\\
+%		F_{e,0} & = 0
+%	\end{split}
+%\end{equation}
+%
+%The last two categories of fatigue are inter-set fatigue and latent fatigue. It is tempting to add an index for inter-set fatigue, but the set and reps values already serve this purpose. Latent fatigue's behavior is not so cut and dry as the other types of fatigue. It can fluctuate based on many factors, many of which are entirely independent from the gym. This makes it difficult to make an index value for latent fatigue as the key to making any index work is to make it increase and decrease as the original measurement would. If those increases and decreases cannot be accurately predicted and represented then an index cannot be used reliably. While the factors outside the gym cannot be controlled for due to the lack of data representing them, the factors that are present from the gym can, and should, be considered. Doing this however will require it's own chapter, chapter \ref{sec:}.
