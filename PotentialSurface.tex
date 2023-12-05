@@ -342,18 +342,20 @@ The same simplifications that were applied in the section about inter-set fatigu
 
 \begin{equation*}
 	F_w =
-	F_{e} + \epsilon_3 F_e \sum_{i=0}^{n_e-1} c_i
+	F_{e} + \epsilon_3 F_e \sum_{i=1}^{n_e-1} c_i
 \end{equation*}
 
 At this point the relative differences in recovery caused by the feedback present in inter-workout fatigue need to be considered. The previous sections on inter-exercise and inter-set fatigue reached this point and they were able to find a consistent pattern with the recovery performed that enabled the removal of the summation. This section cannot rely on this behavior, so to proceed the nature of each $c_i$ term needs to be considered. 
 
-The first component of each $c_i$ term comes from effort. The fatigue delta from a given exercise will increase with the number of reps performed and the level of effort those reps required. As discussed previously fatigue may not scale linearly with effort. For this reason the effort term will be raised to a power, $\mu$. This looks very similar to the equation from inter-rep fatigue, but they are separate values. This summation is not calculating the total fatigue by summing up every exercises inter-rep fatigue. It is calculating the fatigue delta, which will increase with increases in inter-rep fatigue but is not equal to inter-rep fatigue. This distinction is important because it separates the inter-rep fatigue term from the effort term in this equation even though they have similar behaviors. The fatigue delta should increase with increases in effort, which constrains $\mu$ to being $>0$. If $\mu>1$ then there will be increasing returns in the fatigue delta from increasing effort levels. If $\mu=1$ then there will be constant increases in the fatigue delta, and if $0<\mu<1$ then there will be decreasing returns to the fatigue delta as effort increases. The value of $\mu$ will be found by fitting the model to the data.
+The first component of each $c_i$ term comes from peripheral and central fatigue. Peripheral fatigue correlates with volume and central fatigue correlates with the effort it required to perform that volume. The fatigue delta from a given exercise will increase from both peripheral and central fatigue. Stated another way, the fatigue delta from a given exercise will increase with the number of reps performed and the level of effort those reps required. As discussed in section \ref{sec:P2C1_InterRepFatigue} fatigue may not scale linearly with effort. For this reason the effort term will be raised to a power, $\mu$. This looks very similar to the equation from inter-rep fatigue, but they are separate values. This summation is not calculating the total fatigue by summing up every exercises inter-rep fatigue. It is calculating the fatigue delta, which will increase with increases in inter-rep fatigue but is not equal to inter-rep fatigue. This distinction is important because it separates the inter-rep fatigue term from the effort term in this equation even though they have similar behaviors. The fatigue delta should increase with increases in effort, which constrains $\mu$ to being $>0$. If $\mu>1$ then there will be increasing returns in the fatigue delta from increasing effort levels. If $\mu=1$ then there will be constant increases in the fatigue delta, and if $0<\mu<1$ then there will be decreasing returns to the fatigue delta as effort increases. The value of $\mu$ will be found by fitting the model to the data.
 
 The second component of each $c_i$ term comes from the similarity between exercises with respect to time. The fatigue delta will increase with greater similarity between exercises that were previously performed, represented by $S(i,j)$. This $S(i,j)$ term is then scaled by time such that exercises performed earlier in the workout end up reducing the fatigue delta. The behavior of the fatigue delta relative to time is not exactly known. Similar to the effort term, a constant, $\eta$, will be added to allow the model to understand different behaviors. The ranges of $\eta$ that have differing behaviors are the same as $\mu$.
 
 \begin{minipage}{\textwidth}
 	\begin{equation*}
-		c_i=s_i r_i E_i^\mu \sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+		c_i=s_i r_i I_i E_i^\mu \sum_{j=1}^{j=i-1} S(i,j)\left(
+			\frac{1}{i-j}
+		\right)^\eta
 	\end{equation*}
 	\centerline{where}
 	\begin{equation*}
@@ -364,16 +366,22 @@ The second component of each $c_i$ term comes from the similarity between exerci
 	\end{equation*}
 \end{minipage}\\
 
-This equation for $c_i$ can be placed in the equation for $F_w$.
+It may seem strange seeing $I_i$ in the equation shown above. After all, intensity is what is being solved for as discussed in section \ref{sec:P2C1_WhatIsPerformance}. The saving nuance comes from the bounds of the summation, where the upper bound on the outer summation is $n_e-1$, meaning that the $I_i$ value of every term up to but not including the current data point will be needed. This removes any worries about having the value that is being solved for on both sides of the equation as the only value that is being solved for is the intensity on the current data point.
+
+Looking at the part of the equation above that deals with time it might be tempting to say that there is another problem: there will a vertical asymptote when $i=j$. This is true, but the bounds of the inner summation will prevent $i$ from ever equaling $j$. Given that $i$ and $j$ are always integer values it will always be true that $|i-j|\ge1$. This means that each $S(i,j)$ value in the inner summation will always be multiplied by a number between $0$ and $1$. The other important thing about the part of the equation that deals with time is that it shifts forward in time as each additional exercise is performed. This is because the $i$ value which represents the current exercise continually increments, pushing the fatigue equation forward relative to the first exercise, or $i=1$.
+
+The equation for $c_i$ can now be placed in the equation for $F_w$.
 
 \begin{minipage}{\textwidth}
 	\begin{equation*}
 		F_w =
 			F_{e} + 
 			\epsilon_3 F_e 
-			\sum_{i=0}^{n_e-1} \left( 
-				s_i r_i E_i^\mu 
-				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+			\sum_{i=1}^{n_e-1} \left( 
+				s_i r_i I_i E_i^\mu 
+				\sum_{j=1}^{j=i-1} S(i,j)\left(
+					\frac{1}{i-j}
+				\right)^\eta
 			\right)
 	\end{equation*}
 	\centerline{where}
@@ -394,15 +402,19 @@ With all of that, the final equation for inter-workout fatigue is shown in equat
 		\begin{split}
 			F_e & = 
 			\epsilon_3 F_e 
-			\sum_{i=0}^{n_e-1} \left( 
-				s_i r_i E_i^\mu 
-				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+			\sum_{i=1}^{n_e-1} \left( 
+				s_i r_i I_i E_i^\mu 
+				\sum_{j=1}^{j=i-1} S(i,j)\left(
+					\frac{1}{i-j}
+				\right)^\eta
 			\right)
 			+ F_e \\
-			& = F_e \left(
-				\sum_{i=0}^{n_e-1} \left( 
-					s_i r_i E_i^\mu 
-					\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+			& = F_e \left(1+
+				\sum_{i=1}^{n_e-1} \left( 
+					s_i r_i I_i E_i^\mu 
+					\sum_{j=1}^{j=i-1} S(i,j)\left(
+						\frac{1}{i-j}
+					\right)^\eta
 				\right)
 			\right)
 			\\
@@ -410,9 +422,11 @@ With all of that, the final equation for inter-workout fatigue is shown in equat
 				\left( \epsilon_5 (r-1)^\beta + 1 \right)
 				\left(\epsilon_4 (s-1)^\gamma+1  \right)
 				\left(
-					1+\epsilon_3 \sum_{i=0}^{n_e-1} \left( 
-						s_i r_i E_i^\mu 
-						\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+					1+\epsilon_3 \sum_{i=1}^{n_e-1} \left( 
+						s_i r_i I_i E_i^\mu 
+						\sum_{j=1}^{j=i-1} S(i,j)\left(
+							\frac{1}{i-j}
+						\right)^\eta
 					\right)
 				\right)
 			\\
@@ -442,17 +456,17 @@ The last fatigue category is latent fatigue. This category has the largest times
     \label{fig:P2C1_LatentFatigue}
 \end{figure}
 
-Capturing the latent fatigue from workouts is a very similar process to inter-workout fatigue, the timescale is just a lot larger. As such, a similar equation to what was used in the previous section can be used here. One difference 
+Capturing the latent fatigue from workouts is a very similar process to inter-workout fatigue, the timescale is just a lot larger. As such, a similar equation to what was used in the previous section can be used here. One difference however is the time span is not limited like it was with inter-workout fatigue. Unlike inter-workout fatigue there is no definitive end to the timescale of latent fatigue, it continues on for as long as there is data to capture it. After adjusting the bounds of the summation to capture this the equation show below can be created.
 
 \begin{minipage}{\textwidth}
 	\begin{equation*}
 		F_l =
 			F_{w} + 
 			\epsilon_2 F_w
-			\sum_{i=0}^{n_w-1} \left( 
-				s_i r_i E_i^\rho
-				\sum_{j=0}^{j=i-1} S(i,j)\left(
-					\frac{1}{t_i-t_j+1}
+			\sum_{i=1}^{n_w-1} \left( 
+				s_i r_i I_i E_i^\rho
+				\sum_{j=1}^{j=i-1} S(i,j)\left(
+					\frac{1}{t_i-t_j}
 				\right)^\sigma
 			\right)
 	\end{equation*}
@@ -466,15 +480,19 @@ Capturing the latent fatigue from workouts is a very similar process to inter-wo
 	\end{equation*}
 \end{minipage}\\
 
+With the above equation the final equation for inter-workout fatigue can be stated, and is shown below in equation \ref{eq:P2C1_LatentFatigue}. Given that latent fatigue represents fatigue at the largest timescale and that is contains the fatigue from every single timescale below it, this equation is also equal to total fatigue, or $F_{tot}$.
+
 \begin{minipage}{\textwidth}
 	\begin{equation}
-		\label{eq:P2C1_InterWorkoutFatigue}
+		\label{eq:P2C1_LatentFatigue}
 		\begin{split}
-			F_w & = 
+			F_{tot} = F_l & = 
 			\epsilon_2 F_e 
 			\sum_{i=0}^{n_e-1} \left( 
 				s_i r_i E_i^\mu 
-				\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+				\sum_{j=0}^{j=i-1} S(i,j)\left(
+					\frac{1}{i-j}
+				\right)^\eta
 			\right)
 			+ F_e
 			\\
@@ -486,7 +504,9 @@ Capturing the latent fatigue from workouts is a very similar process to inter-wo
 				\left(
 					1+\epsilon_3 \sum_{i=0}^{n_e-1} \left( 
 						s_i r_i E_i^\mu 
-						\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+						\sum_{j=0}^{j=i-1} S(i,j)\left(
+							\frac{1}{i-j}
+						\right)^\eta
 					\right)
 				\right)
 				\\
@@ -737,7 +757,7 @@ Capturing the latent fatigue from workouts is a very similar process to inter-wo
 \section{What is Similarity?}
 \label{sec:P2C1_WhatIsSimilarity}
 
-There has been discussion about exercise similarity, but there has been no discussion about what constitutes similarity. Before continuing the details of what makes exercises similar needs to be established.
+There has been discussion about exercise similarity, but there has been no discussion about what constitutes similarity. Before continuing the details of what makes exercises similar needs to be established. In section \ref{sec:P1_ExerciseClassification} a couple different exercise classifications were mentioned.
 
 
 
