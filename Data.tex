@@ -3,10 +3,9 @@
 }
 \label{ch:DataSection}
 
-The data associated with this paper is present in the projects associated GitHub repository, available at the following url:  \url{github.com/barbell-math/data}.
-The data represents almost two years worth of training data, all collected from a single male lifter. There are over 900 data points in this data set varying across many different exercises. Before recording any data, the lifter was asked to list there 1RM's for several lifts. These were recorded as having been performed on macrocycle 1 and having RPE 10.
+With the model having been outlined the next concern is the data that the model will be fitted to. The data that was collected during the research for this book collectively represents over $4$ years worth of training data. There were two lifters that recorded their data for the purpose of this book, with over $1500$ data points in total. Before recording any data, the lifter was asked to list there 1RM's for the squat, bench, and deadlift. For each lifter these lifts were recorded as having been performed on macrocycle 1 and having RPE 10. It is important to include this data because of the reliance the model has on intensity, which could not be calculated if a lifts 1RM is not known.
 
-The data recorded consists of a list of exercises performed at the gym, with the lifter recording the following data for each exercise:
+The data recorded consists of a list of exercises performed at the gym, with each lifter recording the following data for each exercise:
 
 \begin{itemize}
     \item What exercise was performed
@@ -17,7 +16,7 @@ The data recorded consists of a list of exercises performed at the gym, with the
     \item The RPE the exercise required
 \end{itemize}
 
-In addition to the data listed above, the lifter also recorded the starting and ending dates of each macrocycle. From the data the lifter recorded, the following additional data points were calculated. These data points were calculated for the lifter in order to avoid any errors from manual entry.
+In addition to the data listed above, each lifter also recorded the starting and ending dates of each macrocycle they went through. From the data the lifter recorded, the following additional data points were calculated. These data points were calculated for the lifter in order to avoid any errors from manual entry.
 
 \begin{itemize}
     \item The volume for each exercise was obtained by multiplying the sets, reps, and weight. This comes directly from equation \ref{eq:P1_BaseVolumeEquation}.
@@ -25,7 +24,7 @@ In addition to the data listed above, the lifter also recorded the starting and 
     \item Each lift was given a macrocycle ID according to the date the exercise was performed.
 \end{itemize}
 
-During the time period the lifter was recording data, there were several notable occurrences:
+During the time period the lifters were recording data, there were several notable occurrences:
 
 \begin{enumerate}
     \item Near 3/2/2022 the lifter sustained an injury to his lower back, specifically his sacroiliac joint, or SI joint. This injury was a result of rounding of the lumbar spine while attempting a maximal effort deadlift, and required chiropractic care coupled with 2 weeks off of training. The failed lift was not recorded.
@@ -161,3 +160,5 @@ Table \ref{tab:P1C2_DomainUnitTable} summarizes the domains the data set element
     \caption{A table showing each measurement and it's associated domain.}
     \label{tab:P1C2_DomainUnitTable}
 \end{table}
+
+\section{Initial Unit Analysis}

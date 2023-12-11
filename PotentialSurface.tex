@@ -347,26 +347,57 @@ The same simplifications that were applied in the section about inter-set fatigu
 
 At this point the relative differences in recovery caused by the feedback present in inter-workout fatigue need to be considered. The previous sections on inter-exercise and inter-set fatigue reached this point and they were able to find a consistent pattern with the recovery performed that enabled the removal of the summation. This section cannot rely on this behavior, so to proceed the nature of each $c_i$ term needs to be considered. 
 
-The first component of each $c_i$ term comes from peripheral and central fatigue. Peripheral fatigue correlates with volume and central fatigue correlates with the effort it required to perform that volume. The fatigue delta from a given exercise will increase from both peripheral and central fatigue. Stated another way, the fatigue delta from a given exercise will increase with the number of reps performed and the level of effort those reps required. As discussed in section \ref{sec:P2C1_InterRepFatigue} fatigue may not scale linearly with effort. For this reason the effort term will be raised to a power, $\mu$. This looks very similar to the equation from inter-rep fatigue, but they are separate values. This summation is not calculating the total fatigue by summing up every exercises inter-rep fatigue. It is calculating the fatigue delta, which will increase with increases in inter-rep fatigue but is not equal to inter-rep fatigue. This distinction is important because it separates the inter-rep fatigue term from the effort term in this equation even though they have similar behaviors. The fatigue delta should increase with increases in effort, which constrains $\mu$ to being $>0$. If $\mu>1$ then there will be increasing returns in the fatigue delta from increasing effort levels. If $\mu=1$ then there will be constant increases in the fatigue delta, and if $0<\mu<1$ then there will be decreasing returns to the fatigue delta as effort increases. The value of $\mu$ will be found by fitting the model to the data.
+The first component of each $c_i$ term comes from peripheral and central fatigue. Peripheral fatigue correlates with volume and central fatigue correlates with the effort it required to perform that volume. The fatigue delta from a given exercise will increase from both peripheral and central fatigue. Stated another way, the fatigue delta from a given exercise will increase with the number of reps performed and the level of effort those reps required. Peripheral fatigue is left to simply increase with the volume that is completed, but central fatigue requires a second component beyond effort. Central fatigue scales with the number of muscle groups used in a lift. For example, performing a set of deadlifts will produce more fatigue then a set of hamstring curls even if both exercises are performed at the same effort. This is because a deadlift requires many muscles to work together in harmony whereas a hamstring curl is designed to isolate a single muscle group. To capture this the first classification shown in section \ref{sec:P1_ExerciseClassification} can be utilized. Every category will be given an index value that increases as the number of muscle groups used increases, as shown in table \ref{tab:P2C1_CentralFatigueIndexValues}. This index value will be represented by $\text{idx}(\text{cat}(E_x))$, denoting the index of the category of the given exercise.
+
+\begin{table}[h]
+	\centering
+    \begin{tabular}{|c|c|}
+	    	\hline
+        Category & Index \\
+        \hline
+        Main compound & 4 \\
+        Main compound accessory & 3 \\
+        Compound accessory & 2 \\
+        Accessory & 1 \\
+        \hline
+    \end{tabular}
+    \caption{A table showing each category and it's associated index value.}
+    \label{tab:P2C1_CentralFatigueIndexValues}
+\end{table}
+
+As discussed in section \ref{sec:P2C1_InterRepFatigue} fatigue may not scale linearly with effort. For this reason the effort term will be raised to a power, $\mu$. This looks very similar to the equation from inter-rep fatigue, but they are separate values. This summation is not calculating the total fatigue by summing up every exercises inter-rep fatigue. It is calculating the fatigue delta, which will increase with increases in inter-rep fatigue but is not equal to inter-rep fatigue. This distinction is important because it separates the inter-rep fatigue term from the effort term in this equation even though they have similar behaviors. The fatigue delta should increase with increases in effort, which constrains $\mu$ to being $>0$. If $\mu>1$ then there will be increasing returns in the fatigue delta from increasing effort levels. If $\mu=1$ then there will be constant increases in the fatigue delta, and if $0<\mu<1$ then there will be decreasing returns to the fatigue delta as effort increases. The value of $\mu$ will be found by fitting the model to the data.
 
 The second component of each $c_i$ term comes from the similarity between exercises with respect to time. The fatigue delta will increase with greater similarity between exercises that were previously performed, represented by $S(i,j)$. This $S(i,j)$ term is then scaled by time such that exercises performed earlier in the workout end up reducing the fatigue delta. The behavior of the fatigue delta relative to time is not exactly known. Similar to the effort term, a constant, $\eta$, will be added to allow the model to understand different behaviors. The ranges of $\eta$ that have differing behaviors are the same as $\mu$.
 
 \begin{minipage}{\textwidth}
 	\begin{equation*}
-		c_i=s_i r_i I_i E_i^\mu \sum_{j=1}^{j=i-1} S(i,j)\left(
-			\frac{1}{i-j}
-		\right)^\eta
+		\begin{split}
+			c_i & = 
+			s_i r_i I_i \left(
+				\text{idx}(\text{cat}(E_{x,i})) E_i^\mu 
+			\right) \sum_{j=1}^{j=i-1} S(E_{x,i},E_{x,j})\left(
+				\frac{1}{i-j}
+			\right)^\eta
+			\\
+			& =
+			v_i \left(
+				\text{idx}(\text{cat}(E_{x,i})) E_i
+			\right) ^\mu \sum_{j=1}^{j=i-1} S(E_{x,i},E_{x,j})\left(
+				\frac{1}{i-j}
+			\right)^\eta
+			\\
+		\end{split}
 	\end{equation*}
 	\centerline{where}
 	\begin{equation*}
 		\begin{split}
-			& S(i,j) \text{ represents a similarity score between exercise }i \text{ and exercise }j \\
+			& S(E_{x,i},E_{x,j}) \text{ represents a similarity score between } E_{x,i} \text{ and } E_{x,j} \\
 			& \mu, \eta>0
 		\end{split}
 	\end{equation*}
 \end{minipage}\\
 
-It may seem strange seeing $I_i$ in the equation shown above. After all, intensity is what is being solved for as discussed in section \ref{sec:P2C1_WhatIsPerformance}. The saving nuance comes from the bounds of the summation, where the upper bound on the outer summation is $n_e-1$, meaning that the $I_i$ value of every term up to but not including the current data point will be needed. This removes any worries about having the value that is being solved for on both sides of the equation as the only value that is being solved for is the intensity on the current data point.
+It may seem strange seeing $I_i$ in the equation shown above. After all, intensity is what is being solved for as discussed in section \ref{sec:P2C1_WhatIsPerformance}. The saving nuance comes from the bounds of the summation, where the upper bound on the outer summation is $n_e-1$, meaning that the $I_i$ value of every data point up to but not including the current exercise will be needed. This removes any worries about having the value that is being solved for on both sides of the equation as the only value that is being solved for is the intensity on the current exercise.
 
 Looking at the part of the equation above that deals with time it might be tempting to say that there is another problem: there will a vertical asymptote when $i=j$. This is true, but the bounds of the inner summation will prevent $i$ from ever equaling $j$. Given that $i$ and $j$ are always integer values it will always be true that $|i-j|\ge1$. This means that each $S(i,j)$ value in the inner summation will always be multiplied by a number between $0$ and $1$. The other important thing about the part of the equation that deals with time is that it shifts forward in time as each additional exercise is performed. This is because the $i$ value which represents the current exercise continually increments, pushing the fatigue equation forward relative to the first exercise, or $i=1$.
 
@@ -378,8 +409,10 @@ The equation for $c_i$ can now be placed in the equation for $F_w$.
 			F_{e} + 
 			\epsilon_3 F_e 
 			\sum_{i=1}^{n_e-1} \left( 
-				s_i r_i I_i E_i^\mu 
-				\sum_{j=1}^{j=i-1} S(i,j)\left(
+				v_i \left(
+					\text{idx}(\text{cat}(E_{x,i})) E_i
+				\right)^\mu 
+				\sum_{j=1}^{j=i-1} S(E_{x,i},E_{x,j})\left(
 					\frac{1}{i-j}
 				\right)^\eta
 			\right)
@@ -388,7 +421,7 @@ The equation for $c_i$ can now be placed in the equation for $F_w$.
 	\begin{equation*}
 		\begin{split}
 			& n_e \text{ represents the total number of exercises performed in a workout} \\
-			& S(i,j) \text{ represents a similarity score between exercise }i \text{ and exercise }j \\
+			& S(E_{x,i},E_{x,j}) \text{ represents a similarity score between } E_{x,i} \text{ and } E_{x,j} \\
 			& \mu, \eta>0
 		\end{split}
 	\end{equation*}
@@ -403,16 +436,20 @@ With all of that, the final equation for inter-workout fatigue is shown in equat
 			F_e & = 
 			\epsilon_3 F_e 
 			\sum_{i=1}^{n_e-1} \left( 
-				s_i r_i I_i E_i^\mu 
-				\sum_{j=1}^{j=i-1} S(i,j)\left(
+				v_i \left(
+					\text{idx}(\text{cat}(E_{x,i})) E_i
+				\right)^\mu 
+				\sum_{j=1}^{j=i-1} S(E_{x,i},E_{x,j})\left(
 					\frac{1}{i-j}
 				\right)^\eta
 			\right)
 			+ F_e \\
 			& = F_e \left(1+
 				\sum_{i=1}^{n_e-1} \left( 
-					s_i r_i I_i E_i^\mu 
-					\sum_{j=1}^{j=i-1} S(i,j)\left(
+					v_i \left(
+						\text{idx}(\text{cat}(E_{x,i})) E_i
+					\right)^\mu  
+					\sum_{j=1}^{j=i-1} S(E_{x,i},E_{x,j})\left(
 						\frac{1}{i-j}
 					\right)^\eta
 				\right)
@@ -421,10 +458,14 @@ With all of that, the final equation for inter-workout fatigue is shown in equat
 			& = \epsilon_6 \left( \frac{E}{10} \right)^\alpha
 				\left( \epsilon_5 (r-1)^\beta + 1 \right)
 				\left(\epsilon_4 (s-1)^\gamma+1  \right)
+				\\
+				& \;\;\;
 				\left(
 					1+\epsilon_3 \sum_{i=1}^{n_e-1} \left( 
-						s_i r_i I_i E_i^\mu 
-						\sum_{j=1}^{j=i-1} S(i,j)\left(
+						v_i \left(
+							\text{idx}(\text{cat}(E_{x,i})) E_i
+						\right)^\mu 
+						\sum_{j=1}^{j=i-1} S(E_{x,i},E_{x,j})\left(
 							\frac{1}{i-j}
 						\right)^\eta
 					\right)
@@ -439,7 +480,7 @@ With all of that, the final equation for inter-workout fatigue is shown in equat
 		    & \beta,\gamma, \mu, \eta > 0 \\
 			& 0 \le \epsilon_3, \epsilon_4, \epsilon_5, \epsilon_6 \le 1 \\
 			& n_e \text{ represents the total number of exercises performed in a workout} \\
-			& S(i,j) \text{ represents a similarity score between exercise }i \text{ and exercise }j \\
+			& S(E_{x,i},E_{x,j}) \text{ represents a similarity score between } E_{x,i} \text{ and } E_{x,j} \\
 		\end{split}
 	\end{equation*}
 \end{minipage}\\
@@ -464,8 +505,10 @@ Capturing the latent fatigue from workouts is a very similar process to inter-wo
 			F_{w} + 
 			\epsilon_2 F_w
 			\sum_{i=1}^{n_w-1} \left( 
-				s_i r_i I_i E_i^\rho
-				\sum_{j=1}^{j=i-1} S(i,j)\left(
+				v_i \left(
+					\text{idx}(\text{cat}(E_{x,i})) E_i
+				\right)^\rho
+				\sum_{j=1}^{j=i-1} S(E_{x,i},E_{x,j})\left(
 					\frac{1}{t_i-t_j}
 				\right)^\sigma
 			\right)
@@ -474,7 +517,7 @@ Capturing the latent fatigue from workouts is a very similar process to inter-wo
 	\begin{equation*}
 		\begin{split}
 			& n_w \text{ represents the total number of exercises performed} \\
-			& S(i,j) \text{ represents a similarity score between exercise }i \text{ and exercise }j \\
+			& S(E_{x,i},E_{x,j}) \text{ represents a similarity score between } E_{x,i} \text{ and } E_{x,j} \\
 			& \rho, \sigma >0
 		\end{split}
 	\end{equation*}
@@ -489,8 +532,10 @@ With the above equation the final equation for inter-workout fatigue can be stat
 			F_{tot} = F_l & = 
 			\epsilon_2 F_e 
 			\sum_{i=0}^{n_e-1} \left( 
-				s_i r_i E_i^\mu 
-				\sum_{j=0}^{j=i-1} S(i,j)\left(
+				v_i \left(
+					\text{idx}(\text{cat}(E_{x,i})) E_i
+				\right)^\rho
+				\sum_{j=1}^{j=i-1} S(E_{x,i},E_{x,j})\left(
 					\frac{1}{i-j}
 				\right)^\eta
 			\right)
@@ -502,9 +547,11 @@ With the above equation the final equation for inter-workout fatigue can be stat
 				\\
 				& \;\;\;
 				\left(
-					1+\epsilon_3 \sum_{i=0}^{n_e-1} \left( 
-						s_i r_i E_i^\mu 
-						\sum_{j=0}^{j=i-1} S(i,j)\left(
+					1+\epsilon_3 \sum_{i=1}^{n_e-1} \left( 
+						v_i \left(
+							\text{idx}(\text{cat}(E_{x,i})) E_i
+						\right)^\mu
+						\sum_{j=0}^{j=i-1} S(E_{x,i},E_{x,j})\left(
 							\frac{1}{i-j}
 						\right)^\eta
 					\right)
@@ -512,10 +559,12 @@ With the above equation the final equation for inter-workout fatigue can be stat
 				\\
 				& \;\;\;
 				\left(
-					1+\epsilon_2 \sum_{i=0}^{n_w-1} \left( 
-						s_i r_i E_i^\rho
-						\sum_{j=0}^{j=i-1} S(i,j)\left(
-							\frac{1}{t_i-t_j+1}
+					1+\epsilon_2 \sum_{i=1}^{n_w-1} \left( 
+						v_i \left(
+							\text{idx}(\text{cat}(E_{x,i})) E_i
+						\right)^\rho
+						\sum_{j=0}^{j=i-1} S(E_{x,i},E_{x,j})\left(
+							\frac{1}{t_i-t_j}
 						\right)^\sigma
 					\right)
 				\right)
@@ -530,7 +579,7 @@ With the above equation the final equation for inter-workout fatigue can be stat
 			& 0 \le \epsilon_2, \epsilon_3, \epsilon_4, \epsilon_5, \epsilon_6 \le 1 \\
 			& n_e \text{ represents the total number of exercises performed in a workout} \\
 			& n_w \text{ represents the total number of exercises performed} \\
-			& S(i,j) \text{ represents a similarity score between exercise }i \text{ and exercise }j \\
+			& S(E_{x,i},E_{x,j}) \text{ represents a similarity score between } E_{x,i} \text{ and } E_{x,j} \\
 		\end{split}
 	\end{equation*}
 \end{minipage}\\
@@ -757,12 +806,68 @@ With the above equation the final equation for inter-workout fatigue can be stat
 \section{What is Similarity?}
 \label{sec:P2C1_WhatIsSimilarity}
 
-There has been discussion about exercise similarity, but there has been no discussion about what constitutes similarity. Before continuing the details of what makes exercises similar needs to be established. In section \ref{sec:P1_ExerciseClassification} a couple different exercise classifications were mentioned.
+There has been discussion about exercise similarity, but there has been no discussion about what constitutes similarity. Before continuing the details of what makes exercises similar needs to be established. In section \ref{sec:P1_ExerciseClassification} a couple different exercise classifications were mentioned. These classifications can be used to create similarity scores. If two exercises are in the same categories then it could be said that they are very similar as they use the same muscle groups as well as a similar number of muscle groups. With this in mind, the similarity between two exercises can be represented as a geometric average of the similarity of each category.
 
+The first category classifies exercises based on how many muscle groups are being used. An index for this category was presented in section \ref{sec:P2C1_LatentFatigue}. This index will be used again here to calculate the difference between categories. If the indexes match then there will be maximum similarity and the equation will produce a value of $1$ for this category. If they do not match then the value produced will be somewhere between $0$ and $1$.
 
+The second category classifies exercises based on the muscle groups that are used during the exercise. These muscle groups are further broken down into primary and secondary categories. To calculate the similarity for each subcategory the set of muscle groups used to perform each exercise will be used to find the jacobian distance between each exercise. Given that there is this breakdown into subcategories it only makes sense that the secondary category weights the overall similarity less than the primary category. To do this the differences in similarity will be scaled and shifted so that instead of varying from $0$ to $1$ they will vary from $0.5$ to $1$. By doing this the similarly score from the secondary muscle groups is considered to be half as important as the similarity score from the primary muscle groups.
 
+With that discussion the equation for similarity between two exercises is shown below in equation \ref{eq:P2C1_SimilarityEquation}.
 
-
+\begin{minipage}{\textwidth}
+	\begin{equation}
+		\label{eq:P2C1_SimilarityEquation}
+		\begin{split}
+			S(E_{x,i},E_{x,j}) & = 
+			\left(
+				\left(
+					\frac{
+						\text{idx}(\text{cat}(E_{x,i}))+
+						\text{idx}(\text{cat}(E_{x,j}))
+					}{
+						2\max\left(
+							\text{idx}(\text{cat}(E_{x,i})),
+							\text{idx}(\text{cat}(E_{x,j}))
+						\right)
+					}
+				\right)
+			\right.
+				\\
+				& \;\;\;\;\;\;\;
+				\left(
+					\frac{
+						\text{PMG}(E_{x,i}) \cap 
+						\text{PMG}(E_{x,j})			
+					}{
+						\text{PMG}(E_{x,i}) \cup 
+						\text{PMG}(E_{x,j})
+					}
+				\right)
+				\\
+				& \;\;\;\;\;\;\;
+			\left.			
+				\left(
+					\frac{
+						\text{SMG}(E_{x,i}) \cap 
+						\text{SMG}(E_{x,j})			
+					}{
+						2 \left(
+							\text{SMG}(E_{x,i}) \cup 
+							\text{SMG}(E_{x,j})
+						\right)
+					}+0.5
+				\right)
+			\right)^\frac{1}{3}
+		\end{split}
+	\end{equation}
+	\centerline{where}
+	\begin{equation*}
+		\begin{split}
+		    & \text{PMG stands for primary muscle group} \\
+		    & \text{SMG stands for secondary muscle group} \\
+		\end{split}
+	\end{equation*}
+\end{minipage}\\
 
 \section{Summary}
 
@@ -770,38 +875,56 @@ This chapter outlined a model that will be fully realized in the remaining chapt
 
 Finally, the approximate form of the effort-fatigue model can be defined, and is shown in equation \ref{eq:PotentialSurfaceEquation}. Again, this may seem like a finished equation, but remember this is just a template. The surfaces in the next several chapters will create final equations to concretely realize the ideas of the effort-fatigue model. These equations may take very different forms, but the principles of the effort-fatigue model will still stand behind them.
 
-\begin{equation}
-	\label{eq:PotentialSurfaceEquation}
-	\begin{split}
-		I & \hat{=} E_{tot} \hat{-} F_{tot} \\
-		I & \hat{=} \epsilon_1 E \hat{-} 
-			\left(
-				\epsilon_6 \left( \frac{E}{10} \right)^\alpha
-				\left( \epsilon_5 (r-1)^\beta + 1 \right)
-				\left( \epsilon_4 (s-1)^\gamma+1 \right)
-				\right.
-				\\
-				& \;\;\;\;\;\;\;\;\;\;\;\;\;\;
+\begin{minipage}{\textwidth}
+	\begin{equation}
+		\label{eq:PotentialSurfaceEquation}
+		\begin{split}
+			I & \hat{=} E_{tot} \hat{-} F_{tot} \\
+			I & \hat{=} \epsilon_1 E \hat{-} 
 				\left(
-					1+\epsilon_3 \sum_{i=0}^{n_e-1} \left( 
-						s_i r_i E_i^\mu 
-						\sum_{j=0}^{j=i-1} S(i,j)(n_e-j)^\eta
+					\epsilon_6 \left( \frac{E}{10} \right)^\alpha
+					\left( \epsilon_5 (r-1)^\beta + 1 \right)
+					\left( \epsilon_4 (s-1)^\gamma+1 \right)
+					\right.
+					\\
+					& \;\;\;\;\;\;\;\;\;\;\;\;\;\;
+					\left(
+						1+\epsilon_3 \sum_{i=1}^{n_e-1} \left( 
+							v_i \left(
+								\text{idx}(\text{cat}(E_{x,i})) E_i
+							\right)^\mu
+							\sum_{j=1}^{j=i-1} S(E_{x,i},E_{x,j})(n_e-j)^\eta
+						\right)
+					\right)
+					\\
+					& \;\;\;\;\;\;\;\;\;\;\;\;\;\;
+					\left.
+					\left(
+						1+\epsilon_2 \sum_{i=1}^{n_w-1} \left( 
+							v_i \left(
+								\text{idx}(\text{cat}(E_{x,i})) E_i
+							\right)^\rho
+							\sum_{j=1}^{j=i-1} S(E_{x,i},E_{x,j})\left(
+								\frac{1}{t_i-t_j}
+							\right)^\sigma
+						\right)
 					\right)
 				\right)
-				\\
-				& \;\;\;\;\;\;\;\;\;\;\;\;\;\;
-				\left.
-				\left(
-					1+\epsilon_2 \sum_{i=0}^{n_w-1} \left( 
-						s_i r_i E_i^\rho
-						\sum_{j=0}^{j=i-1} S(i,j)\left(
-							\frac{1}{t_i-t_j+1}
-						\right)^\sigma
-					\right)
-				\right)
-			\right)
-	\end{split}
-\end{equation}
+		\end{split}
+	\end{equation}
+	\centerline{where}
+	\begin{equation*}
+		\begin{split}
+		    & \alpha \ge 1 \\
+		    & \beta,\gamma, \mu, \eta, \rho, \sigma > 0 \\
+		    & \epsilon_1 >0 \\
+			& 0 \le \epsilon_2, \epsilon_3, \epsilon_4, \epsilon_5, \epsilon_6 \le 1 \\
+			& n_e \text{ represents the total number of exercises performed in a workout} \\
+			& n_w \text{ represents the total number of exercises performed} \\
+			& S(E_{x,i},E_{x,j}) \text{ represents a similarity score between } E_{x,i} \text{ and } E_{x,j} \\
+		\end{split}
+	\end{equation*}
+\end{minipage}
 
 
 
